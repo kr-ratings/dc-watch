@@ -172,6 +172,12 @@ td.nw .more{font-size:.7rem;color:var(--muted)}
 .pill{display:inline-block;font-size:.66rem;font-weight:600;border:1px solid currentColor;border-radius:999px;padding:0 6px;margin-left:6px;vertical-align:1px}
 .pill.live{color:var(--accent)} .pill.done{color:var(--ok)} .pill.dead{color:var(--muted)}
 .scroll{max-height:560px;overflow:auto}
+@media (min-width:980px){
+  .eqh > div{display:flex;flex-direction:column;min-width:0}
+  .eqh .card{height:600px}
+  .eqh .card.scroll{max-height:none;overflow:auto}
+  .eqh #tl-box{flex:1 1 auto;min-height:0;max-height:none}
+}
 .explain{margin:0;font-size:.8rem;line-height:1.6;color:var(--muted);word-break:keep-all;background:var(--accent-soft);border-radius:8px;padding:9px 12px}
 .explain b{color:var(--fg);font-weight:600;margin-right:4px}
 h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;vertical-align:2px;white-space:nowrap}
@@ -430,7 +436,7 @@ footer .ct{white-space:nowrap}
   </section>
 
   <section aria-labelledby="h-law">
-    <div class="two">
+    <div class="two eqh">
       <div>
         <div class="sec-head"><h2 id="h-news">최근 기사</h2><span class="note" id="news-note"></span></div>
         <div class="card scroll"><ul class="list" id="news"></ul></div>
