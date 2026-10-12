@@ -718,12 +718,23 @@ function renderScatter(){
   const S=D.power.self, K=D.kepco, tot12=K.nat.slice(-12).reduce((a,b)=>a+b,0);
   const pts=Object.keys(S).map(sd=>({sd,lb:sd==="전남광주"?"전남광주":sd,x:S[sd],y:(K.sido[sd]||[]).slice(-12).reduce((a,b)=>a+(b||0),0)/K.hours.slice(-12).reduce((a,b)=>a+b,0)/1e3})).filter(p=>p.y>0);
   const box=$("#sc-chart"), W=Math.max(300,Math.round(box.clientWidth||520)), H=W<520?380:380, m={l:42,r:12,t:30,b:36}, iw=W-m.l-m.r, ih=H-m.t-m.b;
-  const xmax=Math.ceil(Math.max(...pts.map(p=>p.x))/50)*50, ymx0=Math.max(...pts.map(p=>p.y))*1.1, ystep=ymx0>800?200:ymx0>300?100:50, ymax=Math.ceil(ymx0/ystep)*ystep;
-  const X=v=>m.l+v/xmax*iw, Y=v=>m.t+ih-v/ymax*ih;
+  const xmax=Math.ceil(Math.max(...pts.map(p=>p.x))/50)*50, X=v=>m.l+v/xmax*iw;
+  // 세로축: 값이 크게 벌어지면 가운데를 물결선으로 끊어 아래(작은 값)를 크게 보인다
+  const ys=pts.map(p=>p.y).sort((a,b)=>a-b); let cut=-1; for(let i=1;i<ys.length;i++) if(ys[i]>ys[i-1]*2&&ys[i]-ys[i-1]>80&&(cut<0||ys[i]/ys[i-1]>ys[cut]/ys[cut-1])) cut=i;
+  const nice=(v,st)=>Math.ceil(v/st)*st;
+  let Y, ticks=[], brk=null;
+  if(cut>0){ const lst=ys[cut-1]>150?50:20, L1=nice(ys[cut-1]*1.15,lst), ust=100, U0=Math.floor(ys[cut]*.8/ust)*ust, U1=nice(ys[ys.length-1]*1.08,ust);
+    const hb=m.t+ih, hl=ih*.6, gap=ih*.07, hu=ih-hl-gap, yUb=m.t+hu;
+    Y=v=>v<=L1?hb-v/L1*hl:yUb-(v-U0)/(U1-U0)*hu;
+    for(let v=0;v<L1;v+=lst) ticks.push(v); for(let v=U0+ust;v<=U1;v+=ust) ticks.push(v); // 끊는 자리(L1 · U0)는 눈금 생략
+    brk=[yUb,yUb+gap]; }
+  else { const ymx0=ys[ys.length-1]*1.1, st=ymx0>800?200:ymx0>300?100:50, ymax=nice(ymx0,st); Y=v=>m.t+ih-v/ymax*ih; for(let v=0;v<=ymax;v+=st) ticks.push(v); }
   pts.forEach(p=>{p.px=X(p.x);p.py=Y(p.y);});
   let s=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="시도별 전력자립도와 정보통신업 전력사용량">`;
   s+=`<rect x="${m.l}" y="${m.t}" width="${X(100)-m.l}" height="${ih}" fill="var(--sf2)" opacity=".7"/><rect x="${X(100)}" y="${m.t}" width="${W-m.r-X(100)}" height="${ih}" fill="var(--sf3)" opacity=".55"/>`;
-  Array.from({length:Math.round(ymax/ystep)+1},(_,i)=>i*ystep).forEach(v=>{ s+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke-opacity=".6"/><text class="ax" x="${m.l-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`; });
+  ticks.forEach(v=>{ s+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke-opacity=".6"/><text class="ax" x="${m.l-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`; });
+  if(brk){ const [a,b]=brk, wave=y=>{ let d=`M${m.l-8},${y}`; for(let x=m.l-8;x<W-m.r;x+=10) d+=` q2.5,-3.5 5,0 t5,0`; return d; };
+    s+=`<rect x="${m.l-10}" y="${a+1}" width="${W-m.r-m.l+10}" height="${b-a-2}" fill="var(--surface)"/><path d="${wave(a+1)}" fill="none" stroke="var(--muted)" stroke-width="1.1"/><path d="${wave(b-1)}" fill="none" stroke="var(--muted)" stroke-width="1.1"/>`; }
   for(let v=0;v<=xmax;v+=50) s+=`<text class="ax" x="${X(v)}" y="${H-m.b+15}" text-anchor="middle">${v}%</text>`;
   s+=`<line x1="${X(100)}" x2="${X(100)}" y1="${m.t}" y2="${H-m.b}" stroke="var(--fg)" stroke-opacity=".55" stroke-dasharray="3 3"/>`;
   s+=`<text class="ax" x="${X(100)-6}" y="${m.t+13}" text-anchor="end">${W<520?"← 부족":"← 다른 지역 전기를 끌어다 씀"}</text><text class="ax" x="${X(100)+6}" y="${m.t+13}">${W<520?"남음 →":"전기가 남음 →"}</text>`;
