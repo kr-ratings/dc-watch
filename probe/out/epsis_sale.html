@@ -1,0 +1,3635 @@
+
+
+
+
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="ko">
+<head>
+	
+
+
+
+
+
+
+
+
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, user-scalable=yes">
+	<link rel="apple-touch-icon" type="image/x-icon" href="/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon-2.ico">
+	<link rel="icon" href="/favicon-2.ico">
+    <link rel="stylesheet" href="/epsisnew/resources/css/common.css" type="text/css">
+    
+    <link rel="stylesheet" href="/epsisnew/resources/css/jquery-ui.css" type="text/css">
+    <link rel="stylesheet" href="/epsisnew/resources/css/datapicker.css" type="text/css">
+    
+    <script src="/epsisnew/resources/js/jquery-2.1.3.min.js"></script>
+    <script src="/epsisnew/resources/js/jquery-ui.min.js"></script>
+    <script>
+	    $(function(){
+	        /*headerMenu*/
+	        var mPos = false;
+	        var mPos2 = false;
+
+            $("#"+"060402".substring(0,2)+"0000").addClass("nowOn");
+            $("#"+"060402".substring(0,4)+"00").addClass("on");
+            $("#"+"060402").addClass("on");
+            $("#"+"060402".substring(0,4)+"00").parent().parent().parent().addClass("nowOn");
+            $("#L"+"060402".substring(0,4)+"00").addClass("on");
+            $("#L"+"060402").addClass("on");
+
+
+            if( $("#L"+"060402").parent().parent().parent().attr("class") == "hasSub" ){
+                $("#L"+"060402").parent().parent().parent().addClass("nowOn");
+            }
+
+            //제공중단통계
+            if("060402".substring(0,4) == "0807"){
+                $("#L"+"060402".substring(0,4)+"00").parent().addClass("nowOn on");
+                $("#L"+"060402".substring(0,6)+"0000").parent().addClass("nowOn on");
+                $("#L"+"060402".substring(0,8)+"00").parent().addClass("nowOn on");
+                $("#L"+"060402").addClass("on");
+            }
+            /*headerMenu*/
+            var mPos = false;
+            $(".headerWrap").on("mouseover focusin",function(){mPos=true;})
+            $(".headerWrap").on("mouseout focusout",function(){mPos=false;})
+            $(".headerMenu li").not(".energyBtn").one("mouseover",function(){/*최초마우스 오버시 반응*/
+				var num = jQuery(this).index();
+				jQuery(".headerGnbMenu > li").removeClass("on")
+				jQuery(".headerMenu li").find("a").removeClass("on")
+				jQuery(".headerGnbWrap").show("blind",200)
+				jQuery(this).find("a").addClass("on")
+				jQuery(".headerGnbMenu > li").eq(num).addClass("on")
+			});
+            $(".headerMenu li").one("mouseover",function(){/*최초마우스 오버시 반응*/
+                var num = $(this).index();
+                $(".headerGnbMenu > li").removeClass("on")
+        		$(".headerMenu li").find("a").removeClass("on")
+        		$(".headerGnbWrap").show("blind",200)
+        		$(this).find("a").addClass("on")
+        		$(".headerGnbMenu > li").eq(num).addClass("on")
+            });
+            $(".headerWrap").on("mouseover focusin",function(){
+                if(mPos){
+                	$(".headerMenu li").not(".energyBtn").on({"mouseover focusin":function(){
+    					var num = jQuery(this).index();
+    					jQuery(".headerGnbMenu > li").removeClass("on")
+    					jQuery(".headerMenu li").find("a").removeClass("on")
+    					jQuery(".headerGnbWrap").show("blind",200)
+    					jQuery(this).find("a").addClass("on")
+    					jQuery(".headerGnbMenu > li").eq(num).addClass("on")
+    					}
+    				});
+                    $(".headerMenu li").on("mouseover focusin",function(){
+                        var num = $(this).index();
+
+                        $(".headerGnbMenu > li").removeClass("on")
+    					$(".headerMenu li").find("a").removeClass("on")
+    					$(".headerGnbWrap").show("blind",200)
+    					$(this).find("a").addClass("on")
+    					$(".headerGnbMenu > li").eq(num).addClass("on")
+                    });
+                    $(".headerGnbMenu > li").on("mouseover focusin",function(){
+                        var num = $(this).index()
+
+                        $(".headerGnbMenu > li").removeClass("on")
+						$(this).addClass("on")
+						$(".headerMenu a").removeClass("on")
+						$(".headerMenu a").eq(num).addClass("on")
+                    });
+                }else{
+                    $(".headerGnbWrap").hide("blind",200)
+                    $(".headerMenu a").removeClass("on");
+                }
+            });
+            $(".headerWrap").on("mouseleave",function(){
+                $(".headerGnbWrap").hide("blind",200)
+                $(".headerMenu a").removeClass("on");
+            });
+
+ 	        /*left Menu action*/
+	        $(".hasSub").each(function(){
+	            if($(this).find("ul > li > a").hasClass("on")){
+	                $(this).addClass("on")
+	                $(this).find("ul").css("display","block");
+	            }
+	        });
+
+            $(".hasDep4").each(function(){
+                $(".nowOn > ul").css("display","block");
+            });
+
+	        /*datepicker*/
+	        $(".datepicker").datepicker({
+	            showOn: "button",
+	            buttonImage: "/epsisnew/resources/images/calendar.gif",
+	            //buttonImageOnly: true,
+	            buttonText: "Select date",
+	            dayNamesMin: [ "일","월","화","수","목","금","토" ],
+	            monthNames: [ "1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월" ],
+	            dateFormat: "yy-mm-dd",
+	            changeYear: true,
+	            yearRange: "-20:+0"
+	          });
+	        $.datepicker._generateMonthYearHeader_original = $.datepicker._generateMonthYearHeader;
+
+	        $.datepicker._generateMonthYearHeader = function(inst, dm, dy, mnd, mxd, s, mn, mns) {
+	          var header = $($.datepicker._generateMonthYearHeader_original(inst, dm, dy, mnd, mxd, s, mn, mns)),
+	              years = header.find('.ui-datepicker-year');
+	          // reverse the years
+	          years.html(Array.prototype.reverse.apply(years.children()));
+	          // return our new html
+	          return $('<div />').append(header).html();
+	        }
+
+	        /*layout*/
+            if($(document).find(".laybox").size()){
+                $(".laybox > div").not(".flow").each(function(){
+                    if($(this).outerHeight() != "100"){
+                        if( $(this).find(".unit").size()){
+                            var head = $(this).find(".opBox").outerHeight();
+                            var hei = $(this).outerHeight();
+                            var val = hei - head - 30 //상수값 head 의 margin값 + 단위 표시 높이값
+                            $(this).find(".dataBox").css("height",val);
+                        }else{
+                            var head = $(this).find(".opBox").outerHeight();
+                            var hei = $(this).outerHeight();
+                            var val = hei - head - 10 //상수값 head 의 margin값
+                            $(this).find(".dataBox").css("height",val);
+                        }
+                    }
+
+                });
+                $(".laybox > div").not(".flow").each(function(){
+                    if($(this).outerWidth() != "69" &&  $(this).outerWidth() != "29" && $(this).outerWidth() != "100" && $(this).outerWidth() != "0"){
+	                    var wthis = $(this).outerWidth();
+	                    $(this).find(".dataBox").css("width",wthis);
+                    }
+                });
+            }
+	        //Title 변경
+	        var getNavi = $(".localNavi").text().split(">");
+	        var setNaviTmp=[];
+	        var finalTitle ="";
+
+	        for(var ii =0; ii < getNavi.length; ii++){
+	        	//
+	        	setNaviTmp[ii] = getNavi[getNavi.length-1-ii];
+	        	var arrStr = setNaviTmp[ii].trim();
+	        	//
+	        	if(ii == getNavi.length-1){
+	        		finalTitle = finalTitle+ arrStr;
+	        	}else{
+	        		finalTitle = finalTitle+ arrStr + " > ";
+	        	}
+	        }
+
+	        if(getNavi.length > 1){
+	        	document.title = finalTitle;
+	        }else{
+	        	document.title = "전력통계정보시스템 (EPSIS)";
+	        }
+
+	    });
+
+	    // 메뉴검색
+		function searchMenuTop() {
+			$("#searchKeywordTop").val($("#searchKeywordTop").val().trim());
+			if( $("#searchKeywordTop").val() == "") {
+				alert("검색어를 입력해주세요.");
+			}
+			else {
+				$("#menuFormTop").submit();
+			}
+		}
+
+	    function siteOpen(obj) {
+	    	if($("#"+obj+" option:selected").val() !=""){
+	        	window.open($("#"+obj+" option:selected").val(),"_blank");
+	    	}
+	    }
+
+		// 개인정보처리방침 Popup
+		function personalRulePopup(){
+			window.open("/epsisnew/personalRulePopup.do","personalRulePopup","width=662,height=865,top=50,left=100, scrollbars=yes, resizable=no, location=no, menubar=no, toolbar=no, status=no");
+		}
+
+		// 이메일무단수집거부 Popup
+		function emailRulePopup(){
+			window.open("/epsisnew/emailRulePopup.do","emailRulePopup","width=638,height=680,top=50,left=100, scrollbars=yes, resizable=no, location=no, menubar=no, toolbar=no, status=no");
+		}
+
+        function postObj(obj){
+            try {
+
+                // 타겟 document 객체
+                var targetDocument = document;
+                // 타겟 검사
+                if(targetDocument == null) {
+                    alert("Wrong target allocation. Please allocate the target again.");
+                    return false;
+                }
+
+                // 폼생성
+                var fm = targetDocument.createElement("form");
+
+                // 폼설정
+                fm.method="post";
+                fm.action=obj["URL"];
+
+                if(obj["ITARGET"] != undefined) {
+                    fm.target=obj["ITARGET"];
+                }
+                if(obj["TOTARGET"] != undefined){
+                    fm.target=obj["TOTARGET"];
+                }
+
+                // 오브젝트변수를 form 에 적용
+                for(i in obj){
+                    if(i != "TARGET" && i != "URL" && i != "TOTARGET" && i != "ITARGET"){
+
+                        if(typeof obj[i] == "object"){
+                            var obj2 = obj[i];
+                            if(obj2 == null){
+                                var input=targetDocument.createElement("input");
+                                input.setAttribute ("name", i);
+                                input.setAttribute ("type", "hidden");
+                                input.setAttribute ("value", obj[i]);
+                                fm.appendChild(input);;
+                            }else{
+                                for(j in obj2){
+                                    if(typeof obj2[j] != "function"){
+                                        var input=targetDocument.createElement("input");
+                                        input.setAttribute ("name", i);
+
+                                        input.setAttribute ("type", "hidden");
+                                        input.setAttribute ("value", obj2[j]);
+                                        fm.appendChild(input);
+                                    }
+                                }
+                            }
+                        }else{
+                            var input=targetDocument.createElement("input");
+                            input.setAttribute ("name", i);
+                            input.setAttribute ("type", "hidden");
+                            input.setAttribute ("value", obj[i]);
+                            fm.appendChild(input);
+                        }
+                    }
+                }
+
+                // 폼추가(타겟 문서에 폼을 추가한다.)
+                targetDocument.body.appendChild(fm);
+
+                // 타겟 문서 캐릭터셋 저장 (복구용)
+                var documentCharset = targetDocument.charset;
+
+                // 전송전 캐릭터셋 변경
+                if(obj["CHARSET"] != undefined) {
+                    document.charset=obj["CHARSET"];
+                }
+                // 전송
+                fm.submit();
+
+                // 전송후 폼 삭제
+                //removeElement(fm);
+
+                // 캐릭터셋 복구
+                if(obj["CHARSET"] != undefined) {
+                    targetDocument.charset=documentCharset;
+                }
+
+            } catch(e) {
+
+                alert("postObj() - "+e.name+"("+e.number+") : "+ e.description);
+            }
+        }
+
+        //팝업창 하루만 열기
+        function getCookie( name ) {
+            var nameOfCookie = name + "=";
+            var x = 0;
+            while ( x <= document.cookie.length )
+            {
+                var y = (x+nameOfCookie.length);
+                if ( document.cookie.substring( x, y ) == nameOfCookie ) {
+                    if ( (endOfCookie=document.cookie.indexOf( ";", y )) == -1 )
+                        endOfCookie = document.cookie.length;
+                    return unescape( document.cookie.substring( y, endOfCookie ) );
+                }
+                x = document.cookie.indexOf( " ", x ) + 1;
+                if ( x == 0 )
+                    break;
+            }
+            return "";
+         }
+
+     // 전력시장
+        function noAction(){
+        }
+
+        /*
+         * strTemp  : [필수] 크로스사이트 스크립팅을 검사할 문자열
+         * level    : [옵션] 검사레벨
+         *            0 (기본) -> XSS취약한 문자 제거
+         *            1 (선택) -> 단순한 <, > 치환
+         */
+        function XSS_Check(strTemp, level) {
+          if ( level == undefined || level == 0 ) {
+
+            strTemp = strTemp.replace(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-/g,"");
+          }
+          else if (level != undefined && level == 1 ) {
+            strTemp = strTemp.replace(/\</g, "&lt;");
+            strTemp = strTemp.replace(/\>/g, "&gt;");
+            strTemp = strTemp.replace(/\(/g, "&#40;");
+            strTemp = strTemp.replace(/\)/g, "&#41;");
+          }
+          return strTemp;
+        }
+
+         function numbersonly(e, decimal) {
+             var key;
+             var keychar;
+
+             if (window.event) {
+              key = window.event.keyCode;
+             } else if (e) {
+              key = e.which;
+             } else {
+              return true;
+             }
+             keychar = String.fromCharCode(key);
+
+            if ((key == null) || (key == 0) || (key == 8) || (key == 9) || (key == 13) || (key == 27)) {
+                return true;
+            } else if ((("0123456789").indexOf(keychar) > -1)) {
+                return true;
+            } else if (decimal && (keychar == ".")) {
+                return true;
+            } else return false;
+         }
+
+         function bringToday(){
+           //팝업날짜제한(이벤트 끝나고 삭제하기)
+             var today = new Date();
+             var dd = today.getDate();
+             var mm = today.getMonth()+1;
+             var yyyy = today.getFullYear();
+
+             if(dd<10) {
+                 dd='0'+dd
+             }
+
+             if(mm<10) {
+                 mm='0'+mm
+             }
+
+             today = yyyy+''+mm+''+dd;
+
+             return today;
+         }
+
+         function bringTodayHour(){
+             //팝업날짜제한(이벤트 끝나고 삭제하기)
+             var today = new Date();
+             var h = today.getHours();
+             var dd = today.getDate();
+             var mm = today.getMonth()+1;
+             var yyyy = today.getFullYear();
+
+             if(h<10) {
+                 h='0'+h
+             }
+
+             if(dd<10) {
+                 dd='0'+dd
+             }
+
+             if(mm<10) {
+                 mm='0'+mm
+             }
+
+             today = yyyy+''+mm+''+dd+''+h;
+
+             return today;
+        }
+
+		function fn_goHome(depth){
+
+			if(depth == "H"){
+				location.href="/epsisnew/selectMain.do?locale=";
+			}else if(depth == "1"){
+				if("060402".substring(0,2) == "99" || "060402".substring(0,2) == "10" || "060402".substring(0,2) == "11"){
+					$("#L"+"060402".substring(0,2)+"0100")[0].click();
+				}else{
+					$("#"+"060402".substring(0,2)+"0000")[0].click();
+				}
+			}else if(depth == "2"){
+				$("#"+"060402".substring(0,4)+"00")[0].click();
+			}else if(depth == "3"){
+				$("#L"+"060402".substring(0,6)+"0000")[0].click();
+			}else if(depth == "4"){
+				$("#L"+"060402".substring(0,8)+"00")[0].click();
+			}
+
+		}
+
+    </script>
+    <title>전력통계정보시스템 (EPSIS)</title>
+
+	
+
+
+
+
+
+
+
+
+
+
+	<!-- rMateChartH5 에서 사용하는 스타일 -->
+	<link rel="stylesheet" type="text/css" href="/epsisnew/resources/js/rMateChartH5/Assets/Css/rMateChartH5.css"/>
+	<!-- IE7, 8 에서 차트 생성하고자 하는 경우 -->
+	<!--[if IE]><script  src="./resources/js/rMateChartH5/JS/excanvas.js"></script><![endif]-->
+	<!-- rMateChartH5 라이센스 -->
+	<script  src="/epsisnew/resources/js/LicenseKey/rMateChartH5License.js"></script>
+	<!-- 실제적인 rMateChartH5 라이브러리 -->
+	<script  src="/epsisnew/resources/js/rMateChartH5/JS/rMateChartH5.js"></script>
+	<!-- rMateChartH5 테마 js -->
+    <script src="/epsisnew/resources/js/rMateChartH5/Assets/Theme/theme.js"></script>
+    <script src="/epsisnew/resources/js/rMateChartH5/JS/jspdf.js"></script>
+    <script src="/epsisnew/resources/js/rMateChartH5/JS/jspdf.plugin.addimage.js"></script>
+	<script>
+		// 팝업창 열기
+		function helpPopup() {
+
+		}
+
+        function addCommas(nStr) {
+            // 천단위 콤마를 추가
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
+        }
+
+		// 이미지 저장
+        function saveAsImage(id){
+            // IE 판별
+            var tmp = $(".localNavi").text();
+			var name = tmp.replace(/ /g,"");
+
+            if(compIE()){
+                rMateChartH5.downloadToLocal(name, "png", "", function(){
+                    return document.getElementById(id).saveAsImage();
+                });
+            }
+        }
+
+        function compIE(){
+            var agent = navigator.userAgent;
+            if(agent.indexOf("MSIE 7.0") > -1 || agent.indexOf("MSIE 8.0") > - 1  ||agent.indexOf("MSIE 9.0") > - 1|| agent.indexOf("Trident 4.0") > -1){
+                alert("IE7,8,9 에서는 이미지 변환기능이 지원되지 않습니다.");
+                return false;
+            }
+            if(document.documentMode && document.documentMode <= 5){
+                alert("쿼크모드에서는 이미지 변환기능이 지원되지 않습니다.");
+                return false;
+            }
+            return true;
+        }
+        
+
+        function chartOverHandler(eventName, id) {
+        	
+        	$("#infoDataTip").remove();
+        	var divTag = "<div id='infoDataTip' class='rMateH5__DataTip pen show' style='left:20px; top:40px; font-size=14px; color:black; font-weight: 600; position:absolute; border-color: black;'>"
+        				+"데이터 기간을 확장하려면&nbsp;<img src='/epsisnew/resources/js/rMateChartH5/Assets/Css/selector.png' style='width:8px; height:12px; display:inline;' alt='바'>을 좌/우측으로 끌어당기십시오.<br>"
+        				+"데이터 기간을 이동하려면&nbsp;<img src='/epsisnew/resources/js/rMateChartH5/Assets/Css/selector.png' style='width:8px; height:12px; display:inline;' alt='바'> 사이의 공간을 클릭 후 좌/우측으로 이동하십시오."
+        				+"</div>";
+        	$(".rMateH5__Area2DChart").append(divTag);
+        	
+       	}
+        
+        function chartOutHandler(eventName, id) {
+        	$("#infoDataTip").remove();
+       	}
+        
+	</script>
+	
+
+
+
+
+
+
+
+
+
+	<link rel="stylesheet" type="text/css" href="/epsisnew/resources/js/rMateGridH5/Assets/rMateH5.css"/>
+	<!-- rMateGridH5 라이센스 -->
+	<script src="/epsisnew/resources/js/LicenseKey/rMateGridH5License.js"></script>
+	<!-- rMateGridH5 라이브러리 -->
+    <script src="/epsisnew/resources/js/rMateGridH5/JS/rMateGridH5.js"></script>
+    <script src="/epsisnew/resources/js/rMateGridH5/JS/jszip.min.js"></script>
+    <script src="/epsisnew/resources/js/rMateGridH5/JS/xlsx.min.js"></script>
+    <script src="/epsisnew/resources/js/cpexcel.js"></script>
+	<script>
+		// 왼쪽에서부터 채움
+		function LPAD(s, c, n) {
+		    if (! s || ! c || s.length >= n) {
+		        return s;
+		    }
+
+		    var max = (n - s.length)/c.length;
+		    for (var i = 0; i < max; i++) {
+		        s = c + s;
+		    }
+
+		    return s;
+		}
+
+		// 오른쪽에서부터 채움
+		function RPAD(s, c, n) {
+		    if (! s || ! c || s.length >= n) {
+		        return s;
+		    }
+
+		    var max = (n - s.length)/c.length;
+		    for (var i = 0; i < max; i++) {
+		        s += c;
+		    }
+
+		    return s;
+		}
+		// 오른쪽에서부터 채움
+        function textFormmat(str,count) {
+            var rstr = "", sign = "";
+
+            //소수점몇자리 RPAD여부
+            //0자리면
+            if(str == "-" || str == "..."){
+                return str;
+            }else {
+                //
+            }
+            //
+            return str;
+        }
+
+		// 오른쪽에서부터 채움
+        function moneyFormmat(str) {
+            var rstr = "", sign = "";
+
+            if(str.substr(0, 1) == "-" ){
+              sign = "-";
+              str = str.substr(1);
+            }
+            var arr = str.split(".");
+            for(var ii = 0 ; ii < arr[0].length ; ii++){
+              if( ii % 3 == 0 && ii > 0){
+                rstr = arr[0].substring(arr[0].length-ii,arr[0].length-ii-1) + "," + rstr;
+              }else{
+                rstr = arr[0].substring(arr[0].length-ii,arr[0].length-ii-1) + rstr;
+              }
+            }
+            rstr = sign + rstr;
+            return arr.length > 1 ? rstr + "." + arr[1] : rstr;
+        }
+
+		//엑셀출력
+		function excelExport() {
+			// excel 파일 종류 지정
+			var tmp = $(".localNavi").text();
+			var name = tmp.replace(/ /g,"");
+			
+			dataGrid.exportType = "xlsx";
+			dataGrid.exportFileName = name+".xlsx";
+		//	dataGrid.exportSheetName = "Sheet1";
+
+			gridRoot.excelExportSave("", false);
+			//엑셀 다운로드 횟수 입력
+			$.ajax({
+                url  : "/epsisnew/insertCommExcount.ajax",
+                type : "POST",
+                data  : {
+                    menuId : "060402"
+                    ,locale : ""
+                    ,downKind : "E"
+                },
+                dataType :"text",
+                async: false,
+                    success:function(data) {
+                    },
+                    error: function(hxr, data, error) {
+                        console.log(error);
+                        return;
+                    }
+            });
+		}
+		
+		//신재생 엑셀출력
+		function knreExcelExport() {
+			// excel 파일 종류 지정
+			var tmp = $(".breadcrumb").text();
+			var name = tmp.replace(/ /g,"");
+			
+			dataGrid.exportType = "xlsx";
+			dataGrid.exportFileName = name+".xlsx";
+		//	dataGrid.exportSheetName = "Sheet1";
+
+			gridRoot.excelExportSave("", false);
+		}
+
+		//csv출력
+        function csvExport() {
+            // excel 파일 종류 지정
+            var tmp = $(".localNavi").text();
+			var name = tmp.replace(/ /g,"");
+            
+            dataGrid.exportType = "csv";
+            dataGrid.exportFileName = name+".csv";
+        //  dataGrid.exportSheetName = "Sheet1";
+
+            gridRoot.excelExportSave("", false);
+
+            $.ajax({
+                url  : "/epsisnew/insertCommExcount.ajax",
+                type : "POST",
+                data  : {
+                    menuId : "060402"
+                    ,locale : ""
+                    ,downKind : "C"
+                },
+                dataType :"text",
+                async: false,
+                    success:function(data) {
+                    },
+                    error: function(hxr, data, error) {
+                        console.log(error);
+                        return;
+                    }
+            });
+        }
+		
+      	//신재생 csv출력
+        function knreCsvExport() {
+            // excel 파일 종류 지정
+            var tmp = $(".breadcrumb").text();
+			var name = tmp.replace(/ /g,"");
+            
+            dataGrid.exportType = "csv";
+            dataGrid.exportFileName = name+".csv";
+        //  dataGrid.exportSheetName = "Sheet1";
+
+            gridRoot.excelExportSave("", false);
+
+        }
+
+		// 그리드의 속성인 rMateOnLoadCallFunction 으로 설정된 함수.
+		// rMate 그리드의 준비가 완료된 경우 이 함수가 호출됩니다.
+		// 이 함수를 통해 그리드에 레이아웃과 데이터를 삽입합니다.
+		// 파라메터 : id - rMateGridH5.create() 사용 시 사용자가 지정한 id 입니다.
+		function gridReadyHandler(id) {
+			// rMateGrid 관련 객체
+			gridApp = document.getElementById(id);	// 그리드를 포함하는 div 객체
+			gridRoot = gridApp.getRoot();	// 데이터와 그리드를 포함하는 객체
+
+			gridApp.setLayout(layoutStr);
+ 			gridApp.setData(gridData);
+
+ 			rMateGridH5.setAssetsPath("/epsisnew/resources/js/rMateGridH5/Assets/");
+
+ 		    // 사용자가 import를 완료하면 불려집니다.
+ 	        var importCompleteHandler = function() {
+ 	        }
+
+			var layoutCompleteHandler = function(event) {
+				dataGrid = gridRoot.getDataGrid();	// 그리드 객체
+				if("" == "001010" && "" != "eng"){
+				    dataGrid.addEventListener("change", selectionChangeHandler);
+				    gridRoot.addEventListener("importComplete", importCompleteHandler);
+				}
+			}
+			gridRoot.addEventListener("layoutComplete", layoutCompleteHandler);
+		}
+
+		function showLoadingBar() {
+		    dataGrid.setEnabled(false);
+		    gridRoot.addLoadingBar();
+		}
+
+		function hideLoadingBar() {
+		    dataGrid.setEnabled(true);
+		    gridRoot.removeLoadingBar();
+		}
+
+
+		function postObj(obj){
+		    try {
+
+		        // 타겟 document 객체
+		        var targetDocument = null;
+
+		        // 현제페이지기준 프레임 타겟       ITARGET
+		        if(obj["ITARGET"] != undefined){
+
+		            targetDocument = window.frames[obj["ITARGET"]].document;
+		        }
+
+		        // 탑페이지기준 프레임 타겟        TARGET
+		        else if(obj["TARGET"] != undefined){
+
+		            var target = obj["TARGET"].split(".");
+
+		            targetDocument = top;
+
+		            if(target.length>0){
+		                if(target[0] != ""){
+		                    for(var idx=0; idx<target.length; idx++){
+
+		                        // top 문자 처리
+		                        if(target[idx] == "top"){
+		                            targetDocument = targetDocument.top;
+		                        }
+
+		                        // opener 문자 처리
+		                        else if(target[idx] == "opener"){
+		                            targetDocument = targetDocument.opener;
+		                        }
+
+		                        // 프레임명 문자 처리
+		                        else{
+		                            targetDocument = targetDocument.frames[target[idx]];
+		                        }
+		                    }
+		                }
+		            }
+
+		        }else{
+		            targetDocument = document;
+		        }
+
+		        // 타겟 검사
+		        if(targetDocument == null) {
+		            alert("타겟지정이 잘못되었습니다. 다시지정하여주세요.");
+		            return false;
+		        }
+
+		        // 폼생성
+		        var fm = targetDocument.createElement("form");
+
+		        // 폼설정
+		        fm.method="post";
+		        fm.action=obj["URL"];
+
+		        if(obj["ITARGET"] != undefined) {
+		            fm.target=obj["ITARGET"];
+		        }
+		        if(obj["TOTARGET"] != undefined){
+		            fm.target=obj["TOTARGET"];
+		        }
+
+		        // 오브젝트변수를 form 에 적용
+		        for(i in obj){
+		            if(i != "TARGET" && i != "URL" && i != "TOTARGET" && i != "ITARGET"){
+
+		                if(typeof obj[i] == "object"){
+		                    var obj2 = obj[i];
+		                    if(obj2 == null){
+		                        var input=targetDocument.createElement("input");
+		                        input.setAttribute ("name", i);
+		                        input.setAttribute ("type", "hidden");
+		                        input.setAttribute ("value", obj[i]);
+		                        fm.appendChild(input);;
+		                    }else{
+		                        for(j in obj2){
+		                            if(typeof obj2[j] != "function"){
+		                                var input=targetDocument.createElement("input");
+		                                input.setAttribute ("name", i);
+
+		                                input.setAttribute ("type", "hidden");
+		                                input.setAttribute ("value", obj2[j]);
+		                                fm.appendChild(input);
+		                            }
+		                        }
+		                    }
+		                }else{
+		                    var input=targetDocument.createElement("input");
+		                    input.setAttribute ("name", i);
+		                    input.setAttribute ("type", "hidden");
+		                    input.setAttribute ("value", obj[i]);
+		                    fm.appendChild(input);
+		                }
+		            }
+		        }
+
+		        // 폼추가(타겟 문서에 폼을 추가한다.)
+		        targetDocument.body.appendChild(fm);
+
+		        // 타겟 문서 캐릭터셋 저장 (복구용)
+		        var documentCharset = targetDocument.charset;
+
+		        // 전송전 캐릭터셋 변경
+		        if(obj["CHARSET"] != undefined) {
+		            document.charset=obj["CHARSET"];
+		        }
+		        // 전송
+		        fm.submit();
+
+		        // 전송후 폼 삭제
+		        //removeElement(fm);
+
+		        // 캐릭터셋 복구
+		        if(obj["CHARSET"] != undefined) {
+		            targetDocument.charset=documentCharset;
+		        }
+
+		    } catch(e) {
+
+		        alert("postObj() - "+e.name+"("+e.number+") : "+ e.description);
+		    }
+		}
+
+	      // 그리드의 selctedIndex를 전달된 행으로 이동
+        function girdMoveSelctedIndex(idx) {
+            // addItemAt나 removeItemAt후에 바로 selctedIndex를 변경하면 무시되는 경우가 발생하여 setTimeout로 지연후 실행토록 함
+            setTimeout("gridSetSelectedIndex("+idx+")", 100);
+        }
+
+        function gridSetSelectedIndex(idx) {
+            // 현재 그리드의 verticalScrollPosition을 조사하여 스크롤을 일으킬지 조사하여 필요시 세팅
+            var verticalScrollPosition = dataGrid.getVerticalScrollPosition();
+            // 그리드의 행수를 가져옵니다 (이 값은 화면에 제대로 표시되지 않는 행을 포함하기 때문에 실제와 다른 값으로 보일 수 있으며, DataGrid의 variableRowHeight가 true일 경우에는 추정치를 의미합니다.
+            var rowCount = dataGrid.getRowCount();
+            if (rowCount > 0)
+                rowCount = rowCount - 1;
+            var halfRowCount = (rowCount / 2).toFixed();
+
+            // idx가 값이 없는 경우 collection에서 현재 데이터의 레코드수를 가져와 맨 마지막 행값을 계산.
+            if (idx == null || idx == undefined) {
+                if (!collection)
+                    collection = gridRoot.getCollection();
+                idx = collection.getLength() - 1;
+            }
+            dataGrid.setSelectedIndex(idx);
+            if (idx < verticalScrollPosition || idx > verticalScrollPosition + rowCount) {
+                if (idx - halfRowCount >= 0)    // 화면 중간에 위치하도록 계산
+                    dataGrid.setVerticalScrollPosition(idx - halfRowCount);
+                else
+                    dataGrid.setVerticalScrollPosition(0);
+            }
+        }
+
+        // 수정 작업 결과 가져오기 (그리드에서 작업된 입력,수정,삭제 내용을 가져옵니다)
+        // 데이터는 배열 형태로
+        //  idx: 행번호
+        //  job: 수행 작업 (I:입력, U:수정, D:삭제)
+        //  data: 행의 자료
+        // 를 가지고 있으며 삭제가 먼저 오도록 정렬되어 있습니다.
+        function getChangedData() {
+            var changedData = gridRoot.getChangedData();
+            if (changedData.length == 0)
+                if ( gridRoot.getRemoveAllData() ) {
+                    alert("전체 삭제");
+                } else
+                    alert("변경된 자료가 없습니다");
+            else {
+                for (var i = 0; i < changedData.length; i++)
+                    alert("index:"+changedData[i].idx+"\n"+"job:"+changedData[i].job+"\n"+"data:"+changedData[i].data);
+            }
+        }
+
+        // 수정 작업 결과 XML로 가져오기 (그리드에서 작업된 입력,수정,삭제 내용을 XML로 가져옵니다)
+        // 데이터는 XML 형태로
+        //  idx: 행번호
+        //  job: 수행 작업 (I:입력, U:수정, D:삭제)
+        //  data: 행의 자료
+        // node를 가지고 있으며 삭제가 먼저 오도록 정렬되어 있습니다.
+        function getChangedDataXML() {
+            var changedDataXML = gridRoot.getChangedDataXML();
+            if (changedDataXML == null)
+                if ( gridRoot.getRemoveAllData() ) {
+                    alert("전체 삭제");
+                } else
+                    alert("변경된 자료가 없습니다");
+            else
+                alert(changedDataXML);
+        }
+
+        // 전체 삭제
+        function removeAll() {
+            gridRoot.removeAll();
+        //  inputForm.itemXMLData.value = "";
+            inputForm.rowIndex.value = "0";
+        }
+
+        // 행 삭제
+        function removeItemAt() {
+            var selectedIndex = dataGrid.getSelectedIndex();
+            gridRoot.removeItemAt(selectedIndex);
+        }
+	</script>
+
+	<script>
+
+		// -----------------------차트 설정 시작-----------------------
+
+		// rMate 차트 생성 준비가 완료된 상태 시 호출할 함수를 지정합니다.
+		var chartVars = "rMateOnLoadCallFunction=chartReadyHandler";
+        // 차트 데이터
+        var chartData = [];
+        // 스트링 형식으로 레이아웃 정의.
+        var layoutStr = "";
+        var prevVal = "";
+
+		// rMateChart 를 생성합니다.
+		// 파라메터 (순서대로)
+		//  1. 차트의 id ( 임의로 지정하십시오. )
+		//  2. 차트가 위치할 div 의 id (즉, 차트의 부모 div 의 id 입니다.)
+		//  3. 차트 생성 시 필요한 환경 변수들의 묶음인 chartVars
+		//  4. 차트의 가로 사이즈 (생략 가능, 생략 시 100%)
+		//  5. 차트의 세로 사이즈 (생략 가능, 생략 시 100%)
+		rMateChartH5.create("chart1", "chartHolder", chartVars, "100%", "100%");
+
+
+		// 차트의 속성인 rMateOnLoadCallFunction 으로 설정된 함수.
+		// rMate 차트 준비가 완료된 경우 이 함수가 호출됩니다.
+		// 이 함수를 통해 차트에 레이아웃과 데이터를 삽입합니다.
+		// 파라메터 : id - rMateChartH5.create() 사용 시 사용자가 지정한 id 입니다.
+		function chartReadyHandler(id) {
+			document.getElementById(id).setLayout(layoutStr);
+			document.getElementById(id).setData(chartData);
+		}
+		//
+		function lineChartLayoutMake(id,value,unit,count){
+			layoutStr =
+				'<rMateChart backgroundColor="#FFFFFF"  borderStyle="none">'
+					+'<Options>';
+
+						if(count=="one"){
+	                        layoutStr = layoutStr +'<Caption text="판매전력량" fontFamily="맑은 고딕"/>';
+	                    }else{
+	                        layoutStr = layoutStr +'<Caption text="'+value+'" fontFamily="맑은 고딕"/>';
+	                    }
+						layoutStr = layoutStr +
+						+'<SubCaption text="( '+unit+' )" fontFamily="맑은 고딕" textAlign="right"/>'
+						+'<Legend useVisibleCheck="true" />'
+					+'</Options>'
+					+'<NumberFormatter id="numfmt" useThousandsSeparator="true" precision="0" rounding="nearest"/>'
+					+'<HistoryChart>'
+						+'<displayerChart>'
+							+'<Displayer id="chart1" showDataTips="true" width="100%" height="100%" dataTipDisplayMode="axis" styleName="chartStyle" dataTipFormatter="{numfmt}">'
+								+'<horizontalAxis>'
+									+'<CategoryAxis id="mainHAxis" categoryField="'+id+'" ticksBetweenLabels="false" padding="0.5"/>'
+								+'</horizontalAxis>'
+								+'<verticalAxis>'
+									+'<LinearAxis  formatter="{numfmt}"/>'
+								+'</verticalAxis>'
+								+'<series>';
+
+									if(count=="two"){
+										layoutStr = layoutStr +'<Line2DSeries id="lineSeris" yField="Value" radius="6" form="segment" displayName="'+value.split("/")[0]+'" itemRenderer="CircleItemRenderer">'
+										/* 디스플레이어(Displayer)차트로 Line2DSeries를 정의 하였습니다 */
+											+'<showDataEffect>'
+												+'<SeriesInterpolate duration="1000"/>'
+											+'</showDataEffect>'
+										+'</Line2DSeries>'
+										+'<Line2DSeries id="lineSeris" yField="Value2" radius="6" form="segment" displayName="'+value.split("/")[1]+'" itemRenderer="CircleItemRenderer">'
+										/* 디스플레이어(Displayer)차트로 Line2DSeries를 정의 하였습니다 */
+											+'<showDataEffect>'
+												+'<SeriesInterpolate duration="1000"/>'
+											+'</showDataEffect>'
+										+'</Line2DSeries>';
+									}else{
+									    layoutStr = layoutStr +'<Line2DSeries id="lineSeris" yField="Value" radius="6" form="segment" displayName="'+value.split("/")[0]+'" itemRenderer="CircleItemRenderer">'
+                                        /* 디스플레이어(Displayer)차트로 Line2DSeries를 정의 하였습니다 */
+                                            +'<showDataEffect>'
+                                                +'<SeriesInterpolate duration="1000"/>'
+                                            +'</showDataEffect>'
+                                        +'</Line2DSeries>'
+                                        +'<Line2DSeries id="lineSeris" yField="Value2" radius="6" form="segment" displayName="'+value.split("/")[1]+'" itemRenderer="CircleItemRenderer">'
+                                        /* 디스플레이어(Displayer)차트로 Line2DSeries를 정의 하였습니다 */
+                                            +'<showDataEffect>'
+                                                +'<SeriesInterpolate duration="1000"/>'
+                                            +'</showDataEffect>'
+                                        +'</Line2DSeries>'
+                                        +'<Line2DSeries id="lineSeris" yField="Value3" radius="6" form="segment" displayName="'+value.split("/")[2]+'" itemRenderer="CircleItemRenderer">'
+                                        /* 디스플레이어(Displayer)차트로 Line2DSeries를 정의 하였습니다 */
+                                            +'<showDataEffect>'
+                                                +'<SeriesInterpolate duration="1000"/>'
+                                            +'</showDataEffect>'
+                                        +'</Line2DSeries>'
+                                        +'<Line2DSeries id="lineSeris" yField="Value4" radius="6" form="segment" displayName="'+value.split("/")[3]+'" itemRenderer="CircleItemRenderer">'
+                                        /* 디스플레이어(Displayer)차트로 Line2DSeries를 정의 하였습니다 */
+                                            +'<showDataEffect>'
+                                                +'<SeriesInterpolate duration="1000"/>'
+                                            +'</showDataEffect>'
+                                        +'</Line2DSeries>'
+                                        +'<Line2DSeries id="lineSeris" yField="Value5" radius="6" form="segment" displayName="'+value.split("/")[4]+'" itemRenderer="CircleItemRenderer">'
+                                        /* 디스플레이어(Displayer)차트로 Line2DSeries를 정의 하였습니다 */
+                                            +'<showDataEffect>'
+                                                +'<SeriesInterpolate duration="1000"/>'
+                                            +'</showDataEffect>'
+                                        +'</Line2DSeries>'
+                                        +'<Line2DSeries id="lineSeris" yField="Value6" radius="6" form="segment" displayName="'+value.split("/")[5]+'" itemRenderer="CircleItemRenderer">'
+                                        /* 디스플레이어(Displayer)차트로 Line2DSeries를 정의 하였습니다 */
+                                            +'<showDataEffect>'
+                                                +'<SeriesInterpolate duration="1000"/>'
+                                            +'</showDataEffect>'
+                                        +'</Line2DSeries>'
+                                        +'<Line2DSeries id="lineSeris" yField="Value7" radius="6" form="segment" displayName="'+value.split("/")[6]+'" itemRenderer="CircleItemRenderer">'
+                                        /* 디스플레이어(Displayer)차트로 Line2DSeries를 정의 하였습니다 */
+                                        	+'<lineStroke>'
+												+'<Stroke color="#FFFF00" weight="2"/>'
+											+'</lineStroke>'
+											+'<fill>'
+												+'<SolidColor color="#FFFF00"/>'
+											+'</fill>'
+                                            +'<showDataEffect>'
+                                                +'<SeriesInterpolate duration="1000"/>'
+                                            +'</showDataEffect>'
+                                        +'</Line2DSeries>';
+									}
+			layoutStr = layoutStr
+								+'</series>'
+								+'<annotationElements>'
+	                                +'<CrossRangeZoomer zoomType="vertical" fontSize="11" color="#FFFFFF" enableZooming="false" enableCrossHair="true" horizontalStrokeEnable="false">'
+	                                +'</CrossRangeZoomer>'
+	                            +'</annotationElements>'
+							+'</Displayer>'
+						+'</displayerChart>'
+						+'<navigator>'
+							+'<Navigator id="navi" width="100%"  height="60" gutterLeft="0" paddingLeft="30" paddingRight="30" showDataTips="true" chartOverJsFunction="chartOverHandler" chartOutJsFunction="chartOutHandler">'
+								+'<horizontalAxis>'
+									+'<CategoryAxis categoryField="index" id="naviHAxis"  padding="0"/>'
+								+'</horizontalAxis>'
+								+'<horizontalAxisRenderers>'
+									+'<Axis2DRenderer axis="{naviHAxis}" visible="false"/>'
+								+'</horizontalAxisRenderers>'
+								+'<verticalAxis>'
+									+'<LinearAxis id="vAxis"/>'
+								+'</verticalAxis>'
+								+'<verticalAxisRenderers>'
+									+'<Axis2DRenderer axis="{vAxis}" visible="false"/>'
+								+'</verticalAxisRenderers>'
+								 +'<backgroundElements>'
+									+'<GridLines/>'
+								+'</backgroundElements>'
+								+'<series>'
+									+'<Column2DSeries yField="'+value+'"/>'
+								+'</series>'
+							+'</Navigator>'
+						+'</navigator>'
+						+'<selector>'/* 시작 시 보여지는 차트는 총 데이터의 약 30%이며 센터 영역입니다. */
+							+'<HistoryRangeSelector width="100%" startingRange="right" visibleItemSize="50" unSelectedRangeAreaStyleName="unSelectedRangeAreaStyle"/>'
+						+'</selector>'
+					+'</HistoryChart>'
+					+'<Style>'
+						+'.unSelectedRangeAreaStyle{backgroundColor:#50a800;backgroundAlpha:0.1;borderStyle:solid;borderWeight:1;borderColor:#50a800;}'
+						+'.chartStyle{fontWeight:bold;color:#000000;}'
+					+'</Style>'
+				+'</rMateChart>';
+		}
+		//
+		function columnChartLayoutMake(id,value,unit,count){
+            layoutStr =
+                '<rMateChart backgroundColor="#FFFFFF"  borderStyle="none">'
+                    +'<Options>';
+		            if(count=="one"){
+		                layoutStr = layoutStr +'<Caption text="판매전력량" fontFamily="맑은 고딕"/>';
+		            }else{
+		                layoutStr = layoutStr +'<Caption text="'+value+'" fontFamily="맑은 고딕"/>';
+		            }
+                        layoutStr = layoutStr +'<SubCaption text="( '+unit+' )" fontFamily="맑은 고딕" textAlign="right"/>'
+                        +'<Legend useVisibleCheck="true" />'
+                    +'</Options>'
+                    +'<NumberFormatter id="numfmt" useThousandsSeparator="true" precision="0"/>'
+                    +'<HistoryChart displayCompleteCallFunction="displayCallFunction">'
+                    /*
+                    History 차트 생성시에 필요한 HistoryChart 정의합니다
+                    History 차트는 디스플레이어(Displayer), 네비게이터(Navigator), 셀렉터(Selector)로 구성되어 있습니다
+                    */
+                        +'<displayerChart>'
+                        /*
+                        디스플레이어(Displayer)
+                        디스플레이어 차트는 사용자가 선택된 영역이 표시되는 차트 입니다. 실제로 사용자가 보고자 하는 부분의 데이터를 표시합니다
+                         */
+                            +'<Displayer id="chart1" showDataTips="true" fontFamily="맑은 고딕" dataTipDisplayMode="axis" styleName="chartStyle" dataTipFormatter="{numfmt}">'
+                                +'<horizontalAxis>'
+                                    +'<CategoryAxis id="mainHAxis" categoryField="'+id+'"/>'
+                                +'</horizontalAxis>'
+                                +'<verticalAxis>'
+                                    +'<LinearAxis  formatter="{numfmt}"/>'
+                                +'</verticalAxis>'
+                                +'<series>'
+                                +'<Column2DSet type="clustered">'
+                                +'<series>';
+	                                if(count=="one"){
+	                                    layoutStr = layoutStr +'<Column2DSet type="stacked" showTotalLabel="true" totalLabelJsFunction="totalFunc" labelYOffset="-5">'
+	                                    +'<series>'
+	                                    /*  Column2D Stacked 를 생성시에는 Column2DSeries를 최소 2개 정의합니다 */
+	                                        +'<Column2DSeries labelPosition="inside" yField="Value" displayName="'+value.split("/")[0]+'" styleName="seriesLabel" showValueLabels="[]">'
+	                                            +'<showDataEffect>'
+	                                                +'<SeriesInterpolate/>'
+	                                            +'</showDataEffect>'
+	                                        +'</Column2DSeries>'
+	                                        +'<Column2DSeries labelPosition="inside" yField="Value2" displayName="'+value.split("/")[1]+'" styleName="seriesLabel" showValueLabels="[]">'
+	                                            +'<showDataEffect>'
+	                                                +'<SeriesInterpolate/>'
+	                                            +'</showDataEffect>'
+	                                        +'</Column2DSeries>'
+	                                        +'<Column2DSeries labelPosition="inside" yField="Value3" displayName="'+value.split("/")[2]+'" styleName="seriesLabel" showValueLabels="[]">'
+	                                            +'<showDataEffect>'
+	                                                +'<SeriesInterpolate/>'
+	                                            +'</showDataEffect>'
+	                                        +'</Column2DSeries>'
+	                                        +'<Column2DSeries labelPosition="inside" yField="Value4" displayName="'+value.split("/")[3]+'" styleName="seriesLabel" showValueLabels="[]">'
+		                                        +'<showDataEffect>'
+		                                            +'<SeriesInterpolate/>'
+		                                        +'</showDataEffect>'
+		                                    +'</Column2DSeries>'
+		                                    +'<Column2DSeries labelPosition="inside" yField="Value5" displayName="'+value.split("/")[4]+'" styleName="seriesLabel" showValueLabels="[]">'
+	                                            +'<showDataEffect>'
+	                                                +'<SeriesInterpolate/>'
+	                                            +'</showDataEffect>'
+	                                        +'</Column2DSeries>'
+	                                        +'<Column2DSeries labelPosition="inside" yField="Value6" displayName="'+value.split("/")[5]+'" styleName="seriesLabel" showValueLabels="[]">'
+	                                            +'<showDataEffect>'
+	                                                +'<SeriesInterpolate/>'
+	                                            +'</showDataEffect>'
+	                                        +'</Column2DSeries>'
+	                                        +'<Column2DSeries labelPosition="inside" yField="Value7" displayName="'+value.split("/")[6]+'"  styleName="seriesLabel" showValueLabels="[]">'
+												+'<fill>'
+													+'<SolidColor color="#FFFF00"/>'
+												+'</fill>'
+	                                            +'<showDataEffect>'
+	                                                +'<SeriesInterpolate/>'
+	                                            +'</showDataEffect>'
+	                                        +'</Column2DSeries>'
+	                                    +'</series>'
+	                                +'</Column2DSet>';
+	                                }else if(count=="two"){
+                                        layoutStr = layoutStr +'<Column2DSet type="stacked" showTotalLabel="true" totalLabelJsFunction="totalFunc" labelYOffset="-5">'
+                                        +'<series>'
+                                        /*  Column2D Stacked 를 생성시에는 Column2DSeries를 최소 2개 정의합니다 */
+                                            +'<Column2DSeries labelPosition="inside" yField="Value" displayName="'+value.split("/")[0]+'" styleName="seriesLabel" showValueLabels="[]">'
+                                                +'<showDataEffect>'
+                                                    +'<SeriesInterpolate/>'
+                                                +'</showDataEffect>'
+                                            +'</Column2DSeries>'
+                                            +'<Column2DSeries labelPosition="inside" yField="Value2" displayName="'+value.split("/")[1]+'"  styleName="seriesLabel" showValueLabels="[]">'
+                                                +'<showDataEffect>'
+                                                    +'<SeriesInterpolate/>'
+                                                +'</showDataEffect>'
+                                            +'</Column2DSeries>'
+                                        +'</series>'
+                                    +'</Column2DSet>';
+                                    }else{
+                                        layoutStr = layoutStr +'<Column2DSet type="stacked" showTotalLabel="true" totalLabelJsFunction="totalFunc" labelYOffset="-5">'
+                                        +'<series>'
+                                        /*  Column2D Stacked 를 생성시에는 Column2DSeries를 최소 2개 정의합니다 */
+                                            +'<Column2DSeries labelPosition="inside" yField="Value" displayName="'+value.split("/")[0]+'" styleName="seriesLabel" showValueLabels="[]">'
+                                                +'<showDataEffect>'
+                                                    +'<SeriesInterpolate/>'
+                                                +'</showDataEffect>'
+                                            +'</Column2DSeries>'
+                                            +'<Column2DSeries labelPosition="inside" yField="Value2" displayName="'+value.split("/")[1]+'"  styleName="seriesLabel" showValueLabels="[]">'
+                                                +'<showDataEffect>'
+                                                    +'<SeriesInterpolate/>'
+                                                +'</showDataEffect>'
+                                            +'</Column2DSeries>'
+                                        +'</series>'
+                                    +'</Column2DSet>';
+                                    }
+                layoutStr = layoutStr
+                                +'</series>'
+                                +'</Column2DSet>'
+                                +'</series>'
+                                +'<annotationElements>'
+	                                +'<CrossRangeZoomer zoomType="vertical" fontSize="11" color="#FFFFFF" enableZooming="false" enableCrossHair="true" horizontalStrokeEnable="false">'
+	                                +'</CrossRangeZoomer>'
+	                            +'</annotationElements>'
+                            +'</Displayer>'
+                        +'</displayerChart>'
+                        +'<navigator>'
+                        /*
+                        네비게이터(Navigator)
+                        네비게이터는 전체 데이터를 표현하여 데이터의 흐름을 전체적으로 볼 수 잇습니다
+                         */
+                            +'<Navigator id="navi"  width="100%" height="60" gutterLeft="0" gutterRight="0" paddingLeft="30" paddingRight="10" showDataTips="true" chartOverJsFunction="chartOverHandler" chartOutJsFunction="chartOutHandler">'
+                                /* 수평 축 정의  */
+                                +'<horizontalAxis>'
+                                    +'<CategoryAxis categoryField="Date" id="naviHAxis"  padding="0"/>'
+                                +'</horizontalAxis>'
+                                +'<horizontalAxisRenderers>'
+                                    +'<Axis2DRenderer axis="{naviHAxis}" visible="false"/>'
+                                +'</horizontalAxisRenderers>'
+                                /* 수직 축 정의  */
+                                +'<verticalAxis>'
+                                    +'<LinearAxis id="vAxis"/>'
+                                +'</verticalAxis>'
+                                +'<verticalAxisRenderers>'
+                                    +'<Axis2DRenderer axis="{vAxis}" visible="false"/>'
+                                +'</verticalAxisRenderers>'
+                                /* 배경 정의 */
+                                 +'<backgroundElements>'
+                                    +'<GridLines/>'
+                                +'</backgroundElements>'
+
+                                +'<series>'
+                                    +'<Area2DSet>'
+                                        +'<series>'
+                                    +'<Area2DSeries name="A" yField="Value"/>'
+                                        +'</series>'
+                                    +'</Area2DSet>'
+                                    /* 네비게이터(Navigator)차트로 Area2DSeries를 정의 하였습니다 */
+                                +'</series>'
+                            +'</Navigator>'
+                        +'</navigator>'
+                        +'<selector>'
+                /*
+                셀렉터(Selector)
+                셀렉터는 네비게이터에서 사용자가 틀정 영역을 선택하게끔 하는 역할을 합니다
+                셀렉터에서 선택된 영역이 디스플레이어(Displayer)차트에 표현 됩니다 */
+                /* 시작 시 보여지는 차트는 총 데이터의 약 30%이며 센터 영역입니다. */
+                            +'<HistoryRangeSelector width="100%" startingRange="right" visibleItemSize="50"/>'
+                /*
+                startingRange - center, left, right : 히스토리 차트가 처음 로딩 시 표시할 데이터 영역
+                visibleItemSize : 처음 로딩 시 디스플레이어 차트가 표시할 데이터의 양을 나타냅니다
+                           양은 전체 데이터의 퍼센티지 수치입니다. 유효값 1~100
+                */
+                        +'</selector>'
+                    +'</HistoryChart>'
+                    +'<Style>'
+	                	+'.chartStyle{fontWeight:bold;color:#000000;}'
+	                +'</Style>'
+                +'</rMateChart>';
+        }
+
+		//차트완성
+		function displayCallFunction(){
+			rMateGridH5.create("grid1", "gridHolder", jsVars, "100%", "100%");
+		}
+
+		function labelJsFunc(seriesId, index, data, values){
+            return addCommas(values[0].toFixed(0)) + "("+ values[1].toFixed(1) + "%)";
+        }
+
+		// -----------------------차트 설정 끝 -----------------------
+		//
+		//차트다시만들기
+		function chartRemake(chartKind, id){
+			//
+			var value = "";
+			var value2 = "";
+			var data = "";
+			var unit = "";
+			var idx = "";
+			//
+			data = $("#vChartUnit option:selected").val();
+			chartData = [];
+			//
+			idx = $("#vChartUnit option:selected").index();
+			//
+			unit = "MWh";
+
+			data = $("#vChartUnit option:selected").val();
+
+			
+
+				chartData.push({"Date":"2001",
+                    "Value":"40269734.24",
+                    "Value2":"52622435.09",
+                    "Value3":"2639687.25",
+                    "Value4":"142160215.4",
+                    "Value5":"6142089.507",
+                    "Value6":"1877624.402",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2002",
+                    "Value":"43452142.21",
+                    "Value2":"57428012.17",
+                    "Value3":"2953566.377",
+                    "Value4":"151196191.8",
+                    "Value5":"6328169.218",
+                    "Value6":"2075944.013",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2003",
+                    "Value":"46505348",
+                    "Value2":"61626421.34",
+                    "Value3":"3351320.214",
+                    "Value4":"157844516.7",
+                    "Value5":"6147364.226",
+                    "Value6":"2197210.383",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2004",
+                    "Value":"49513298.44",
+                    "Value2":"67475970",
+                    "Value3":"3773549.221",
+                    "Value4":"166222983.2",
+                    "Value5":"6766323.773",
+                    "Value6":"2367076.988",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2005",
+                    "Value":"52044461.6",
+                    "Value2":"73715517.35",
+                    "Value3":"4308747.515",
+                    "Value4":"174945372.7",
+                    "Value5":"7317815.423",
+                    "Value6":"2570005.506",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2006",
+                    "Value":"53912272",
+                    "Value2":"77809152.07",
+                    "Value3":"4790496.283",
+                    "Value4":"183067126.6",
+                    "Value5":"7635659.599",
+                    "Value6":"2687040.04",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2007",
+                    "Value":"55680846.01",
+                    "Value2":"82207585.91",
+                    "Value3":"5304103.629",
+                    "Value4":"194936409.3",
+                    "Value5":"8215174.194",
+                    "Value6":"2793943.083",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2008",
+                    "Value":"57877514.33",
+                    "Value2":"86827002.62",
+                    "Value3":"5783323.517",
+                    "Value4":"203474609",
+                    "Value5":"8869459.142",
+                    "Value6":"2847240.868",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2009",
+                    "Value":"59427254.63",
+                    "Value2":"89619315.85",
+                    "Value3":"6465448.526",
+                    "Value4":"207215867.1",
+                    "Value5":"9671356.662",
+                    "Value6":"2954230.98",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2010",
+                    "Value":"63199602.27",
+                    "Value2":"97410032.26",
+                    "Value3":"7452576.466",
+                    "Value4":"232672176.3",
+                    "Value5":"10654294.54",
+                    "Value6":"3081490.265",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2011",
+                    "Value":"63523655.234",
+                    "Value2":"99504064.577",
+                    "Value3":"7568016.011",
+                    "Value4":"251490647.939",
+                    "Value5":"11231538.371",
+                    "Value6":"3145497.971",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2012",
+                    "Value":"65483732.827",
+                    "Value2":"101592760.074",
+                    "Value3":"7860449.36",
+                    "Value4":"258101932.911",
+                    "Value5":"12776044.639",
+                    "Value6":"3158091.48",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2013",
+                    "Value":"65814572.339",
+                    "Value2":"102196338.312",
+                    "Value3":"7947317.399",
+                    "Value4":"265372530.719",
+                    "Value5":"13865836.654",
+                    "Value6":"3156225.641",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2014",
+                    "Value":"64457263.285",
+                    "Value2":"100760879.149",
+                    "Value3":"7438373.754",
+                    "Value4":"272551572.699",
+                    "Value5":"14504731.303",
+                    "Value6":"3221008.114",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2015",
+                    "Value":"65618610.102",
+                    "Value2":"103679345.522",
+                    "Value3":"7690600.115",
+                    "Value4":"273547996.643",
+                    "Value5":"15702467.649",
+                    "Value6":"3341239.614",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2016",
+                    "Value":"68056786",
+                    "Value2":"108616888",
+                    "Value3":"8079392",
+                    "Value4":"278827855",
+                    "Value5":"16579843",
+                    "Value6":"3462314",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2017",
+                    "Value":"68543760",
+                    "Value2":"111297776",
+                    "Value3":"8316290",
+                    "Value4":"285969563",
+                    "Value5":"17250850",
+                    "Value6":"3556775",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2018",
+                    "Value":"72894709",
+                    "Value2":"116933912",
+                    "Value3":"8677808",
+                    "Value4":"292998663",
+                    "Value5":"18503827",
+                    "Value6":"3582649",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2019",
+                    "Value":"72638867.792",
+                    "Value2":"116226510.249",
+                    "Value3":"8560660.333",
+                    "Value4":"289240197.984",
+                    "Value5":"18882368.129",
+                    "Value6":"3571475.434",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2020",
+                    "Value":"76303404.721",
+                    "Value2":"113638541.698",
+                    "Value3":"7515351.52",
+                    "Value4":"278660247.281",
+                    "Value5":"19028828.684",
+                    "Value6":"3506999.019",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2021",
+                    "Value":"79914811.457",
+                    "Value2":"119550386.231",
+                    "Value3":"8422604.806",
+                    "Value4":"291333422.205",
+                    "Value5":"20603211.649",
+                    "Value6":"3444429.166",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2022",
+                    "Value":"80996133.021",
+                    "Value2":"127192892.347",
+                    "Value3":"9073974.29",
+                    "Value4":"296035506.666",
+                    "Value5":"21420088.649",
+                    "Value6":"3424194.074",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2023",
+                    "Value":"82348423.196",
+                    "Value2":"130843829.601",
+                    "Value3":"9231946.83",
+                    "Value4":"290555370.686",
+                    "Value5":"20762854.726",
+                    "Value6":"3398721.032",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2024",
+                    "Value":"86989168.409",
+                    "Value2":"134806918.192",
+                    "Value3":"9432713",
+                    "Value4":"286212188.263",
+                    "Value5":"21088217.699",
+                    "Value6":"3401568.758",
+                    "Value7":""
+                    });
+			
+
+				chartData.push({"Date":"2025",
+                    "Value":"88473843.234",
+                    "Value2":"138315365.194",
+                    "Value3":"9811316.752",
+                    "Value4":"280221380.382",
+                    "Value5":"21523019.235",
+                    "Value6":"3416365.156",
+                    "Value7":""
+                    });
+			
+			//경상/자본수지 or 수출/수입액
+			if(chartKind=="line"){
+				lineChartLayoutMake("Date","주택용/일반용/교육용/산업용/농사용/가로등/심야",unit,"one");
+			}else if(chartKind=="column"){
+				columnChartLayoutMake("Date","주택용/일반용/교육용/산업용/농사용/가로등/심야",unit,"one");
+			}
+
+			document.getElementById(id).setLayout(layoutStr);
+			document.getElementById(id).setData(chartData);
+			//
+		}
+
+		// ----------------------- 그리드 설정 시작 -------------------------------------
+
+	// rMate 그리드 생성 준비가 완료된 상태 시 호출할 함수를 지정합니다.
+		var jsVars = "rMateOnLoadCallFunction=gridReadyHandler";
+		var gridlayoutStr = "";
+		var count = 1000000;
+		var gridData = [];
+	    var gridApp, gridRoot, dataGrid,collection;
+
+        var selectionChangeHandler = function(event) {
+        }
+		// rMateDataGrid 를 생성합니다.
+		// 파라메터 (순서대로)
+		//  1. 그리드의 id ( 임의로 지정하십시오. )
+		//  2. 그리드가 위치할 div 의 id (즉, 그리드의 부모 div 의 id 입니다.)
+		//  3. 그리드 생성 시 필요한 환경 변수들의 묶음인 jsVars
+		//  4. 그리드의 가로 사이즈 (생략 가능, 생략 시 100%)
+		//  5. 그리드의 세로 사이즈 (생략 가능, 생략 시 100%)
+		//----------------------- 그리드 설정 끝 -----------------------
+		function gridLayoutMake(edit){
+			gridlayoutStr = '<rMateGrid>';
+            if($("#pageGrid").find(".section").css("display")!="none"){
+            	gridlayoutStr +='<NumberFormatter id="numfmt" useThousandsSeparator="true" rounding="nearest" precision="'+$("#selCount").val()+'"/>';
+            }else{
+            	gridlayoutStr +='<NumberFormatter id="numfmt" useThousandsSeparator="true"/>';
+            }
+            if(edit =="Y"){
+            	gridlayoutStr +='<DataGrid id="dg1"  horizontalScrollPolicy="auto" headerColors="[#eeeeee,#cccccc]" headerSeparatorColor="#999999" headerBorderBottomColor="#999999" headerBorderTopColor="#999999" headerHorizontalSeparatorColor="#999999"  textAlign="right" editable="true" doubleClickEnabled="true" pasteEnabled="true">';
+            }else{
+            	gridlayoutStr +='<DataGrid id="dg1"  horizontalScrollPolicy="auto" headerColors="[#eeeeee,#cccccc]" headerSeparatorColor="#999999" headerBorderBottomColor="#999999" headerBorderTopColor="#999999" headerHorizontalSeparatorColor="#999999"  textAlign="right" lockedColumnCount="1" >';
+            }
+
+            gridlayoutStr +='<groupedColumns>\
+						<DataGridColumn dataField="year" headerText="연도" width="60" textAlign="center"/>\
+                        <DataGridColumn dataField="c1" headerText="주택용" width="120" formatter="{numfmt}"/>\
+                        <DataGridColumn dataField="c2" headerText="일반용" width="120" formatter="{numfmt}"/>\
+                        <DataGridColumn dataField="c3" headerText="교육용" width="120" formatter="{numfmt}"/>\
+                        <DataGridColumn dataField="c4" headerText="산업용" width="120" formatter="{numfmt}"/>\
+                        <DataGridColumn dataField="c5" headerText="농사용" width="120" formatter="{numfmt}"/>\
+                        <DataGridColumn dataField="c6" headerText="가로등" width="120" formatter="{numfmt}"/>\
+                        <DataGridColumn dataField="c7" headerText="심야" width="120" formatter="{numfmt}"/>\
+                        <DataGridColumn dataField="c8" headerText="합계" width="120" formatter="{numfmt}"/>\
+					</groupedColumns>\
+				</DataGrid>\
+			</rMateGrid>';
+		}
+
+		var readyYn = "N";
+		function gridReadyHandler(id) {
+			// rMateGrid 관련 객체
+			gridApp = document.getElementById(id);  // 그리드를 포함하는 div 객체
+			gridRoot = gridApp.getRoot();   // 데이터와 그리드를 포함하는 객체
+
+			gridApp.setLayout(gridlayoutStr);
+			gridApp.setData(gridData);
+
+			rMateGridH5.setAssetsPath("/epsisnew/resources/js/rMateGridH5/Assets/");
+
+		    // 사용자가 import를 완료하면 불려집니다.
+		    var importCompleteHandler = function() {
+		    }
+
+		    var layoutCompleteHandler = function(event) {
+		        dataGrid = gridRoot.getDataGrid();  // 그리드 객체
+		        if(readyYn =="N"){
+		            dataSerch();
+		            readyYn ="Y";
+		        }
+		    }
+		    gridRoot.addEventListener("layoutComplete", layoutCompleteHandler);
+		}
+
+		//
+		//그리드 데이터 입력
+		function dataSerch(text){
+			//
+			var count = $("#selCount option:selected").val();
+			var beginDate = $("#selBeginDate option:selected").val();
+			var endDate = $("#selEndDate option:selected").val();
+			//
+			var c1,c2,c3,c4,c5,c6,c7,c8;
+
+			gridData = [];
+
+			if(beginDate > endDate){
+                alert("조회시작년도가 조회끝년도보다 클 수 없습니다.");
+                return;
+            }
+
+			
+				if("2025" >= beginDate && "2025" <= endDate){
+
+				    c1 = textFormmat("88473843.234",count);
+                    c2 = textFormmat("138315365.194",count);
+                    c3 = textFormmat("9811316.752",count);
+                    c4 = textFormmat("280221380.382",count);
+                    c5 = textFormmat("21523019.235",count);
+                    c6 = textFormmat("3416365.156",count);
+                    c7 = textFormmat("7655969.407",count);
+                    c8 = textFormmat("549417259.36",count);
+
+                    gridData.push({"year":"2025",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2024" >= beginDate && "2024" <= endDate){
+
+				    c1 = textFormmat("86989168.409",count);
+                    c2 = textFormmat("134806918.192",count);
+                    c3 = textFormmat("9432713",count);
+                    c4 = textFormmat("286212188.263",count);
+                    c5 = textFormmat("21088217.699",count);
+                    c6 = textFormmat("3401568.758",count);
+                    c7 = textFormmat("7889890.507",count);
+                    c8 = textFormmat("549820664.828",count);
+
+                    gridData.push({"year":"2024",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2023" >= beginDate && "2023" <= endDate){
+
+				    c1 = textFormmat("82348423.196",count);
+                    c2 = textFormmat("130843829.601",count);
+                    c3 = textFormmat("9231946.83",count);
+                    c4 = textFormmat("290555370.686",count);
+                    c5 = textFormmat("20762854.726",count);
+                    c6 = textFormmat("3398721.032",count);
+                    c7 = textFormmat("8824809.279",count);
+                    c8 = textFormmat("545965955.35",count);
+
+                    gridData.push({"year":"2023",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2022" >= beginDate && "2022" <= endDate){
+
+				    c1 = textFormmat("80996133.021",count);
+                    c2 = textFormmat("127192892.347",count);
+                    c3 = textFormmat("9073974.29",count);
+                    c4 = textFormmat("296035506.666",count);
+                    c5 = textFormmat("21420088.649",count);
+                    c6 = textFormmat("3424194.074",count);
+                    c7 = textFormmat("9789953.166",count);
+                    c8 = textFormmat("547932742.213",count);
+
+                    gridData.push({"year":"2022",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2021" >= beginDate && "2021" <= endDate){
+
+				    c1 = textFormmat("79914811.457",count);
+                    c2 = textFormmat("119550386.231",count);
+                    c3 = textFormmat("8422604.806",count);
+                    c4 = textFormmat("291333422.205",count);
+                    c5 = textFormmat("20603211.649",count);
+                    c6 = textFormmat("3444429.166",count);
+                    c7 = textFormmat("10161945.344",count);
+                    c8 = textFormmat("533430810.858",count);
+
+                    gridData.push({"year":"2021",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2020" >= beginDate && "2020" <= endDate){
+
+				    c1 = textFormmat("76303404.721",count);
+                    c2 = textFormmat("113638541.698",count);
+                    c3 = textFormmat("7515351.52",count);
+                    c4 = textFormmat("278660247.281",count);
+                    c5 = textFormmat("19028828.684",count);
+                    c6 = textFormmat("3506999.019",count);
+                    c7 = textFormmat("10616342.274",count);
+                    c8 = textFormmat("509269715.197",count);
+
+                    gridData.push({"year":"2020",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2019" >= beginDate && "2019" <= endDate){
+
+				    c1 = textFormmat("72638867.792",count);
+                    c2 = textFormmat("116226510.249",count);
+                    c3 = textFormmat("8560660.333",count);
+                    c4 = textFormmat("289240197.984",count);
+                    c5 = textFormmat("18882368.129",count);
+                    c6 = textFormmat("3571475.434",count);
+                    c7 = textFormmat("11378657.805",count);
+                    c8 = textFormmat("520498737.726",count);
+
+                    gridData.push({"year":"2019",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2018" >= beginDate && "2018" <= endDate){
+
+				    c1 = textFormmat("72894709",count);
+                    c2 = textFormmat("116933912",count);
+                    c3 = textFormmat("8677808",count);
+                    c4 = textFormmat("292998663",count);
+                    c5 = textFormmat("18503827",count);
+                    c6 = textFormmat("3582649",count);
+                    c7 = textFormmat("12557594",count);
+                    c8 = textFormmat("526149162",count);
+
+                    gridData.push({"year":"2018",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2017" >= beginDate && "2017" <= endDate){
+
+				    c1 = textFormmat("68543760",count);
+                    c2 = textFormmat("111297776",count);
+                    c3 = textFormmat("8316290",count);
+                    c4 = textFormmat("285969563",count);
+                    c5 = textFormmat("17250850",count);
+                    c6 = textFormmat("3556775",count);
+                    c7 = textFormmat("12811372",count);
+                    c8 = textFormmat("507746386",count);
+
+                    gridData.push({"year":"2017",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2016" >= beginDate && "2016" <= endDate){
+
+				    c1 = textFormmat("68056786",count);
+                    c2 = textFormmat("108616888",count);
+                    c3 = textFormmat("8079392",count);
+                    c4 = textFormmat("278827855",count);
+                    c5 = textFormmat("16579843",count);
+                    c6 = textFormmat("3462314",count);
+                    c7 = textFormmat("13415826",count);
+                    c8 = textFormmat("497038904",count);
+
+                    gridData.push({"year":"2016",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2015" >= beginDate && "2015" <= endDate){
+
+				    c1 = textFormmat("65618610.102",count);
+                    c2 = textFormmat("103679345.522",count);
+                    c3 = textFormmat("7690600.115",count);
+                    c4 = textFormmat("273547996.643",count);
+                    c5 = textFormmat("15702467.649",count);
+                    c6 = textFormmat("3341239.614",count);
+                    c7 = textFormmat("14074556.043",count);
+                    c8 = textFormmat("483654815.688",count);
+
+                    gridData.push({"year":"2015",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2014" >= beginDate && "2014" <= endDate){
+
+				    c1 = textFormmat("64457263.285",count);
+                    c2 = textFormmat("100760879.149",count);
+                    c3 = textFormmat("7438373.754",count);
+                    c4 = textFormmat("272551572.699",count);
+                    c5 = textFormmat("14504731.303",count);
+                    c6 = textFormmat("3221008.114",count);
+                    c7 = textFormmat("14657872.719",count);
+                    c8 = textFormmat("477591701.023",count);
+
+                    gridData.push({"year":"2014",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2013" >= beginDate && "2013" <= endDate){
+
+				    c1 = textFormmat("65814572.339",count);
+                    c2 = textFormmat("102196338.312",count);
+                    c3 = textFormmat("7947317.399",count);
+                    c4 = textFormmat("265372530.719",count);
+                    c5 = textFormmat("13865836.654",count);
+                    c6 = textFormmat("3156225.641",count);
+                    c7 = textFormmat("16495759.046",count);
+                    c8 = textFormmat("474848580.11",count);
+
+                    gridData.push({"year":"2013",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2012" >= beginDate && "2012" <= endDate){
+
+				    c1 = textFormmat("65483732.827",count);
+                    c2 = textFormmat("101592760.074",count);
+                    c3 = textFormmat("7860449.36",count);
+                    c4 = textFormmat("258101932.911",count);
+                    c5 = textFormmat("12776044.639",count);
+                    c6 = textFormmat("3158091.48",count);
+                    c7 = textFormmat("17619937.397",count);
+                    c8 = textFormmat("466592948.688",count);
+
+                    gridData.push({"year":"2012",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2011" >= beginDate && "2011" <= endDate){
+
+				    c1 = textFormmat("63523655.234",count);
+                    c2 = textFormmat("99504064.577",count);
+                    c3 = textFormmat("7568016.011",count);
+                    c4 = textFormmat("251490647.939",count);
+                    c5 = textFormmat("11231538.371",count);
+                    c6 = textFormmat("3145497.971",count);
+                    c7 = textFormmat("18606840.397",count);
+                    c8 = textFormmat("455070260.5",count);
+
+                    gridData.push({"year":"2011",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2010" >= beginDate && "2010" <= endDate){
+
+				    c1 = textFormmat("63199602.27",count);
+                    c2 = textFormmat("97410032.26",count);
+                    c3 = textFormmat("7452576.466",count);
+                    c4 = textFormmat("232672176.3",count);
+                    c5 = textFormmat("10654294.54",count);
+                    c6 = textFormmat("3081490.265",count);
+                    c7 = textFormmat("19690055.92",count);
+                    c8 = textFormmat("434160228",count);
+
+                    gridData.push({"year":"2010",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2009" >= beginDate && "2009" <= endDate){
+
+				    c1 = textFormmat("59427254.63",count);
+                    c2 = textFormmat("89619315.85",count);
+                    c3 = textFormmat("6465448.526",count);
+                    c4 = textFormmat("207215867.1",count);
+                    c5 = textFormmat("9671356.662",count);
+                    c6 = textFormmat("2954230.98",count);
+                    c7 = textFormmat("19121162.98",count);
+                    c8 = textFormmat("394474636.8",count);
+
+                    gridData.push({"year":"2009",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2008" >= beginDate && "2008" <= endDate){
+
+				    c1 = textFormmat("57877514.33",count);
+                    c2 = textFormmat("86827002.62",count);
+                    c3 = textFormmat("5783323.517",count);
+                    c4 = textFormmat("203474609",count);
+                    c5 = textFormmat("8869459.142",count);
+                    c6 = textFormmat("2847240.868",count);
+                    c7 = textFormmat("19390987.31",count);
+                    c8 = textFormmat("385070136.8",count);
+
+                    gridData.push({"year":"2008",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2007" >= beginDate && "2007" <= endDate){
+
+				    c1 = textFormmat("55680846.01",count);
+                    c2 = textFormmat("82207585.91",count);
+                    c3 = textFormmat("5304103.629",count);
+                    c4 = textFormmat("194936409.3",count);
+                    c5 = textFormmat("8215174.194",count);
+                    c6 = textFormmat("2793943.083",count);
+                    c7 = textFormmat("19467370.78",count);
+                    c8 = textFormmat("368605432.9",count);
+
+                    gridData.push({"year":"2007",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2006" >= beginDate && "2006" <= endDate){
+
+				    c1 = textFormmat("53912272",count);
+                    c2 = textFormmat("77809152.07",count);
+                    c3 = textFormmat("4790496.283",count);
+                    c4 = textFormmat("183067126.6",count);
+                    c5 = textFormmat("7635659.599",count);
+                    c6 = textFormmat("2687040.04",count);
+                    c7 = textFormmat("18817624.33",count);
+                    c8 = textFormmat("348719370.9",count);
+
+                    gridData.push({"year":"2006",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2005" >= beginDate && "2005" <= endDate){
+
+				    c1 = textFormmat("52044461.6",count);
+                    c2 = textFormmat("73715517.35",count);
+                    c3 = textFormmat("4308747.515",count);
+                    c4 = textFormmat("174945372.7",count);
+                    c5 = textFormmat("7317815.423",count);
+                    c6 = textFormmat("2570005.506",count);
+                    c7 = textFormmat("17510907.65",count);
+                    c8 = textFormmat("332412828",count);
+
+                    gridData.push({"year":"2005",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2004" >= beginDate && "2004" <= endDate){
+
+				    c1 = textFormmat("49513298.44",count);
+                    c2 = textFormmat("67475970",count);
+                    c3 = textFormmat("3773549.221",count);
+                    c4 = textFormmat("166222983.2",count);
+                    c5 = textFormmat("6766323.773",count);
+                    c6 = textFormmat("2367076.988",count);
+                    c7 = textFormmat("15976384.13",count);
+                    c8 = textFormmat("312095585.9",count);
+
+                    gridData.push({"year":"2004",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2003" >= beginDate && "2003" <= endDate){
+
+				    c1 = textFormmat("46505348",count);
+                    c2 = textFormmat("61626421.34",count);
+                    c3 = textFormmat("3351320.214",count);
+                    c4 = textFormmat("157844516.7",count);
+                    c5 = textFormmat("6147364.226",count);
+                    c6 = textFormmat("2197210.383",count);
+                    c7 = textFormmat("15927049.32",count);
+                    c8 = textFormmat("293599230.2",count);
+
+                    gridData.push({"year":"2003",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2002" >= beginDate && "2002" <= endDate){
+
+				    c1 = textFormmat("43452142.21",count);
+                    c2 = textFormmat("57428012.17",count);
+                    c3 = textFormmat("2953566.377",count);
+                    c4 = textFormmat("151196191.8",count);
+                    c5 = textFormmat("6328169.218",count);
+                    c6 = textFormmat("2075944.013",count);
+                    c7 = textFormmat("15017345.74",count);
+                    c8 = textFormmat("278451371.5",count);
+
+                    gridData.push({"year":"2002",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+				if("2001" >= beginDate && "2001" <= endDate){
+
+				    c1 = textFormmat("40269734.24",count);
+                    c2 = textFormmat("52622435.09",count);
+                    c3 = textFormmat("2639687.25",count);
+                    c4 = textFormmat("142160215.4",count);
+                    c5 = textFormmat("6142089.507",count);
+                    c6 = textFormmat("1877624.402",count);
+                    c7 = textFormmat("12019568.47",count);
+                    c8 = textFormmat("257731354.4",count);
+
+                    gridData.push({"year":"2001",
+			                        "c1":c1,
+			                        "c2":c2,
+			                        "c3":c3,
+			                        "c4":c4,
+			                        "c5":c5,
+			                        "c6":c6,
+			                        "c7":c7,
+			                        "c8":c8
+			                        });
+				}
+			
+			//그리드 데이터 입력
+			if(text != "reset"){
+			    gridLayoutMake();
+                gridApp.setLayout(gridlayoutStr);
+                gridApp.setData(gridData);
+                dataGrid = gridRoot.getDataGrid();
+            }
+			//
+			$("#pageGrid").find(".adminsection").hide();
+            $("#pageGrid").find(".section").show();
+		}
+
+		// 행 수정
+        function setItemAt() {
+            if (!inputForm.year.value)
+                alert("수정할 데이터를 필드에 입력해주시기 바랍니다.");
+            else {
+                var item = {
+                    "year": inputForm.year.value,
+                    "c1": inputForm.c1.value,
+                    "c2": inputForm.c2.value,
+                    "c3": inputForm.c3.value,
+                    "c4": inputForm.c4.value,
+                    "c5": inputForm.c5.value,
+                    "c6": inputForm.c6.value,
+                    "c7": inputForm.c7.value,
+                    "c8": inputForm.c8.value
+                };
+                gridRoot.setItemAt(item, inputForm.rowIndex.value);
+            }
+        }
+
+        // 행 추가
+        function addItemAt() {
+            var item = {};
+            gridRoot.addItemAt(item, 0);
+            girdMoveSelctedIndex(0);
+        }
+
+        //페이지전환 서버호출
+        function serverCallSelf(){
+            try {
+                var obj = new Object();
+                var changedData = gridRoot.getChangedData();
+                var cnt = 0;
+
+                if(changedData.length == 0){
+                    alert("변경된 자료가 없습니다");
+                    return;
+                }
+                obj["URL"]              = "/epsisnew"+"/updateEksaAscAscGrid.do";
+                obj["ITARGET"]         = "I_TARGET";
+                obj["PROCTYPE"]         = "NEXT";
+                obj["nextMappingId"]   = "/selectEksaAscAscChart.do";
+                //
+                for (var i = 0; i < changedData.length; i++){
+                    //
+                    obj["job_"+i] = changedData[i].job;
+                    obj["year_"+i] = changedData[i].data.year;
+                    obj["c1_"+i] = changedData[i].data.c1;
+                    obj["c2_"+i] = changedData[i].data.c2;
+                    obj["c3_"+i] = changedData[i].data.c3;
+                    obj["c4_"+i] = changedData[i].data.c4;
+                    obj["c5_"+i] = changedData[i].data.c5;
+                    obj["c6_"+i] = changedData[i].data.c6;
+                    obj["c7_"+i] = changedData[i].data.c7;
+                    obj["c8_"+i] = changedData[i].data.c8;
+                    //
+                    cnt++;
+                }
+                obj["nmTable"] = "SA_CON_SAL_PMT";
+                obj["menuId"]  = "060402";
+                obj["jobcnt"] = cnt;
+                //
+                postObj(obj);
+                //
+            } catch (e) {
+                //
+                alert("serverCallSelf() - "+e.name+"("+e.number+") : "+ e.description);
+
+            }
+        }
+
+        function editMode(){
+            try {
+                //
+                gridData = [];
+
+                
+                    c1 = "88473843.234";
+                    c2 = "138315365.194";
+                    c3 = "9811316.752";
+                    c4 = "280221380.382";
+                    c5 = "21523019.235";
+                    c6 = "3416365.156";
+                    c7 = "7655969.407";
+                    c8 = "549417259.36";
+
+                    gridData.push({"year":"2025",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "86989168.409";
+                    c2 = "134806918.192";
+                    c3 = "9432713";
+                    c4 = "286212188.263";
+                    c5 = "21088217.699";
+                    c6 = "3401568.758";
+                    c7 = "7889890.507";
+                    c8 = "549820664.828";
+
+                    gridData.push({"year":"2024",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "82348423.196";
+                    c2 = "130843829.601";
+                    c3 = "9231946.83";
+                    c4 = "290555370.686";
+                    c5 = "20762854.726";
+                    c6 = "3398721.032";
+                    c7 = "8824809.279";
+                    c8 = "545965955.35";
+
+                    gridData.push({"year":"2023",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "80996133.021";
+                    c2 = "127192892.347";
+                    c3 = "9073974.29";
+                    c4 = "296035506.666";
+                    c5 = "21420088.649";
+                    c6 = "3424194.074";
+                    c7 = "9789953.166";
+                    c8 = "547932742.213";
+
+                    gridData.push({"year":"2022",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "79914811.457";
+                    c2 = "119550386.231";
+                    c3 = "8422604.806";
+                    c4 = "291333422.205";
+                    c5 = "20603211.649";
+                    c6 = "3444429.166";
+                    c7 = "10161945.344";
+                    c8 = "533430810.858";
+
+                    gridData.push({"year":"2021",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "76303404.721";
+                    c2 = "113638541.698";
+                    c3 = "7515351.52";
+                    c4 = "278660247.281";
+                    c5 = "19028828.684";
+                    c6 = "3506999.019";
+                    c7 = "10616342.274";
+                    c8 = "509269715.197";
+
+                    gridData.push({"year":"2020",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "72638867.792";
+                    c2 = "116226510.249";
+                    c3 = "8560660.333";
+                    c4 = "289240197.984";
+                    c5 = "18882368.129";
+                    c6 = "3571475.434";
+                    c7 = "11378657.805";
+                    c8 = "520498737.726";
+
+                    gridData.push({"year":"2019",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "72894709";
+                    c2 = "116933912";
+                    c3 = "8677808";
+                    c4 = "292998663";
+                    c5 = "18503827";
+                    c6 = "3582649";
+                    c7 = "12557594";
+                    c8 = "526149162";
+
+                    gridData.push({"year":"2018",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "68543760";
+                    c2 = "111297776";
+                    c3 = "8316290";
+                    c4 = "285969563";
+                    c5 = "17250850";
+                    c6 = "3556775";
+                    c7 = "12811372";
+                    c8 = "507746386";
+
+                    gridData.push({"year":"2017",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "68056786";
+                    c2 = "108616888";
+                    c3 = "8079392";
+                    c4 = "278827855";
+                    c5 = "16579843";
+                    c6 = "3462314";
+                    c7 = "13415826";
+                    c8 = "497038904";
+
+                    gridData.push({"year":"2016",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "65618610.102";
+                    c2 = "103679345.522";
+                    c3 = "7690600.115";
+                    c4 = "273547996.643";
+                    c5 = "15702467.649";
+                    c6 = "3341239.614";
+                    c7 = "14074556.043";
+                    c8 = "483654815.688";
+
+                    gridData.push({"year":"2015",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "64457263.285";
+                    c2 = "100760879.149";
+                    c3 = "7438373.754";
+                    c4 = "272551572.699";
+                    c5 = "14504731.303";
+                    c6 = "3221008.114";
+                    c7 = "14657872.719";
+                    c8 = "477591701.023";
+
+                    gridData.push({"year":"2014",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "65814572.339";
+                    c2 = "102196338.312";
+                    c3 = "7947317.399";
+                    c4 = "265372530.719";
+                    c5 = "13865836.654";
+                    c6 = "3156225.641";
+                    c7 = "16495759.046";
+                    c8 = "474848580.11";
+
+                    gridData.push({"year":"2013",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "65483732.827";
+                    c2 = "101592760.074";
+                    c3 = "7860449.36";
+                    c4 = "258101932.911";
+                    c5 = "12776044.639";
+                    c6 = "3158091.48";
+                    c7 = "17619937.397";
+                    c8 = "466592948.688";
+
+                    gridData.push({"year":"2012",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "63523655.234";
+                    c2 = "99504064.577";
+                    c3 = "7568016.011";
+                    c4 = "251490647.939";
+                    c5 = "11231538.371";
+                    c6 = "3145497.971";
+                    c7 = "18606840.397";
+                    c8 = "455070260.5";
+
+                    gridData.push({"year":"2011",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "63199602.27";
+                    c2 = "97410032.26";
+                    c3 = "7452576.466";
+                    c4 = "232672176.3";
+                    c5 = "10654294.54";
+                    c6 = "3081490.265";
+                    c7 = "19690055.92";
+                    c8 = "434160228";
+
+                    gridData.push({"year":"2010",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "59427254.63";
+                    c2 = "89619315.85";
+                    c3 = "6465448.526";
+                    c4 = "207215867.1";
+                    c5 = "9671356.662";
+                    c6 = "2954230.98";
+                    c7 = "19121162.98";
+                    c8 = "394474636.8";
+
+                    gridData.push({"year":"2009",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "57877514.33";
+                    c2 = "86827002.62";
+                    c3 = "5783323.517";
+                    c4 = "203474609";
+                    c5 = "8869459.142";
+                    c6 = "2847240.868";
+                    c7 = "19390987.31";
+                    c8 = "385070136.8";
+
+                    gridData.push({"year":"2008",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "55680846.01";
+                    c2 = "82207585.91";
+                    c3 = "5304103.629";
+                    c4 = "194936409.3";
+                    c5 = "8215174.194";
+                    c6 = "2793943.083";
+                    c7 = "19467370.78";
+                    c8 = "368605432.9";
+
+                    gridData.push({"year":"2007",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "53912272";
+                    c2 = "77809152.07";
+                    c3 = "4790496.283";
+                    c4 = "183067126.6";
+                    c5 = "7635659.599";
+                    c6 = "2687040.04";
+                    c7 = "18817624.33";
+                    c8 = "348719370.9";
+
+                    gridData.push({"year":"2006",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "52044461.6";
+                    c2 = "73715517.35";
+                    c3 = "4308747.515";
+                    c4 = "174945372.7";
+                    c5 = "7317815.423";
+                    c6 = "2570005.506";
+                    c7 = "17510907.65";
+                    c8 = "332412828";
+
+                    gridData.push({"year":"2005",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "49513298.44";
+                    c2 = "67475970";
+                    c3 = "3773549.221";
+                    c4 = "166222983.2";
+                    c5 = "6766323.773";
+                    c6 = "2367076.988";
+                    c7 = "15976384.13";
+                    c8 = "312095585.9";
+
+                    gridData.push({"year":"2004",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "46505348";
+                    c2 = "61626421.34";
+                    c3 = "3351320.214";
+                    c4 = "157844516.7";
+                    c5 = "6147364.226";
+                    c6 = "2197210.383";
+                    c7 = "15927049.32";
+                    c8 = "293599230.2";
+
+                    gridData.push({"year":"2003",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "43452142.21";
+                    c2 = "57428012.17";
+                    c3 = "2953566.377";
+                    c4 = "151196191.8";
+                    c5 = "6328169.218";
+                    c6 = "2075944.013";
+                    c7 = "15017345.74";
+                    c8 = "278451371.5";
+
+                    gridData.push({"year":"2002",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                    c1 = "40269734.24";
+                    c2 = "52622435.09";
+                    c3 = "2639687.25";
+                    c4 = "142160215.4";
+                    c5 = "6142089.507";
+                    c6 = "1877624.402";
+                    c7 = "12019568.47";
+                    c8 = "257731354.4";
+
+                    gridData.push({"year":"2001",
+                                    "c1":c1,
+                                    "c2":c2,
+                                    "c3":c3,
+                                    "c4":c4,
+                                    "c5":c5,
+                                    "c6":c6,
+                                    "c7":c7,
+                                    "c8":c8
+                                    });
+                
+                //그리드 데이터 입력
+                $("#pageGrid").find(".adminsection").show();
+                $("#pageGrid").find(".section").hide();
+                gridLayoutMake("Y");
+                gridApp.setLayout(gridlayoutStr);
+                gridApp.setData(gridData);
+                dataGrid = gridRoot.getDataGrid();
+                //
+            } catch (e) {
+                //
+                alert("editMode() - "+e.name+"("+e.number+") : "+ e.description);
+            }
+        }
+
+		$(document).ready(function(){
+			//차트레이아웃생성
+			columnChartLayoutMake("Date","주택용/일반용/교육용/산업용/농사용/가로등/심야","MWh","one");
+			//차트데이터입력
+			
+				chartData.push({"Date":"2001",
+								"Value":"40269734.24",
+                                "Value2":"52622435.09",
+                                "Value3":"2639687.25",
+                                "Value4":"142160215.4",
+                                "Value5":"6142089.507",
+                                "Value6":"1877624.402",
+                                "Value7":"12019568.47"
+								});
+			
+				chartData.push({"Date":"2002",
+								"Value":"43452142.21",
+                                "Value2":"57428012.17",
+                                "Value3":"2953566.377",
+                                "Value4":"151196191.8",
+                                "Value5":"6328169.218",
+                                "Value6":"2075944.013",
+                                "Value7":"15017345.74"
+								});
+			
+				chartData.push({"Date":"2003",
+								"Value":"46505348",
+                                "Value2":"61626421.34",
+                                "Value3":"3351320.214",
+                                "Value4":"157844516.7",
+                                "Value5":"6147364.226",
+                                "Value6":"2197210.383",
+                                "Value7":"15927049.32"
+								});
+			
+				chartData.push({"Date":"2004",
+								"Value":"49513298.44",
+                                "Value2":"67475970",
+                                "Value3":"3773549.221",
+                                "Value4":"166222983.2",
+                                "Value5":"6766323.773",
+                                "Value6":"2367076.988",
+                                "Value7":"15976384.13"
+								});
+			
+				chartData.push({"Date":"2005",
+								"Value":"52044461.6",
+                                "Value2":"73715517.35",
+                                "Value3":"4308747.515",
+                                "Value4":"174945372.7",
+                                "Value5":"7317815.423",
+                                "Value6":"2570005.506",
+                                "Value7":"17510907.65"
+								});
+			
+				chartData.push({"Date":"2006",
+								"Value":"53912272",
+                                "Value2":"77809152.07",
+                                "Value3":"4790496.283",
+                                "Value4":"183067126.6",
+                                "Value5":"7635659.599",
+                                "Value6":"2687040.04",
+                                "Value7":"18817624.33"
+								});
+			
+				chartData.push({"Date":"2007",
+								"Value":"55680846.01",
+                                "Value2":"82207585.91",
+                                "Value3":"5304103.629",
+                                "Value4":"194936409.3",
+                                "Value5":"8215174.194",
+                                "Value6":"2793943.083",
+                                "Value7":"19467370.78"
+								});
+			
+				chartData.push({"Date":"2008",
+								"Value":"57877514.33",
+                                "Value2":"86827002.62",
+                                "Value3":"5783323.517",
+                                "Value4":"203474609",
+                                "Value5":"8869459.142",
+                                "Value6":"2847240.868",
+                                "Value7":"19390987.31"
+								});
+			
+				chartData.push({"Date":"2009",
+								"Value":"59427254.63",
+                                "Value2":"89619315.85",
+                                "Value3":"6465448.526",
+                                "Value4":"207215867.1",
+                                "Value5":"9671356.662",
+                                "Value6":"2954230.98",
+                                "Value7":"19121162.98"
+								});
+			
+				chartData.push({"Date":"2010",
+								"Value":"63199602.27",
+                                "Value2":"97410032.26",
+                                "Value3":"7452576.466",
+                                "Value4":"232672176.3",
+                                "Value5":"10654294.54",
+                                "Value6":"3081490.265",
+                                "Value7":"19690055.92"
+								});
+			
+				chartData.push({"Date":"2011",
+								"Value":"63523655.234",
+                                "Value2":"99504064.577",
+                                "Value3":"7568016.011",
+                                "Value4":"251490647.939",
+                                "Value5":"11231538.371",
+                                "Value6":"3145497.971",
+                                "Value7":"18606840.397"
+								});
+			
+				chartData.push({"Date":"2012",
+								"Value":"65483732.827",
+                                "Value2":"101592760.074",
+                                "Value3":"7860449.36",
+                                "Value4":"258101932.911",
+                                "Value5":"12776044.639",
+                                "Value6":"3158091.48",
+                                "Value7":"17619937.397"
+								});
+			
+				chartData.push({"Date":"2013",
+								"Value":"65814572.339",
+                                "Value2":"102196338.312",
+                                "Value3":"7947317.399",
+                                "Value4":"265372530.719",
+                                "Value5":"13865836.654",
+                                "Value6":"3156225.641",
+                                "Value7":"16495759.046"
+								});
+			
+				chartData.push({"Date":"2014",
+								"Value":"64457263.285",
+                                "Value2":"100760879.149",
+                                "Value3":"7438373.754",
+                                "Value4":"272551572.699",
+                                "Value5":"14504731.303",
+                                "Value6":"3221008.114",
+                                "Value7":"14657872.719"
+								});
+			
+				chartData.push({"Date":"2015",
+								"Value":"65618610.102",
+                                "Value2":"103679345.522",
+                                "Value3":"7690600.115",
+                                "Value4":"273547996.643",
+                                "Value5":"15702467.649",
+                                "Value6":"3341239.614",
+                                "Value7":"14074556.043"
+								});
+			
+				chartData.push({"Date":"2016",
+								"Value":"68056786",
+                                "Value2":"108616888",
+                                "Value3":"8079392",
+                                "Value4":"278827855",
+                                "Value5":"16579843",
+                                "Value6":"3462314",
+                                "Value7":"13415826"
+								});
+			
+				chartData.push({"Date":"2017",
+								"Value":"68543760",
+                                "Value2":"111297776",
+                                "Value3":"8316290",
+                                "Value4":"285969563",
+                                "Value5":"17250850",
+                                "Value6":"3556775",
+                                "Value7":"12811372"
+								});
+			
+				chartData.push({"Date":"2018",
+								"Value":"72894709",
+                                "Value2":"116933912",
+                                "Value3":"8677808",
+                                "Value4":"292998663",
+                                "Value5":"18503827",
+                                "Value6":"3582649",
+                                "Value7":"12557594"
+								});
+			
+				chartData.push({"Date":"2019",
+								"Value":"72638867.792",
+                                "Value2":"116226510.249",
+                                "Value3":"8560660.333",
+                                "Value4":"289240197.984",
+                                "Value5":"18882368.129",
+                                "Value6":"3571475.434",
+                                "Value7":"11378657.805"
+								});
+			
+				chartData.push({"Date":"2020",
+								"Value":"76303404.721",
+                                "Value2":"113638541.698",
+                                "Value3":"7515351.52",
+                                "Value4":"278660247.281",
+                                "Value5":"19028828.684",
+                                "Value6":"3506999.019",
+                                "Value7":"10616342.274"
+								});
+			
+				chartData.push({"Date":"2021",
+								"Value":"79914811.457",
+                                "Value2":"119550386.231",
+                                "Value3":"8422604.806",
+                                "Value4":"291333422.205",
+                                "Value5":"20603211.649",
+                                "Value6":"3444429.166",
+                                "Value7":"10161945.344"
+								});
+			
+				chartData.push({"Date":"2022",
+								"Value":"80996133.021",
+                                "Value2":"127192892.347",
+                                "Value3":"9073974.29",
+                                "Value4":"296035506.666",
+                                "Value5":"21420088.649",
+                                "Value6":"3424194.074",
+                                "Value7":"9789953.166"
+								});
+			
+				chartData.push({"Date":"2023",
+								"Value":"82348423.196",
+                                "Value2":"130843829.601",
+                                "Value3":"9231946.83",
+                                "Value4":"290555370.686",
+                                "Value5":"20762854.726",
+                                "Value6":"3398721.032",
+                                "Value7":"8824809.279"
+								});
+			
+				chartData.push({"Date":"2024",
+								"Value":"86989168.409",
+                                "Value2":"134806918.192",
+                                "Value3":"9432713",
+                                "Value4":"286212188.263",
+                                "Value5":"21088217.699",
+                                "Value6":"3401568.758",
+                                "Value7":"7889890.507"
+								});
+			
+				chartData.push({"Date":"2025",
+								"Value":"88473843.234",
+                                "Value2":"138315365.194",
+                                "Value3":"9811316.752",
+                                "Value4":"280221380.382",
+                                "Value5":"21523019.235",
+                                "Value6":"3416365.156",
+                                "Value7":"7655969.407"
+								});
+			
+
+			//그리드레이아웃생성
+			gridLayoutMake();
+		});
+
+</script>
+</head>
+	<body>
+	<div title="스킵메뉴" class="skipNavi">
+        <a href="#cont">본문 내용 바로가기</a>
+        <a href="#headWrap">주 메뉴 바로가기</a>
+        <a href="#leftMenuWrap">서브 메뉴 바로가기</a>
+    </div>
+		<div class="allWrap">
+			
+			
+
+
+
+
+
+
+
+
+    <div class="headerWrap" id="headWrap"> <!-- 20-06-01 skipnavi를 위한 id 추가-->
+    	<div class="headerTopWrap">
+            <div class="headerLogoWrap">
+                <div class="epsis_logo">
+                    <a href="/epsisnew/selectMain.do?locale=" target="_self" ><img src="/epsisnew/resources/images/logo_n2.png" alt="EPSIS전력통계정보시스템" /></a>
+                </div>
+                <div class="goverment_logo">
+                    <a href="https://www.innovation.go.kr/ucms/main/main.do" target="_blank" title="보다나은 정부 새창으로 열림">
+                        <img src="/epsisnew/resources/images/government_logo.png" alt="보다나은 정부">
+                    </a>
+                </div>
+            </div>
+            <div class="topMenu">
+                <ul class="topmenuList">
+                	<li><a href="/epsisnew/selectKnreMain.do">신재생이용률</a></li>
+                    <li><a href="/epsisnew/">HOME</a></li>
+                    
+                    <li><a href="/epsisnew/selectEkccSiteMap.do?menuId=090202" target="_self">SITEMAP</a></li>
+                    <li id="eng"><a href="/epsisnew/selectMain.do?locale=eng" target="_self">ENGLISH</a></li>
+                    <li><a href="/epsisnew/selectEkifBoardList.do?menuId=090201&boardId=070000" target="_self">고객센터</a></li>
+                </ul>
+                <div class="headSearch">
+                    <form id="menuFormTop" name="menuFormTop" action="/epsisnew/selectEkccMenuSearchList.do" method="post">
+                        <input type="text" id="searchKeywordTop" name="searchKeyword" value="" onkeypress="if(event.keyCode==13)searchMenuTop();" placeholder="검색어를 입력하세요" title="검색"><button type="button" onclick="searchMenuTop()">검색</button>
+                        <input type="hidden" id="menuIdTop" name="menuId" value="090206">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <header class="headerMenuWrap">
+            <ul class="headerMenu">
+                <li><a href="/epsisnew/selectEkesKepChart.do?menuId=010100&locale=" target="_self" id="010000">주요지표</a></li>
+                <li><a href="/epsisnew/selectEkpoBftChart.do?menuId=020100&locale=" target="_self" id="020000">발전설비</a></li>
+                <li><a href="/epsisnew/selectEkgeEpsMepRealChart.do?menuId=030300&locale=" target="_self" id="030000">전력수급</a></li>
+                <li><a href="/epsisnew/selectEkmaFucUpfChart.do?menuId=040100&locale=" target="_self" id="040000">전력거래</a></li>
+                <li><a href="/epsisnew/selectEkfaPtcChart.do?menuId=050100&locale=" target="_self" id="050000">전력설비</a></li>
+                <li><a href="/epsisnew/selectEkgeGepTotChart.do?menuId=060101&locale=" target="_self" id="060000">발전·판매</a></li>
+                <li><a href="/epsisnew/selectEkifBoardList.do?menuId=080100&boardId=010000" target="_self" id="080000">자료실</a></li>
+                <li><a href="/epsisnew/selectEkccIntro.do?menuId=090101" target="_self" id="090000">소개·안내</a></li>
+                <li class="energyBtn"><a href="/epsisnew/selectKnreMain.do">신재생이용률</a></li>
+            </ul>
+        </header>
+        <div class="headerGnbWrap">
+            <ul class="headerGnbMenu">
+                <li>
+                    <ul>
+                        <li><a href="/epsisnew/selectEkesKepChart.do?menuId=010100" target="_self" id="010100">전력지표</a></li>
+                        <li><a href="/epsisnew/selectEkesKeiChart.do?menuId=010200" target="_self" id="010200">경제지표</a></li>
+                        <li><a href="/epsisnew/selectEkesKnaChart.do?menuId=010300" target="_self" id="010300">국민계정</a></li>
+                        <li><a href="/epsisnew/selectEkesKedsChart.do?menuId=010401" target="_self" id="010400">에너지지표</a></li>
+                        <li><a href="/epsisnew/selectEkesKenFcpChart.do?menuId=010501" target="_self" id="010500">북한전력지표</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li><a href="/epsisnew/selectEkpoBftChart.do?menuId=020100" target="_self" id="020100">연료원별</a></li>
+                        <li><a href="/epsisnew/selectEkpoBgtChart.do?menuId=020200" target="_self" id="020200">발전형식별</a></li>
+                        <li><a href="/epsisnew/selectEkpoBcpChart.do?menuId=020300" target="_self" id="020300">회원사별</a></li>
+                        <li><a href="/epsisnew/selectEkpoBcrGrid.do?menuId=020901" target="_self" id="020900">발전기별</a></li>
+                        <li><a href="/epsisnew/selectEkfaCpgFcpChart.do?menuId=020500" target="_self" id="020500">상용자가설비</a></li>
+                        <li><a href="/epsisnew/selectEkfaFclDtlChart.do?menuId=020600" target="_self" id="020600">발전기 세부내역</a></li>
+                        <li><a href="/epsisnew/selectEkfaFclFesGrid.do?menuId=020702" target="_self" id="020700">연도별</a></li>
+                        
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li><a href="/epsisnew/selectEkgeEpsMepRealChart.do?menuId=030300" target="_self" id="030300">실시간 전력수급</a></li>
+                        <li><a href="/epsisnew/selectEkgeEpsMepChart.do?menuId=030100" target="_self" id="030100">전력수급실적</a></li>
+                        <li><a href="/epsisnew/selectEkgeEpsAepChart.do?menuId=030200" target="_self" id="030200">최대/최소전력 월별평균</a></li>
+                        <li><a href="/epsisnew/selectEkgeEpsEstGrid.do?menuId=030400" target="_self" id="030400">추계정보</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li><a href="/epsisnew/selectEkmaFucUpfChart.do?menuId=040100" target="_self" id="040100">연료비용</a></li>
+                        <li><a href="/epsisnew/selectEkmaSmpSmpChart.do?menuId=040201" target="_self" id="040200">계통한계가격</a></li>
+                        <li><a href="/epsisnew/selectEkmaGcpBftChart.do?menuId=040301" target="_self" id="040300">시장참여설비용량<br/>(전력시장·PPA)</a></li>
+                        <li><a href="/epsisnew/selectEkmaBddBftChart.do?menuId=040401" target="_self" id="040400">전력입찰량</a></li>
+                        <li><a href="/epsisnew/selectEkmaPtdBftChart.do?menuId=040501" target="_self" id="040500">전력거래량<br/>(전력시장·PPA)</a></li>
+                        <li><a href="/epsisnew/selectEkmaStmBftChart.do?menuId=040601" target="_self" id="040600">전력거래금액<br/>(전력시장·PPA)</a></li>
+                        <li><a href="/epsisnew/selectEkmaUpsBftChart.do?menuId=040701" target="_self" id="040700">정산단가</a></li>
+                        <li><a href="/epsisnew/selectEkmaBgcGrid.do?menuId=040800" target="_self" id="040800">회원사현황</a></li>
+                        
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li><a href="/epsisnew/selectEkfaPtcChart.do?menuId=050100" target="_self" id="050100">송전설비</a></li>
+                        <li><a href="/epsisnew/selectEkfaTstChart.do?menuId=050200" target="_self" id="050200">변전설비</a></li>
+                        <li><a href="/epsisnew/selectEkfaTsfChart.do?menuId=050300" target="_self" id="050300">지역별 변전설비</a></li>
+                        <li><a href="/epsisnew/selectEkfaDfsChart.do?menuId=050400" target="_self" id="050400">배전설비</a></li>
+                        <li><a href="/epsisnew/selectEkfaDfaChart.do?menuId=050500" target="_self" id="050500">지역별 배전설비</a></li>
+                        <li><a href="/epsisnew/selectEkfaCfcChart.do?menuId=050600" target="_self" id="050600">통신설비</a></li>
+                        <li><a href="/epsisnew/selectEkfaEpfChart.do?menuId=050700" target="_self" id="050700">유형별전기고장추이</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li><a href="/epsisnew/selectEkgeGepTotChart.do?menuId=060101" target="_self" id="060100">발전량</a></li>
+                        <li><a href="/epsisnew/selectEkgeFfuChart.do?menuId=060200" target="_self" id="060200">발전연료사용량추이</a></li>
+                        <li><a href="/epsisnew/selectEkgeTepChart.do?menuId=060300" target="_self" id="060300">화력발전소열효율</a></li>
+                        <li><a href="/epsisnew/selectEksaAscAscChart.do?menuId=060401" target="_self" id="060400">판매전력량</a></li>
+                        <li><a href="/epsisnew/selectEksaSccChart.do?menuId=060500" target="_self" id="060500">판매금액</a></li>
+                        <li><a href="/epsisnew/selectEksaScfChart.do?menuId=060600" target="_self" id="060600">판매단가</a></li>
+                        <li><a href="/epsisnew/selectEksaPlrChart.do?menuId=060700" target="_self" id="060700">전력손실량</a></li>
+                        <li><a href="/epsisnew/selectEksaCbcCbcChart.do?menuId=060801" target="_self" id="060800">고객호수</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li><a href="/epsisnew/selectEkifBoardList.do?menuId=080100&boardId=010000" target="_self" id="080100">전력시장</a></li>
+			            <li><a href="/epsisnew/selectEkifBoardList.do?menuId=080200&boardId=020000" target="_self" id="080200">전력계통</a></li>
+			            <li><a href="/epsisnew/selectEkifBoardList.do?menuId=080300&boardId=030000" target="_self" id="080300">전력수급</a></li>
+			            <li><a href="/epsisnew/selectEkifBoardList.do?menuId=080401&boardId=040100" target="_self" id="080400">국가승인통계</a></li>
+			            <li><a href="/epsisnew/selectEkifBoardList.do?menuId=080500&boardId=050000" target="_self" id="080500">기타</a></li>
+			            <li><a href="/epsisnew/selectEkifBoardList.do?menuId=080600&boardId=060000" target="_self" id="080600">관련법규</a></li>
+			            <li class="hasDep4"><a href="/epsisnew/selectEksaNeaChart.do?menuId=08070100" target="_self" id="080700">제공중단통계</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <ul>
+                        <li><a href="/epsisnew/selectEkccIntro.do?menuId=090101" target="_self" id="090100">EPSIS소개</a></li>
+                        <li><a href="/epsisnew/selectEkifBoardList.do?menuId=090201&boardId=070000" target="_self" id="090200">고객센터</a></li>
+                	</ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+			<div class="bodyWrap">
+				<div class="body">
+					
+					
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+        <div class="leftMenuWrap" id="leftMenuWrap">
+            <p class="leftTitle">발전·판매</p>
+            <ul class="leftMenu">
+                <li class="hasSub">
+                    <a href="/epsisnew/selectEkgeGepTotChart.do?menuId=060101" target="_self" id="L060100">발전량</a>
+                    <ul>
+                        <li><a href="/epsisnew/selectEkgeGepTotChart.do?menuId=060101" target="_self" id="L060101">전원별</a></li>
+                        <li><a href="/epsisnew/selectEkgeGepGesGrid.do?menuId=060102" target="_self" id="L060102">에너지원별</a></li>
+                        <li><a href="/epsisnew/selectEkgeGepGscGrid.do?menuId=060103" target="_self" id="L060103">회사별</a></li>
+                        <li><a href="/epsisnew/selectEkgeGepGbaChart.do?menuId=060104" target="_self" id="L060104">지역별</a></li>
+                        <li><a href="/epsisnew/selectEkgeGepGbpGrid.do?menuId=060105" target="_self" id="L060105">발전기별</a></li>
+                        <li><a href="/epsisnew/selectEkfaCpgGamChart.do?menuId=060106" target="_self" id="L060106">상용자가발전량</a></li>
+                    </ul>
+                </li>
+                <li><a href="/epsisnew/selectEkgeFfuChart.do?menuId=060200" target="_self" id="L060200">발전연료사용량추이</a></li>
+                <li><a href="/epsisnew/selectEkgeTepChart.do?menuId=060300" target="_self" id="L060300">화력발전소열효율</a></li>
+                <li class="hasSub">
+                    <a href="/epsisnew/selectEksaAscAscChart.do?menuId=060401" target="_self" id="L060400">판매전력량</a>
+                    <ul>
+                        <li><a href="/epsisnew/selectEksaAscAscChart.do?menuId=060401" target="_self" id="L060401">계약종별</a></li>
+                        <li><a href="/epsisnew/selectEksaAscAsuChart.do?menuId=060402" target="_self" id="L060402">용도별</a></li>
+                        <li><a href="/epsisnew/selectEksaAscSmnChart.do?menuId=060407" target="_self" id="L060407">제조업종별</a></li>
+                        <li><a href="/epsisnew/selectEksaAscSmcChart.do?menuId=060403" target="_self" id="L060403">제조업종별(2019년이전)</a></li>
+                        <li><a href="/epsisnew/selectEksaAscSmoChart.do?menuId=060404" target="_self" id="L060404">제조업종별(1994년이전)</a></li>
+                        <li><a href="/epsisnew/selectEksaAscAsaChart.do?menuId=060405" target="_self" id="L060405">시도별 용도별</a></li>
+                        <li><a href="/epsisnew/selectEksaAscMasChart.do?menuId=060406" target="_self" id="L060406">월별</a></li>
+                    </ul>
+                </li>
+                <li><a href="/epsisnew/selectEksaSccChart.do?menuId=060500" target="_self" id="L060500">판매금액</a></li>
+                <li><a href="/epsisnew/selectEksaScfChart.do?menuId=060600" target="_self" id="L060600">판매단가</a></li>
+                <li><a href="/epsisnew/selectEksaPlrChart.do?menuId=060700" target="_self" id="L060700">전력손실량</a></li>
+                <li class="hasSub">
+                    <a href="/epsisnew/selectEksaCbcCbcChart.do?menuId=060801" target="_self" id="L060800">고객호수</a>
+                    <ul>
+                        <li><a href="/epsisnew/selectEksaCbcCbcChart.do?menuId=060801" target="_self" id="L060801">계약종별</a></li>
+                        <li><a href="/epsisnew/selectEksaCbcHbaChart.do?menuId=060802" target="_self" id="L060802">시도별</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    
+    
+    
+	
+
+
+
+
+
+					
+					<div class="cont" id="cont"><!-- 20-06-10 skipnavi를 위한 id 추가-->
+						<p class="pageTitle">
+                            <span>계약종별</span>
+                            <!-- 2023-06-12 em태그 추가 -->
+                            
+                            <span class="localNavi"><a href="#" onclick="fn_goHome('H');">HOME</a> > <a href="#" onclick="fn_goHome('1');">발전 · 판매</a> > <a href="#" onclick="fn_goHome('2');">판매전력량</a> > <em>용도별</em></span>
+                        </p>
+						<div class="page">
+	                        <div class="laybox long" id="pageChart">
+	                            <div class="full">
+	                                <div class="opBox">
+	                                    <div class="section">
+	                                        <span>
+	                                            <label for="vChartKind">그래프</label>
+	                                            <select id="vChartKind" onchange="chartRemake($('#vChartKind option:selected').val(),'chart1')">
+                                                    <option value="column">누적그래프</option>
+					                                <option value="line">개별그래프</option>
+					                            </select>
+	                                        </span>
+	                                        <span style="display:none;">
+	                                            <label for="vChartUnit">구분</label>
+	                                            <select id="vChartUnit" onchange="chartRemake($('#vChartKind option:selected').val(),'chart1')">
+					                                <option value="c1">전체</option>
+					                            </select>
+	                                        </span>
+	                                        <span class="btnArea">
+                                                <button onclick="helpPopup();" style="display:none;">Help</button>
+                                                <button onclick="saveAsImage('chart1');">Image</button>
+                                            </span>
+	                                    </div>
+	                                </div>
+	                                <div class="dataBox" id="chartHolder" >
+	                                    <!--그래프, 데이타 영역 입니다. -->
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="laybox long" id="pageGrid">
+                                <div class="full">
+								    <div class="opBox">
+								        
+								        <div class="section">
+								            <span>
+								                <label for="selBeginDate">기간</label>
+								                <select id="selBeginDate" name="selBeginDate" onchange="dataSerch()" title="선택시작 연도"><!--20-06-03 title 수정-->
+								                    
+								                        <option >2025</option>
+								                    
+								                        <option >2024</option>
+								                    
+								                        <option >2023</option>
+								                    
+								                        <option >2022</option>
+								                    
+								                        <option >2021</option>
+								                    
+								                        <option >2020</option>
+								                    
+								                        <option >2019</option>
+								                    
+								                        <option >2018</option>
+								                    
+								                        <option >2017</option>
+								                    
+								                        <option >2016</option>
+								                    
+								                        <option >2015</option>
+								                    
+								                        <option >2014</option>
+								                    
+								                        <option >2013</option>
+								                    
+								                        <option >2012</option>
+								                    
+								                        <option >2011</option>
+								                    
+								                        <option >2010</option>
+								                    
+								                        <option >2009</option>
+								                    
+								                        <option >2008</option>
+								                    
+								                        <option >2007</option>
+								                    
+								                        <option >2006</option>
+								                    
+								                        <option >2005</option>
+								                    
+								                        <option >2004</option>
+								                    
+								                        <option >2003</option>
+								                    
+								                        <option >2002</option>
+								                    
+								                        <option selected=selected>2001</option>
+								                    
+								                </select>
+								                <em>~</em>
+								                <select id="selEndDate" name="selEndDate" onchange="dataSerch()" title="선택종료 연도"><!--20-06-02 title 추가-->
+								                    
+								                        <option selected=selected>2025</option>
+								                    
+								                        <option >2024</option>
+								                    
+								                        <option >2023</option>
+								                    
+								                        <option >2022</option>
+								                    
+								                        <option >2021</option>
+								                    
+								                        <option >2020</option>
+								                    
+								                        <option >2019</option>
+								                    
+								                        <option >2018</option>
+								                    
+								                        <option >2017</option>
+								                    
+								                        <option >2016</option>
+								                    
+								                        <option >2015</option>
+								                    
+								                        <option >2014</option>
+								                    
+								                        <option >2013</option>
+								                    
+								                        <option >2012</option>
+								                    
+								                        <option >2011</option>
+								                    
+								                        <option >2010</option>
+								                    
+								                        <option >2009</option>
+								                    
+								                        <option >2008</option>
+								                    
+								                        <option >2007</option>
+								                    
+								                        <option >2006</option>
+								                    
+								                        <option >2005</option>
+								                    
+								                        <option >2004</option>
+								                    
+								                        <option >2003</option>
+								                    
+								                        <option >2002</option>
+								                    
+								                        <option >2001</option>
+								                    
+								                </select>
+								            </span>
+								            <span>
+								                <label for="selCount">소수점</label>
+								                <select id="selCount" name="selCount" onchange="dataSerch()">
+								                    <option value="0" selected="selected">없음</option>
+								                    <option value="1">한자리</option>
+								                    <option value="2">두자리</option>
+								                    <option value="3">세자리</option>
+								                </select>
+								            </span>
+								            <span class="btnArea">
+								                <button onclick="excelExport()">EXCEL</button>
+								                <button onclick="csvExport()">CSV</button>
+								                <button onclick="helpPopup();" style="display:none;">Help</button>
+								                
+								            </span>
+								        </div>
+								    </div>
+								    <p class="unit">(단위 : MWh)</p>
+								    <div class="dataBox" id="gridHolder" >
+								        <!--그래프, 데이타 영역 입니다. -->
+								    </div>
+								    <iframe width="0" height="0" id="I_TARGET" name="I_TARGET" style="border:none;" title="관리자권한으로 자료 수정(관리자만 사용 가능)"></iframe><!--20-06-04 title 추가-->
+								</div>
+                            </div>
+	                        <div class="info">
+                                <p>작성주기 : (년) 전년통계치를 매년 7월경 갱신<br>※ 출처 : <a href="https://www.kepco.co.kr/home/customer/library/electricity-statistics/kepco-stats/boardList.do" target="_blank">한국전력통계 책자<img src="/epsisnew/resources/images/hyperlink_icon.png" alt="외부링크" class="hyplink"/></a><br>※ 연간통계 확정치 공표(6월) 전까지는 한국전력공사의 <A href="https://www.kepco.co.kr/home/customer/library/electricity-statistics/monthly-stats/boardList.do" target="_blank">전력통계속보<img src="/epsisnew/resources/images/hyperlink_icon.png" alt="외부링크" class="hyplink"/></A>의 연간 잠정치 참조 바람</p>
+                            </div>
+							<!-- 데이터 테스트 영역 end -->
+						</div>
+						<!-- 그리드영역  -->
+					</div>
+					
+				</div>
+			</div>
+			
+			
+
+
+
+
+
+
+
+
+
+     <script>
+        //PC -> mobile
+        function changeMobile(){
+            $.ajax({
+                url     : '/epsisnew/changePc.ajax',
+                type    : 'POST',
+                data  : {
+                },
+                success : function(data) {
+                    eval(data);
+                },
+                error : function(e) {
+                    console.log(e.responseText);
+                    alert('서버 에러!');
+                }
+            });
+        }
+    </script>
+
+	<div class="footerWrap">
+	    <div class="footer">
+	        <div class="address">
+	            <div>
+	                <ul>
+	                    
+                        <li><a href="https://www.kpx.or.kr/menu.es?mid=a10522000000">개인정보처리방침</a></li>
+	                    <li><a href="javascript:emailRulePopup();">이메일 수집거부</a></li>
+	                </ul>
+	                <span>Today <em>5,741</em> | Total <em>24,517,680</em></span>
+	            </div>
+	            <p>전라남도 나주시 빛가람로 625 전력거래소 Tel.061-330-8715 Email. kpxstat@kpx.or.kr</p>
+	            <p>Copyright(C) 2020 Korea Power Exchange.All Right Reserved.</p>
+	        </div>
+	        <div class="site">
+	            <select id="siteOpen1" onchange="siteOpen('siteOpen1')" title="전력산업기관"> <!--20-06-01 title 추가-->
+	                <option value="">전력산업기관</option>
+	                <option value="https://www.korec.go.kr">전기위원회</option>
+	                <option value="https://www.kpx.or.kr">전력거래소</option>
+	                <option value="https://www.kepco.co.kr">한국전력공사</option>
+	                <option value="https://www.etep.or.kr">전력기금사업단</option>
+	                <option value="https://www.koenergy.kr">한국남동발전</option>
+	                <option value="https://www.komipo.co.kr">한국중부발전</option>
+	                <option value="https://www.iwest.co.kr/sites/iwest/index.do">한국서부발전</option>
+	                <option value="https://www.kospo.co.kr">한국남부발전</option>
+	                <option value="https://www.ewp.co.kr">한국동서발전</option>
+	                <option value="https://www.khnp.co.kr">한수원(주)</option>
+	                <option value="https://www.kwater.or.kr">한국수자원공사</option>
+	                <option value="https://www.kdhc.co.kr">한국지역난방공사</option>
+	                <option value="https://www.keri.re.kr">한국전기연구원</option>
+	                <option value="https://www.kea.kr">대한전기협회</option>
+	                <option value="https://www.kiee.or.kr">대한전기학회</option>
+	            </select>
+	            <select id="siteOpen2" onchange="siteOpen('siteOpen2')" title="공공기관"><!--20-06-01 title 추가-->
+	                <option value="">공공기관</option>
+	                <option value="https://www.molit.go.kr">국토교통부</option>
+	                <option value="https://www.mof.go.kr">해양수산부</option>
+	                <option value="https://www.police.go.kr">경찰청</option>
+	                <option value="https://www.ftc.go.kr">공정거래위원회</option>
+	                <option value="https://www.moe.go.kr">교육부</option>
+	                <option value="https://www.mpva.go.kr">국가보훈부</option>
+	                <option value="https://www.acrc.go.kr">국민권익위원회</option>
+	                <option value="https://www.mnd.go.kr">국방부</option>
+	                <option value="https://www.nts.go.kr">국세청</option>
+	                <option value="https://www.nis.go.kr">국가정보원</option>
+	                <option value="https://www.assembly.go.kr">국회</option>
+	                <option value="https://www.fss.or.kr">금융감독원</option>
+	                <option value="https://www.moef.go.kr/">기획재정부</option>
+	                <option value="https://www.moel.go.kr">고용노동부</option>
+	                <option value="https://www.mafra.go.kr">농림축산식품부</option>
+	                <option value="https://www.scourt.go.kr">법원</option>
+	                <option value="https://www.mcst.go.kr">문화체육관광부</option>
+	                <option value="https://www.moj.go.kr">법무부</option>
+	                <option value="https://www.moleg.go.kr">법제처</option>
+	                <option value="https://www.mma.go.kr">병무청</option>
+	                <option value="https://www.motie.go.kr">산업통상부</option>
+	                <option value="https://www.mofat.go.kr">외교부</option>
+	                <option value="https://www.kcc.go.kr">방송미디어통신위원회</option>
+	                <option value="https://www.mcee.go.kr">기후에너지환경부</option>
+	                <option value="https://www.president.go.kr">대통령실</option>
+	                <option value="https://www.juso.go.kr">도로명주소안내</option>
+	            </select>
+	        </div>
+	    </div>
+	</div>
+
+
+		</div>
+	</body>
+</html>

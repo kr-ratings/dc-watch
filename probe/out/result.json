@@ -1,0 +1,253 @@
+{
+ "keys": {
+  "data_go_kr": true,
+  "kepco": true
+ },
+ "hub_filter": {
+  "ok": true,
+  "res": {
+   "startDate_2025_range": {
+    "n": 102,
+    "crtnDay": [
+     "20250114",
+     "20260826",
+     102
+    ],
+    "archPmsDay": [
+     "20060411",
+     "20260826",
+     101
+    ],
+    "realStcnsDay": [
+     "20010809",
+     "20260825",
+     31
+    ],
+    "useAprDay": [
+     "20011115",
+     "20260824",
+     27
+    ]
+   },
+   "no_filter": {
+    "total": "1141",
+    "head": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    },
+    "n": 5
+   },
+   "mainPurpsCd_24000": {
+    "total": "1141",
+    "head": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    },
+    "n": 5
+   },
+   "sigungu_only": {
+    "total": null,
+    "head": {},
+    "n": 0
+   },
+   "sigungu_only_bjdong_blank": {
+    "total": "0",
+    "head": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    },
+    "n": 0
+   },
+   "flr_sample_since": {
+    "total": "1747",
+    "head": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    },
+    "n": 5
+   },
+   "flr_total_since_vs_all": [
+    "3812",
+    "19250"
+   ]
+  },
+  "sec": 17.45
+ },
+ "kepco2": {
+  "ok": true,
+  "res": {
+   "11": {
+    "nm": "서울",
+    "st": 200,
+    "n": 25,
+    "sum_kwh": 210465630,
+    "err": ""
+   },
+   "26": {
+    "nm": "부산",
+    "st": 200,
+    "n": 16,
+    "sum_kwh": 68564367,
+    "err": ""
+   },
+   "27": {
+    "nm": "대구",
+    "st": 200,
+    "n": 9,
+    "sum_kwh": 26954529,
+    "err": ""
+   },
+   "28": {
+    "nm": "인천",
+    "st": 200,
+    "n": 8,
+    "sum_kwh": 40130785,
+    "err": ""
+   },
+   "29": {
+    "nm": "광주",
+    "st": 404,
+    "n": 0,
+    "sum_kwh": 0,
+    "err": "NotFound"
+   },
+   "30": {
+    "nm": "대전",
+    "st": 200,
+    "n": 5,
+    "sum_kwh": 29041164,
+    "err": ""
+   },
+   "31": {
+    "nm": "울산",
+    "st": 200,
+    "n": 5,
+    "sum_kwh": 9918165,
+    "err": ""
+   },
+   "36": {
+    "nm": "세종",
+    "st": 200,
+    "n": 1,
+    "sum_kwh": 19123031,
+    "err": ""
+   },
+   "41": {
+    "nm": "경기",
+    "st": 200,
+    "n": 32,
+    "sum_kwh": 484929247,
+    "err": ""
+   },
+   "42": {
+    "nm": "강원",
+    "st": 404,
+    "n": 0,
+    "sum_kwh": 0,
+    "err": "NotFound"
+   },
+   "43": {
+    "nm": "충북",
+    "st": 200,
+    "n": 11,
+    "sum_kwh": 20076910,
+    "err": ""
+   },
+   "44": {
+    "nm": "충남",
+    "st": 200,
+    "n": 15,
+    "sum_kwh": 28323152,
+    "err": ""
+   },
+   "45": {
+    "nm": "전북",
+    "st": 404,
+    "n": 0,
+    "sum_kwh": 0,
+    "err": "NotFound"
+   },
+   "46": {
+    "nm": "전남",
+    "st": 404,
+    "n": 0,
+    "sum_kwh": 0,
+    "err": "NotFound"
+   },
+   "47": {
+    "nm": "경북",
+    "st": 200,
+    "n": 22,
+    "sum_kwh": 34227479,
+    "err": ""
+   },
+   "48": {
+    "nm": "경남",
+    "st": 200,
+    "n": 18,
+    "sum_kwh": 31545673,
+    "err": ""
+   },
+   "50": {
+    "nm": "제주",
+    "st": 200,
+    "n": 2,
+    "sum_kwh": 9027436,
+    "err": ""
+   },
+   "51": {
+    "nm": "강원(51)",
+    "st": 200,
+    "n": 18,
+    "sum_kwh": 46959596,
+    "err": ""
+   },
+   "52": {
+    "nm": "전북(52)",
+    "st": 200,
+    "n": 14,
+    "sum_kwh": 21059597,
+    "err": ""
+   },
+   "12": {
+    "nm": "전남광주(12)",
+    "st": 200,
+    "n": 1,
+    "sum_kwh": 52264332,
+    "err": ""
+   },
+   "hist_2016-01": {
+    "st": 200,
+    "n": 31,
+    "sum_kwh": 170188844,
+    "err": null
+   },
+   "hist_2019-01": {
+    "st": 200,
+    "n": 31,
+    "sum_kwh": 216652932,
+    "err": null
+   },
+   "hist_2022-07": {
+    "st": 200,
+    "n": 31,
+    "sum_kwh": 362096412,
+    "err": null
+   },
+   "hist_2025-07": {
+    "st": 200,
+    "n": 31,
+    "sum_kwh": 433544909,
+    "err": null
+   }
+  },
+  "sec": 6.28
+ },
+ "pages": {
+  "ok": true,
+  "res": {
+   "ok": true
+  },
+  "sec": 2.38
+ }
+}
