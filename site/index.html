@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>데이터센터 개발 · 전력 현황 대시보드 (개발중)</title>
-<meta name="description" content="건축 인허가에서 용도가 데이터센터인 건의 허가 · 착공 · 준공, 한전 정보통신업 전력 부하(MW)로 본 가동 · 흡수, 전기요금 · SMP, 시 · 도 전력자립도, 제도 · 일정과 기사를 한 화면에 모은 대시보드">
+<meta name="description" content="건축 인허가에서 용도가 데이터센터인 건의 허가 · 착공 · 준공, 정보통신업 전기 사용량 증가(MW), 전기요금 · SMP, 시 · 도 전력자립도, 제도 · 일정과 기사를 한 화면에 모은 대시보드">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -172,6 +172,8 @@ td.nw .more{font-size:.7rem;color:var(--muted)}
 .pill{display:inline-block;font-size:.66rem;font-weight:600;border:1px solid currentColor;border-radius:999px;padding:0 6px;margin-left:6px;vertical-align:1px}
 .pill.live{color:var(--accent)} .pill.done{color:var(--ok)} .pill.dead{color:var(--muted)}
 .scroll{max-height:560px;overflow:auto}
+.explain{margin:0;font-size:.8rem;line-height:1.6;color:var(--muted);word-break:keep-all;background:var(--accent-soft);border-radius:8px;padding:9px 12px}
+.explain b{color:var(--fg);font-weight:600;margin-right:4px}
 h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;vertical-align:2px;white-space:nowrap}
 .pm-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
 @media (min-width:1180px){.pm-grid{grid-template-columns:minmax(0,1.5fr) minmax(360px,1fr)}}
@@ -203,19 +205,6 @@ h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;verti
 .sr .v small{color:var(--muted);font-size:.7rem;font-family:var(--f-sans)}
 .sup .say{font-size:.84rem;line-height:1.6;word-break:keep-all;padding:10px 12px;border-radius:8px;background:var(--accent-soft);margin-top:6px}
 .sup .say b{font-family:var(--f-mono);font-weight:600}
-.ramps{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
-.rp{border:1px solid var(--line);border-radius:8px;padding:10px 12px 8px;display:flex;flex-direction:column;gap:4px;min-width:0}
-.rp .h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.rp .h b{font-size:.9rem;font-weight:600;white-space:nowrap}
-.rp .h b small{font-size:.72rem;color:var(--muted);font-weight:500;margin-left:4px}
-.rp .h span{font-family:var(--f-mono);font-size:.86rem;font-variant-numeric:tabular-nums;white-space:nowrap}
-.rp .h span small{font-size:.7rem;color:var(--muted);margin-left:3px;font-family:var(--f-sans)}
-.rp .dc{font-size:.72rem;color:var(--muted);word-break:keep-all;line-height:1.45;min-height:2.9em}
-.rp .dc i{font-style:normal;color:var(--fg)}
-.rp .ex{font-size:.74rem;word-break:keep-all}
-.rp .ex b{font-family:var(--f-mono);font-weight:600}
-.rp.out{border-style:dashed}
-.rp svg{display:block;width:100%;height:auto;overflow:visible}
 .up{color:var(--up)} .down{color:var(--down)}
 .pill.plan{color:var(--warm)} .pill.hold{color:var(--muted)}
 td.cp{text-align:right;white-space:nowrap}
@@ -294,7 +283,7 @@ footer .ct{white-space:nowrap}
   <header>
     <div>
       <h1>데이터센터 개발 · 전력 현황 대시보드 <span class="dev">(개발중)</span></h1>
-      <p class="sub">국토교통부 건축 인허가 대장에서 용도가 '데이터센터'인 건을 모아 허가 → 착공 → 준공 흐름과 위치를 보여 주고, 공개 보도로 확인된 수전 · IT 용량, 한전 자료로 본 실제 가동 · 흡수(MW), 전기요금 · SMP, 시 · 도 전력자립도, 제도 · 일정과 기사를 함께 모았습니다 · <span style="white-space:nowrap">매일 자동 갱신</span></p>
+      <p class="sub">국토교통부 건축 인허가 대장에서 용도가 '데이터센터'인 건을 모아 허가 → 착공 → 준공 흐름과 위치를 보여 주고, 공개 보도로 확인된 수전 · IT 용량, 정보통신업 전기 사용량 증가(MW), 전기요금 · SMP, 시 · 도 전력자립도, 제도 · 일정과 기사를 함께 모았습니다 · <span style="white-space:nowrap">매일 자동 갱신</span></p>
     </div>
     <div class="hright">
       <div class="sisters">
@@ -382,28 +371,24 @@ footer .ct{white-space:nowrap}
   </section>
 
   <section aria-labelledby="h-ict">
-    <div class="sec-head"><h2 id="h-ict">데이터센터 가동 · 흡수(전력 부하 MW)</h2><span class="note" id="ict-note"></span></div>
+    <div class="sec-head"><h2 id="h-ict">정보통신업 전기 사용량 — 늘어나는 수요와 짓고 있는 물량</h2><span class="note" id="ict-note"></span></div>
     <div class="two">
       <div class="card">
-        <div class="card-head"><h3>해마다 새로 늘어난 전력 부하</h3><span class="note">정보통신업 연평균 부하의 전년 대비 증가 · MW</span></div>
+        <div class="card-head"><h3>해마다 늘어난 전기 사용량</h3><span class="note">MW 환산 · 전년 대비 증가분</span></div>
+        <p class="explain" id="ict-ex"></p>
         <div class="mk" id="ict-k"></div>
         <div class="chart-top"><span class="legend" style="margin-left:0">
           <span><i class="sw" style="background:var(--cap)"></i>수도권</span>
           <span><i class="sw" style="background:var(--reg)"></i>비수도권</span>
         </span></div>
         <div class="chart" id="ict-chart"></div>
-        <p class="foot">평균 부하 = 12개월 사용량 ÷ 시간. 데이터센터 IT 1MW를 가동률 70% · PUE 1.4로 돌리면 평균 부하가 약 1MW라서, 늘어난 MW는 그해 새로 채워진 IT 용량과 비슷한 크기로 읽을 수 있습니다. 한전 '정보통신업'에는 통신 · 방송 · 소프트웨어 사업장도 섞여 있어 데이터센터만의 값은 아닙니다.</p>
+        <p class="foot">한전 '정보통신업'에는 데이터센터와 함께 통신 · 방송 · 소프트웨어 사업장이 섞여 있어 데이터센터만의 값은 아니지만, 최근 증가분의 대부분은 데이터센터 가동에서 나옵니다.</p>
       </div>
       <div class="card">
-        <div class="card-head"><h3>흡수 속도와 공급 물량</h3><span class="note" id="sup-note"></span></div>
+        <div class="card-head"><h3>늘어나는 수요 vs 짓고 있는 물량</h3><span class="note" id="sup-note"></span></div>
         <div class="sup" id="sup"></div>
         <p class="foot" id="sup-foot"></p>
       </div>
-    </div>
-    <div class="card" style="margin-top:14px">
-      <div class="card-head"><h3>데이터센터가 들어선 곳의 전력 부하 — 준공 뒤 얼마나 빨리 차오르나</h3><span class="note" id="ramp-note"></span></div>
-      <div class="ramps" id="ramps"></div>
-      <p class="foot">시 · 군 · 구별 정보통신업 월평균 부하(MW)입니다. 세로선은 그 지역 데이터센터의 착공(파랑 점선) · 준공(청록) 시점이고, 준공 뒤 선이 올라가는 기울기가 임차 · 가동이 채워지는 속도입니다. 냉방 때문에 여름에 높고 겨울에 낮으므로 같은 달끼리 비교한 값(1년 전 같은 달 대비, 첫 준공 전 같은 달 대비)을 적었습니다. '인허가 목록 밖'은 전국 수집이 덜 끝나 아직 목록에 없지만 부하가 크게 는 곳입니다.</p>
     </div>
   </section>
 
@@ -469,8 +454,8 @@ footer .ct{white-space:nowrap}
       <div><b>연면적</b>같은 연면적이라도 층고 · 랙 밀도에 따라 용량은 크게 다르므로 규모 비교는 용량 칸을 우선 보세요.</div>
       <div><b>관련 기사</b>건물명에 드러난 사업자 · 브랜드와 시 · 군 · 동 이름으로 구글 뉴스를 매주 다시 검색해, 제목에 데이터센터와 이름 · 지역이 함께 나오는 기사만 붙입니다. 같은 동에 데이터센터가 여럿이면 신축 · 전환 성격이 맞는 기사만 남겨, 확신이 없으면 비워 둡니다.</div>
       <div><b>대수선 · 용도변경</b>기존 건물을 데이터센터로 바꾸는 건도 함께 나오며, 구분 칸에 표시합니다.</div>
-      <div><b>정보통신업 전력 부하(MW)</b>한전 산업분류(한국표준산업분류 J) 월 사용량(kWh)을 그 달 시간으로 나눈 평균 부하입니다. 데이터센터 외에 통신 · 방송 · 소프트웨어 사업장도 포함됩니다. 2017년 7월 이전은 같은 대분류의 옛 이름(출판 · 영상 · 방송통신 · 정보서비스업)입니다.</div>
-      <div><b>흡수</b>정보통신업 평균 부하가 1년 동안 늘어난 양(MW)입니다. 새로 가동된 서버 · 냉방 부하로, 데이터센터 임차 · 가동이 실제로 채워진 속도의 대리 지표입니다.</div>
+      <div><b>사용량(MW 환산)</b>한전 산업분류(한국표준산업분류 J) '정보통신업' 사용량(kWh)을 시간으로 나눈 값으로, 1년 내내 평균 몇 MW씩 쓰는지를 뜻합니다. 데이터센터 외에 통신 · 방송 · 소프트웨어 사업장도 포함됩니다. 2017년 7월 이전은 같은 대분류의 옛 이름(출판 · 영상 · 방송통신 · 정보서비스업)입니다.</div>
+      <div><b>수요 증가</b>위 사용량(MW 환산)이 1년 동안 늘어난 양입니다. 새로 돌기 시작한 서버 · 냉방 설비만큼 늘어나므로, 데이터센터 임차 · 가동이 실제로 채워진 속도로 읽을 수 있습니다.</div>
       <div><b>사업장 위치</b>인허가 대장의 법정동 · 리 대표점(도로명주소 행정구역도 기반)에 표시합니다. 정확한 대지 위치는 지도 링크로 확인하세요.</div>
       <div><b>SMP</b>계통한계가격. 전력시장에서 시간대별로 정해지는 도매 전력가격의 월평균입니다.</div>
       <div><b>전력자립도</b>지역 발전량(전력거래소 EPSIS) ÷ 지역 전력판매량(한전). 100% 미만이면 다른 지역에서 송전받아 쓰는 곳입니다.</div>
@@ -530,7 +515,7 @@ function renderKPI(){
     card("데이터센터 건축허가","최근 12개월",fmt(p1.length),"건",`<span class="chg ${pctCls(sum(p1),sum(p0))}">연면적 ${pctTxt(sum(p1),sum(p0))}</span>`,`<div class="split"><span>연면적 <b>${fmt(sum(p1)/1e4,1)}만㎡</b></span><span>직전 12개월 <b>${fmt(p0.length)}건 · ${fmt(sum(p0)/1e4,1)}만㎡</b></span></div>`,"건축HUB 건축인허가 · 허가일 기준")+
     card("착공","최근 12개월",fmt(s1.length),"건",`<span class="chg ${pctCls(sum(s1),sum(s0))}">연면적 ${pctTxt(sum(s1),sum(s0))}</span>`,`<div class="split"><span>연면적 <b>${fmt(sum(s1)/1e4,1)}만㎡</b></span><span>최근 12개월 준공 <b>${fmt(d1.length)}건 · ${fmt(sum(d1)/1e4,1)}만㎡</b></span></div>`,"건축HUB 건축인허가 · 실제착공일 기준")+
     card("공사 중","현재",fmt(live.length),"건","",`<div class="split"><span>연면적 <b>${fmt(sum(live)/1e4,1)}만㎡</b></span><span>수도권 <b>${fmt(live.filter(r=>CAP.has(r.sd)).length)}건</b></span><span>비수도권 <b>${fmt(live.filter(r=>!CAP.has(r.sd)).length)}건</b></span></div>`,"착공일이 있고 사용승인일이 없는 건")+
-    card("정보통신업 전력 부하",`${ym(K.latest)}까지 12개월 평균`,fmt(nMW),"MW",`<span class="chg ${nMW>=nP?"up":"down"}">1년 새 ${sgn(nMW-nP)}MW</span>`,`<div class="split"><span>수도권 <b>${fmt(cMW)}MW · ${sgn(cMW-cP)}</b></span><span>비수도권 <b>${fmt(nMW-cMW)}MW · ${sgn(nMW-cMW-(nP-cP))}</b></span></div>`+spark(sp,"var(--accent)"),"한국전력 월 사용량 ÷ 시간 · 최근 5년 추이");
+    card("정보통신업 전기 사용량",`MW 환산 · ${ym(K.latest)}까지 12개월 평균`,fmt(nMW),"MW",`<span class="chg ${nMW>=nP?"up":"down"}">1년 새 ${sgn(nMW-nP)}MW</span>`,`<div class="split"><span>수도권 <b>${fmt(cMW)}MW · ${sgn(cMW-cP)}</b></span><span>비수도권 <b>${fmt(nMW-cMW)}MW · ${sgn(nMW-cMW-(nP-cP))}</b></span></div>`+spark(sp,"var(--accent)"),"한국전력 · 사용량(kWh) ÷ 시간 · 최근 5년 추이");
   const cov=D.permits.coverage, done=Object.values(cov).reduce((s,v)=>s+v[0],0), tot=Object.values(cov).reduce((s,v)=>s+v[1],0);
   $("#sum-note").textContent=D.permits.complete?`인허가 전국 수집 완료 · ${D.permits.updated}`:`인허가는 전국 수집 진행 중(${fmt(done/tot*100,0)}%) — 아래 숫자는 수집된 지역 기준`;
 }
@@ -603,7 +588,7 @@ function renderTable(){
   document.querySelectorAll("th[data-k]").forEach(th=>th.setAttribute("aria-sort",th.dataset.k===sortK?(sortD>0?"ascending":"descending"):"none"));
 }
 
-/* ── 데이터센터 가동 · 흡수 ── */
+/* ── 정보통신업 사용량 · 수요 대비 물량 ── */
 function absorbGroups(){
   const K=D.kepco, ms=K.months, ca=capArr(), na=K.nat, ra=na.map((v,i)=>v-ca[i]), L=ms.length-1, G=[];
   for(let y=+ms[0].slice(0,4)+1;;y++){ const e=ms.indexOf(`${y}-12`); if(e<0) break; if(e<23) continue;
@@ -614,12 +599,13 @@ function absorbGroups(){
 function renderAbsorb(){
   const {G,ca,ra,L}=absorbGroups(), last=G[G.length-1], prev=G[G.length-2];
   const c3=(mw12(ca,L)-mw12(ca,L-36))/3;
-  $("#ict-k").innerHTML=[["수도권 평균 부하",mw12(ca,L),null],["수도권 1년 새",last.c,prev.c],["비수도권 평균 부하",mw12(ra,L),null],["비수도권 1년 새",last.r,prev.r]]
-    .map(([n,v,p])=>`<div><span>${n}</span><b>${p===null?fmt(v):sgn(v)}<small>MW</small></b>${p===null?`<em>최근 12개월</em>`:`<em class="${v>=p?"up":"down"}">전년 ${sgn(p)}MW</em>`}</div>`).join("");
+  $("#ict-ex").innerHTML=`<b>MW 환산</b> = 1년 사용량(kWh) ÷ 8,760시간. "수도권 ${fmt(mw12(ca,L))}MW"는 수도권 정보통신업이 1년 내내 평균 ${fmt(mw12(ca,L))}MW씩 전기를 쓰고 있다는 뜻이고, 이 값이 1년 새 ${fmt(last.c)}MW 늘었다면 그만큼 새 서버 · 냉방 설비가 돌기 시작한 것입니다. 데이터센터 IT 1MW를 가동률 70% · PUE 1.4로 채우면 평균 약 1MW를 쓰므로, 늘어난 MW ≈ 그해 새로 채워진 데이터센터 IT 용량으로 읽으면 됩니다.`;
+  $("#ict-k").innerHTML=[["수도권 사용량",mw12(ca,L),null],["수도권 1년 새 증가",last.c,prev.c],["비수도권 사용량",mw12(ra,L),null],["비수도권 1년 새 증가",last.r,prev.r]]
+    .map(([n,v,p])=>`<div><span>${n}</span><b>${p===null?fmt(v):sgn(v)}<small>MW</small></b>${p===null?`<em>최근 12개월 평균</em>`:`<em class="${v>=p?"up":"down"}">전년 ${sgn(p)}MW</em>`}</div>`).join("");
   const box=$("#ict-chart"), W=Math.max(300,Math.round(box.clientWidth||600)), H=W<520?230:250, m={l:34,r:6,t:18,b:30}, iw=W-m.l-m.r, ih=H-m.t-m.b;
   const vals=G.flatMap(g=>[g.c,g.r]), lo=Math.min(0,Math.floor(Math.min(...vals)/20)*20), {mx,st}=niceMax(Math.max(...vals));
   const Y=v=>m.t+ih-(v-lo)/(mx-lo)*ih, band=iw/G.length, gw=Math.min(56,band*.74), bw=gw/2;
-  let s=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="연도별 정보통신업 부하 증가(MW)">`;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="연도별 정보통신업 전기 사용량 증가(MW 환산)">`;
   for(let v=lo;v<=mx+1e-9;v+=st) s+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${m.l-6}" y="${Y(v)+4}" text-anchor="end">${fmt(v)}</text>`;
   s+=`<text class="ax" x="${m.l-6}" y="${m.t-7}" text-anchor="end">MW</text>`;
   G.forEach((g,i)=>{ const x0=m.l+band*i+(band-gw)/2, last=i===G.length-1;
@@ -633,7 +619,7 @@ function renderAbsorb(){
   const tip=box.querySelector(".tip");
   box.querySelectorAll(".hit").forEach(h=>{ const show=()=>{ const i=+h.dataset.i, g=G[i];
       box.querySelectorAll(".hl").forEach(e=>e.classList.toggle("on",+e.dataset.i===i));
-      tip.innerHTML=`<div class="t">${g.sub?g.sub:g.lb+"년"}<small>전년 대비 · 평균 부하</small></div><div class="r"><i class="sw" style="background:var(--cap)"></i><span>수도권</span><b>${sgn(g.c)}MW · ${fmt(g.cl)}MW</b></div><div class="r"><i class="sw" style="background:var(--reg)"></i><span>비수도권</span><b>${sgn(g.r)}MW · ${fmt(g.rl)}MW</b></div>`;
+      tip.innerHTML=`<div class="t">${g.sub?g.sub:g.lb+"년"}<small>전년 대비 증가 · 사용량</small></div><div class="r"><i class="sw" style="background:var(--cap)"></i><span>수도권</span><b>${sgn(g.c)}MW · ${fmt(g.cl)}MW</b></div><div class="r"><i class="sw" style="background:var(--reg)"></i><span>비수도권</span><b>${sgn(g.r)}MW · ${fmt(g.rl)}MW</b></div>`;
       tip.hidden=false; const r=box.getBoundingClientRect(), k=r.width/W, tw=tip.offsetWidth, cx=(m.l+band*i+band/2)*k; let left=cx+gw/2*k+8; if(left+tw>r.width) left=Math.max(0,cx-gw/2*k-8-tw); tip.style.left=left+"px"; tip.style.top="0px"; };
     h.addEventListener("pointerenter",show); h.addEventListener("pointerdown",show);
     h.addEventListener("pointerleave",()=>{ tip.hidden=true; box.querySelectorAll(".hl").forEach(e=>e.classList.remove("on")); }); });
@@ -647,43 +633,16 @@ function renderSupply(ab){
     return {n,cnt:xs.length,it,pw,un}; });
   const mx=Math.max(ab.c12,ab.c3,...cat.map(c=>c.it+c.pw))*1.05||1, w=v=>(v/mx*100).toFixed(1)+"%";
   const row=(n,sub,bars,val)=>`<div class="sr"><span class="n">${n}${sub?`<small>${sub}</small>`:""}</span><span class="bar">${bars}</span><span class="v">${val}</span></div>`;
-  let h=row("흡수 · 최근 12개월","수도권 평균 부하 증가",`<i style="width:${w(ab.c12)};background:var(--cap)"></i>`,`<span>${sgn(ab.c12)}MW</span>`)+
-        row("흡수 · 최근 3년 평균","연간",`<i style="width:${w(ab.c3)};background:var(--cap);opacity:.55"></i>`,`<span>${sgn(ab.c3)}MW</span><small>연평균</small>`);
+  let h=row("수요 증가 · 최근 1년","수도권 사용량 증가",`<i style="width:${w(ab.c12)};background:var(--cap)"></i>`,`<span>${sgn(ab.c12)}MW</span>`)+
+        row("수요 증가 · 최근 3년","1년 평균",`<i style="width:${w(ab.c3)};background:var(--cap);opacity:.55"></i>`,`<span>${sgn(ab.c3)}MW</span><small>매년</small>`);
   cat.forEach(c=>{ h+=row(`${c.n} ${c.cnt}곳`,c.un?`용량 미확인 ${c.un}곳`:"",`<i style="width:${w(c.it)};background:var(--st-s)"></i><i style="width:${w(c.pw)};background:var(--st-p)"></i>`,
     `<span>IT ${c.it?fmt(c.it,c.it%1?1:0)+"MW":"–"}</span>${c.pw?`<small>+ 수전 · 미표기 ${fmt(c.pw)}MW</small>`:""}`); });
   const live=cat[0], yrs=ab.c3>0?live.it/ab.c3:null;
-  h+=`<div class="say">수도권 정보통신업 부하는 최근 1년 <b>${sgn(ab.c12)}MW</b>, 최근 3년 평균 연 <b>${fmt(ab.c3)}MW</b>씩 늘었습니다. 목록에서 IT 용량이 확인된 공사 중 센터만 <b>${fmt(live.it)}MW</b>로${yrs?`, 최근 3년 속도로 약 <b>${fmt(yrs,1)}년치</b> 흡수 물량입니다`:""}.${D.permits.complete?"":" 인허가 전국 수집이 끝나지 않아 실제 공급 물량은 이보다 많습니다."}</div>`;
+  h+=`<div class="say">수도권 정보통신업 전기 사용량은 최근 1년 <b>${sgn(ab.c12)}MW</b>, 최근 3년은 매년 평균 <b>${fmt(ab.c3)}MW</b>씩 늘었습니다. 지금 짓고 있는 센터 중 IT 용량이 확인된 것만 <b>${fmt(live.it)}MW</b>로${yrs?`, 최근 3년 증가 속도라면 약 <b>${fmt(yrs,1)}년</b> 동안 늘어날 수요에 해당합니다`:""}.${D.permits.complete?"":" 인허가 전국 수집이 끝나지 않아 실제 공급 물량은 이보다 많습니다."}</div>`;
   $("#sup").innerHTML=h;
   $("#sup-note").textContent="수도권 · MW";
-  $("#sup-foot").innerHTML=`<span class="legend" style="margin-bottom:4px"><span><i class="sw" style="background:var(--st-s)"></i>IT 용량 확인분</span><span><i class="sw" style="background:var(--st-p)"></i>수전 · 기준 미표기만 확인</span></span><br>IT를 다 채우고 가동률 70% · PUE 1.4로 돌리면 평균 부하 ≈ IT 용량이라 흡수(MW)와 공급(IT MW)을 같은 눈금으로 비교할 수 있습니다. 수전 용량은 같은 센터의 IT보다 1.5배 안팎 크게 잡히는 경우가 많아(목록 확인분 기준) 따로 표시했습니다.`;
+  $("#sup-foot").innerHTML=`<span class="legend" style="margin-bottom:4px"><span><i class="sw" style="background:var(--st-s)"></i>IT 용량 확인분</span><span><i class="sw" style="background:var(--st-p)"></i>수전 · 기준 미표기만 확인</span></span><br>IT를 다 채우고 가동률 70% · PUE 1.4로 돌리면 사용량(MW 환산) ≈ IT 용량이라, 늘어난 사용량과 짓고 있는 IT 용량을 같은 눈금으로 비교할 수 있습니다. 수전 용량은 같은 센터의 IT보다 1.5배 안팎 크게 잡히는 경우가 많아(목록 확인분 기준) 따로 표시했습니다.`;
 }
-function renderRamps(){
-  const K=D.kepco, DI=K.dist, ms=K.months, f0=ms.indexOf(DI.from), X=ms.slice(f0), n=X.length, R=D.permits.rows;
-  const P=DI.list.map(d=>{ const rs=R.filter(r=>r.kc&&r.kc[0]===d.sd&&r.kc[1]===d.sg), sites=bySite(rs);
-    const ev=[]; rs.forEach(r=>{ if(r.stc) ev.push(["s",r.stc.slice(0,7)]); if(r.apr) ev.push(["d",r.apr.slice(0,7)]); });
-    const firstD=rs.map(r=>r.apr).filter(a=>a&&a.slice(0,7)>=X[0]&&a.slice(0,7)<=X[n-1]).sort()[0];
-    let since=null; if(firstD){ const ia=X.indexOf(firstD.slice(0,7)), mo=X[n-1].slice(5); for(let j=ia-1;j>=0;j--) if(X[j].slice(5)===mo){ since=d.mw[n-1]-d.mw[j]; break; } }
-    const it=sites.reduce((a,x)=>a+(x.cap&&x.cap.it||0),0);
-    return {d,sites,ev,firstD,since,it,out:!rs.length,key:since??d.yoy,act:sites.some(x=>x.stage!=="착공 전")}; });
-  const dc=P.filter(p=>!p.out&&p.act&&!p.d.gap).sort((a,b)=>b.key-a.key).slice(0,8), out=P.filter(p=>p.out&&p.d.yoy>=2).sort((a,b)=>b.d.yoy-a.d.yoy).slice(0,4);
-  const W=300,H=92,m={l:4,r:4,t:8,b:16};
-  const chart=p=>{ const v=p.d.mw, {mx}=niceMax(Math.max(...v)*1.05), x=i=>m.l+i*(W-m.l-m.r)/(n-1), y=t=>m.t+(H-m.t-m.b)*(1-t/mx), c=CAP.has(p.d.sd)?"var(--cap)":"var(--reg)";
-    let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(p.d.sg)} 월평균 부하">`;
-    X.forEach((k,i)=>{ if(k.endsWith("-01")&&(+k.slice(0,4))%2===0) s+=`<text class="ax" x="${x(i)}" y="${H-3}" text-anchor="middle" style="font-size:9px">'${k.slice(2,4)}</text>`; });
-    const seen=new Set(); p.ev.forEach(([t,k])=>{ const i=X.indexOf(k); if(i<0||seen.has(t+k)) return; seen.add(t+k); s+=`<line x1="${x(i)}" x2="${x(i)}" y1="${m.t-4}" y2="${H-m.b}" stroke="${t==="d"?"var(--st-d)":"var(--st-s)"}" stroke-width="${t==="d"?1.6:1.2}"${t==="s"?' stroke-dasharray="3 2"':""}/>`; });
-    const d=v.map((t,i)=>`${i?"L":"M"}${x(i).toFixed(1)},${y(t).toFixed(1)}`).join("");
-    s+=`<path d="${d}L${x(n-1)},${H-m.b}L${x(0)},${H-m.b}Z" fill="${c}" fill-opacity=".08"/><path d="${d}" fill="none" stroke="${c}" stroke-width="1.6" stroke-linejoin="round"/>`;
-    s+=`<line class="base" x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}"/><circle cx="${x(n-1)}" cy="${y(v[n-1])}" r="2.6" fill="${c}"/><text class="lbl" x="${x(n-1)-4}" y="${Math.max(10,y(v[n-1])-6)}" text-anchor="end" style="font-size:10px">${fmt(v[n-1],1)}MW</text>`;
-    return s+`</svg>`; };
-  const nm=x=>{ let t=(x.nm||x.top.dong||"").replace(/\s*(신축공사|신축|공사|용도변경)\s*$/,""); [x.top.sd,"서울","경기","인천",...(x.top.sg||"").split(" ")].forEach(w=>{ if(w&&t.startsWith(w+" ")) t=t.slice(w.length+1); }); return esc(t.slice(0,16)); };
-  const stTxt=x=>x.stage==="준공"?`준공 ${ymS(x.top.apr)}`:x.stage==="공사 중"?`공사 중(착공 ${ymS(x.top.stc)})`:"착공 전";
-  const panel=p=>`<div class="rp${p.out?" out":""}"><div class="h"><b>${esc(p.d.sg)}<small>${esc(p.d.sd)}</small></b><span class="${p.d.yoy>=0?"up":"down"}">${sgn(p.d.yoy,1)}MW<small>1년</small></span></div>
-    <div class="dc">${p.out?"인허가 목록 밖 — 전국 수집이 끝나면 연결됩니다":p.sites.slice(0,3).map(x=>`<i>${nm(x)}</i> ${stTxt(x)}`).join(" · ")+(p.sites.length>3?` 외 ${p.sites.length-3}곳`:"")}</div>
-    ${chart(p)}<div class="ex">${p.since!=null?`첫 준공(${ymS(p.firstD)}) 전 같은 달보다 <b class="${p.since>=0?"up":"down"}">${sgn(p.since,1)}MW</b>`:`지금 ${fmt(p.d.mw[n-1],1)}MW`}${p.it?` · 이 지역 확인 IT ${fmt(p.it,p.it%1?1:0)}MW`:""}</div></div>`;
-  $("#ramps").innerHTML=dc.map(panel).join("")+out.map(panel).join("")||`<div class="empty">표시할 지역이 없습니다.</div>`;
-  $("#ramp-note").textContent=`한국전력 · ${ym(K.latest)}까지 월별 · 같은 달 기준 비교`;
-}
-
 /* ── 지도 ── */
 let mapView="cap", GEO=null;
 function renderMap(){
@@ -750,18 +709,18 @@ function placeLabels(pts,W,H,m){ // 점 옆에 이름이 서로 겹치지 않게
 }
 function renderScatter(){
   const S=D.power.self, K=D.kepco, tot12=K.nat.slice(-12).reduce((a,b)=>a+b,0);
-  const pts=Object.keys(S).map(sd=>({sd,lb:sd==="전남광주"?"전남광주":sd,x:S[sd],y:(K.sido[sd]||[]).slice(-12).reduce((a,b)=>a+(b||0),0)/1e8})).filter(p=>p.y>0);
+  const pts=Object.keys(S).map(sd=>({sd,lb:sd==="전남광주"?"전남광주":sd,x:S[sd],y:(K.sido[sd]||[]).slice(-12).reduce((a,b)=>a+(b||0),0)/K.hours.slice(-12).reduce((a,b)=>a+b,0)/1e3})).filter(p=>p.y>0);
   const box=$("#sc-chart"), W=Math.max(300,Math.round(box.clientWidth||520)), H=W<520?340:330, m={l:42,r:12,t:24,b:36}, iw=W-m.l-m.r, ih=H-m.t-m.b;
-  const xmax=Math.ceil(Math.max(...pts.map(p=>p.x))/50)*50, ylo=Math.log10(.8), yhi=Math.log10(Math.max(...pts.map(p=>p.y))*1.5);
+  const xmax=Math.ceil(Math.max(...pts.map(p=>p.x))/50)*50, ylo=Math.log10(Math.min(...pts.map(p=>p.y))*.7), yhi=Math.log10(Math.max(...pts.map(p=>p.y))*1.5);
   const X=v=>m.l+v/xmax*iw, Y=v=>m.t+ih-(Math.log10(v)-ylo)/(yhi-ylo)*ih;
   pts.forEach(p=>{p.px=X(p.x);p.py=Y(p.y);});
   let s=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="시도별 전력자립도와 정보통신업 전력사용량">`;
   s+=`<rect x="${m.l}" y="${m.t}" width="${X(100)-m.l}" height="${ih}" fill="var(--sf2)" opacity=".7"/><rect x="${X(100)}" y="${m.t}" width="${W-m.r-X(100)}" height="${ih}" fill="var(--sf3)" opacity=".55"/>`;
-  [1,2,5,10,20,50,100,200].filter(v=>Math.log10(v)<=yhi).forEach(v=>{ s+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke-opacity=".6"/><text class="ax" x="${m.l-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`; });
+  [5,10,20,50,100,200,500,1000,2000].filter(v=>Math.log10(v)<=yhi&&Math.log10(v)>=ylo).forEach(v=>{ s+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke-opacity=".6"/><text class="ax" x="${m.l-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`; });
   for(let v=0;v<=xmax;v+=50) s+=`<text class="ax" x="${X(v)}" y="${H-m.b+15}" text-anchor="middle">${v}%</text>`;
   s+=`<line x1="${X(100)}" x2="${X(100)}" y1="${m.t}" y2="${H-m.b}" stroke="var(--fg)" stroke-opacity=".55" stroke-dasharray="3 3"/>`;
   s+=`<text class="ax" x="${X(100)-6}" y="${m.t+13}" text-anchor="end">${W<520?"← 부족":"← 다른 지역 전기를 끌어다 씀"}</text><text class="ax" x="${X(100)+6}" y="${m.t+13}">${W<520?"남음 →":"전기가 남음 →"}</text>`;
-  s+=`<text class="ax" x="${m.l-6}" y="${m.t-9}" text-anchor="end">억kWh</text><text class="ax" x="${m.l+iw/2}" y="${H-4}" text-anchor="middle">전력자립도(발전량 ÷ 판매량)</text>`;
+  s+=`<text class="ax" x="${m.l-6}" y="${m.t-9}" text-anchor="end">MW</text><text class="ax" x="${m.l+iw/2}" y="${H-4}" text-anchor="middle">전력자립도(발전량 ÷ 판매량)</text>`;
   pts.forEach(p=>{ const c=CAP.has(p.sd)?"var(--cap)":"var(--reg)"; s+=`<circle cx="${p.px.toFixed(1)}" cy="${p.py.toFixed(1)}" r="${CAP.has(p.sd)?6:5}" fill="${c}" stroke="var(--surface)" stroke-width="1.5"/>`; });
   placeLabels(pts,W,H,m).forEach(({p,dx,dy,an})=>{ s+=`<text class="lbl${CAP.has(p.sd)?"":" dim"}" x="${(p.px+dx).toFixed(1)}" y="${(p.py+dy).toFixed(1)}" text-anchor="${an}">${p.lb}</text>`; });
   pts.forEach((p,i)=>{ s+=`<circle class="hit" data-i="${i}" cx="${p.px}" cy="${p.py}" r="14"/>`; });
@@ -769,11 +728,11 @@ function renderScatter(){
   box.innerHTML=s;
   const tip=box.querySelector(".tip");
   box.querySelectorAll(".hit").forEach(h=>{ const show=()=>{ const p=pts[+h.dataset.i];
-      tip.innerHTML=`<div class="t">${p.sd}${CAP.has(p.sd)?"<small>수도권</small>":""}</div><div class="r"><i></i><span>전력자립도</span><b>${fmt(p.x,1)}%</b></div><div class="r"><i></i><span>정보통신업 12개월</span><b>${fmt(p.y,1)}억kWh</b></div><div class="r"><i></i><span>전국 대비</span><b>${fmt(p.y*1e8/tot12*100,1)}%</b></div>`;
+      tip.innerHTML=`<div class="t">${p.sd}${CAP.has(p.sd)?"<small>수도권</small>":""}</div><div class="r"><i></i><span>전력자립도</span><b>${fmt(p.x,1)}%</b></div><div class="r"><i></i><span>정보통신업 사용량</span><b>${fmt(p.y)}MW</b></div><div class="r"><i></i><span>전국 대비</span><b>${fmt(p.y*K.hours.slice(-12).reduce((a,b)=>a+b,0)*1e3/tot12*100,1)}%</b></div>`;
       tip.hidden=false; const r=box.getBoundingClientRect(), k=r.width/W, tw=tip.offsetWidth; let left=p.px*k+12; if(left+tw>r.width) left=p.px*k-12-tw; tip.style.left=left+"px"; tip.style.top=Math.max(0,p.py*k-30)+"px"; };
     h.addEventListener("pointerenter",show); h.addEventListener("pointerdown",show); h.addEventListener("pointerleave",()=>{ tip.hidden=true; }); });
   const capU=[...CAP].reduce((a,sd)=>a+(K.sido[sd]||[]).slice(-12).reduce((x,y)=>x+(y||0),0),0);
-  $("#sc-note").textContent=`${D.power.self_year}년 자립도 · 정보통신업 ${ym(K.latest)}까지 12개월`;
+  $("#sc-note").textContent=`${D.power.self_year}년 자립도 · 정보통신업 사용량(MW 환산) ${ym(K.latest)}까지 12개월 평균`;
   $("#sc-foot").textContent=`수도권이 정보통신업 전력 수요의 ${fmt(capU/tot12*100,0)}%를 차지하지만 서울(${fmt(S["서울"],0)}%) · 경기(${fmt(S["경기"],0)}%)는 쓰는 전기 대부분 또는 상당 부분을 다른 지역에서 끌어옵니다. 그래서 수도권 신규 대형 수전은 한전 공급 가능 판정과 전력계통영향평가(데이터센터 통과 기준 수도권 75점 · 비수도권 70점)가 사업의 첫 관문이고, 자립도 100%를 넘는 비수도권은 AI 데이터센터 특별법의 계통영향평가 특례 · 지역별 요금제 논의가 겨냥하는 곳입니다. 인천은 발전소가 많아 자립도는 높지만 수도권 계통 제약을 함께 받습니다. 세로축은 로그 눈금입니다.`;
 }
 function renderCalc(first){
@@ -849,7 +808,7 @@ function init(d){
   $("#pm-note").textContent=`국토교통부 건축HUB · ${D.permits.since?.slice(0,4)}년 이후 대장 · 매일 자동 갱신`;
   const tg=$("#tl-tag"), have=new Set((D.timeline?.items||[]).map(x=>x.tag)); tg.innerHTML=`<option value="all">전체</option>`+TAGS.filter(x=>have.has(x)).map(x=>`<option>${x}</option>`).join("");
   $("#law-note").textContent=`정부 · 국회 발표와 보도로 확인 · 매주 월요일 재확인`; $("#tl-chk").textContent=`마지막 확인 ${D.timeline?.checked||"–"}`;
-  renderKPI(); renderTable(); renderTimeline(); renderNews(); renderCalc(true); renderRamps(); drawCharts();
+  renderKPI(); renderTable(); renderTimeline(); renderNews(); renderCalc(true); drawCharts();
   tg.addEventListener("change",renderTimeline);
   ["#c-mw","#c-pue","#c-ut","#c-u"].forEach(id=>$(id).addEventListener("input",()=>renderCalc(false)));
   document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{ pmMode=b.dataset.m; document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderPM(); }));

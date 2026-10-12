@@ -121,31 +121,7 @@ def hours(m):
     return calendar.monthrange(y, mo)[1] * 24
 
 
-def districts(k, ms, dc_keys, start="2019-01", top=6):
-    """시 · 군 · 구별 월 평균 부하(MW). 데이터센터가 있는 곳 + 최근 1년 부하가 크게 는 곳."""
-    agg = {}
-    for m in ms:
-        for sd, city, kwh, cust in k["ind"][m]["sgg"]:
-            if city in ("XXX", "", "전체"):
-                continue
-            key = (short(sd), city.split()[0])
-            agg.setdefault(key, {})
-            agg[key][m] = agg[key].get(m, 0) + kwh
-    w = [m for m in ms if m >= start]
-    last, prev = ms[-1], ms[-13] if len(ms) >= 13 else None
-    out = {}
-    for key, v in agg.items():
-        ser = [round(v.get(m, 0) / 1000 / hours(m), 2) for m in w]
-        avg12 = sum(ser[-12:]) / 12
-        gap = ser[-1] < avg12 * 0.5 or any(x == 0 for x in ser[-24:])  # 행정구역 개편 등으로 끊긴 곳
-        yoy = round(ser[-1] - (v.get(prev, 0) / 1000 / hours(prev) if prev else 0), 2)
-        out[key] = {"sd": key[0], "sg": key[1], "mw": ser, "yoy": yoy, "gap": gap}
-    pick = [x for x in out if x in dc_keys]
-    grow = sorted((x for x in out if x not in dc_keys and not out[x]["gap"]), key=lambda x: -out[x]["yoy"])[:top]
-    return {"from": w[0] if w else None, "list": [out[x] for x in pick + grow]}
-
-
-def kepco(dc_keys=frozenset()):
+def kepco():
     k = load_json("data/kepco.json", {"ind": {}, "cntr": {}})
     ms = sorted(m for m, v in k["ind"].items() if v.get("sido"))
     sido_series = {}
@@ -202,8 +178,7 @@ def kepco(dc_keys=frozenset()):
             sale_year[m[:4]][short(sd)] += v
     months_in_year = collections.Counter(m[:4] for m in cm)
     return {"months": ms, "nat": [nat[m] for m in ms], "sido": {sd: [s.get(m) for m in ms] for sd, s in sido_series.items()},
-            "price": price, "unit12": unit12, "ict_unit": ict_unit, "dist": districts(k, ms, dc_keys),
-            "hours": [hours(m) for m in ms], "sale_year": {y: dict(v) for y, v in sale_year.items() if months_in_year[y] == 12},
+            "price": price, "unit12": unit12, "ict_unit": ict_unit, "hours": [hours(m) for m in ms], "sale_year": {y: dict(v) for y, v in sale_year.items() if months_in_year[y] == 12},
             "latest": ms[-1] if ms else None, "updated": k.get("updated")}
 
 
@@ -233,7 +208,7 @@ def power(kep):
 
 def main():
     perm = permits()
-    kep = kepco({tuple(r["kc"]) for r in perm["rows"]})
+    kep = kepco()
     out = {"built": dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M"),
            "permits": perm, "kepco": kep, "power": power(kep), "policy": load_json("data/policy.json", {}),
            "timeline": load_json("data/curated/policy_timeline.json", {"items": []})}
