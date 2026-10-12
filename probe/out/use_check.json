@@ -1,0 +1,58 @@
+{
+ "dongs": [
+  {
+   "dong": "금천구 가산동",
+   "n": 0,
+   "items": [],
+   "err": "RuntimeError('{\"OpenAPI_ServiceResponse\": {\"cmmMsgHeader\": {\"errMsg\": \"LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR\", \"returnAuthMsg\": \"\\\\uc77c\\\\uc77c \\\\uc11c\\\\ube44\\\\uc2a4 \\\\uc694\\\\uccad\\\\uc81c\\\\ud55c \\\\ud69f\\\\uc218 \\\\ucd08\\\\uacfc \\\\uc5d0\\\\ub7ec\", \"returnReasonCode\": \"22\"}}}')"
+  },
+  {
+   "dong": "용인 수지구 죽전동",
+   "n": 0,
+   "items": [],
+   "err": "RuntimeError('{\"OpenAPI_ServiceResponse\": {\"cmmMsgHeader\": {\"errMsg\": \"LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR\", \"returnAuthMsg\": \"\\\\uc77c\\\\uc77c \\\\uc11c\\\\ube44\\\\uc2a4 \\\\uc694\\\\uccad\\\\uc81c\\\\ud55c \\\\ud69f\\\\uc218 \\\\ucd08\\\\uacfc \\\\uc5d0\\\\ub7ec\", \"returnReasonCode\": \"22\"}}}')"
+  },
+  {
+   "dong": "부평구 청천동",
+   "n": 0,
+   "items": [],
+   "err": "RuntimeError('{\"OpenAPI_ServiceResponse\": {\"cmmMsgHeader\": {\"errMsg\": \"LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR\", \"returnAuthMsg\": \"\\\\uc77c\\\\uc77c \\\\uc11c\\\\ube44\\\\uc2a4 \\\\uc694\\\\uccad\\\\uc81c\\\\ud55c \\\\ud69f\\\\uc218 \\\\ucd08\\\\uacfc \\\\uc5d0\\\\ub7ec\", \"returnReasonCode\": \"22\"}}}')"
+  },
+  {
+   "dong": "안산 상록구 사동",
+   "n": 0,
+   "items": [],
+   "err": "RuntimeError('{\"OpenAPI_ServiceResponse\": {\"cmmMsgHeader\": {\"errMsg\": \"LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR\", \"returnAuthMsg\": \"\\\\uc77c\\\\uc77c \\\\uc11c\\\\ube44\\\\uc2a4 \\\\uc694\\\\uccad\\\\uc81c\\\\ud55c \\\\ud69f\\\\uc218 \\\\ucd08\\\\uacfc \\\\uc5d0\\\\ub7ec\", \"returnReasonCode\": \"22\"}}}')"
+  },
+  {
+   "dong": "마포구 상암동",
+   "n": 0,
+   "items": [],
+   "err": "RuntimeError('{\"OpenAPI_ServiceResponse\": {\"cmmMsgHeader\": {\"errMsg\": \"LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR\", \"returnAuthMsg\": \"\\\\uc77c\\\\uc77c \\\\uc11c\\\\ube44\\\\uc2a4 \\\\uc694\\\\uccad\\\\uc81c\\\\ud55c \\\\ud69f\\\\uc218 \\\\ucd08\\\\uacfc \\\\uc5d0\\\\ub7ec\", \"returnReasonCode\": \"22\"}}}')"
+  },
+  {
+   "dong": "세종 집현동",
+   "n": 0,
+   "items": [],
+   "err": "RuntimeError('{\"OpenAPI_ServiceResponse\": {\"cmmMsgHeader\": {\"errMsg\": \"LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR\", \"returnAuthMsg\": \"\\\\uc77c\\\\uc77c \\\\uc11c\\\\ube44\\\\uc2a4 \\\\uc694\\\\uccad\\\\uc81c\\\\ud55c \\\\ud69f\\\\uc218 \\\\ucd08\\\\uacfc \\\\uc5d0\\\\ub7ec\", \"returnReasonCode\": \"22\"}}}')"
+  },
+  {
+   "dong": "화성 동탄구 석우동",
+   "n": 0,
+   "items": [],
+   "err": "RuntimeError('{\"OpenAPI_ServiceResponse\": {\"cmmMsgHeader\": {\"errMsg\": \"LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR\", \"returnAuthMsg\": \"\\\\uc77c\\\\uc77c \\\\uc11c\\\\ube44\\\\uc2a4 \\\\uc694\\\\uccad\\\\uc81c\\\\ud55c \\\\ud69f\\\\uc218 \\\\ucd08\\\\uacfc \\\\uc5d0\\\\ub7ec\", \"returnReasonCode\": \"22\"}}}')"
+  },
+  {
+   "dong": "구로구 구로동",
+   "n": 0,
+   "items": [],
+   "err": "RuntimeError('{\"OpenAPI_ServiceResponse\": {\"cmmMsgHeader\": {\"errMsg\": \"LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR\", \"returnAuthMsg\": \"\\\\uc77c\\\\uc77c \\\\uc11c\\\\ube44\\\\uc2a4 \\\\uc694\\\\uccad\\\\uc81c\\\\ud55c \\\\ud69f\\\\uc218 \\\\ucd08\\\\uacfc \\\\uc5d0\\\\ub7ec\", \"returnReasonCode\": \"22\"}}}')"
+  },
+  {
+   "dong": "성남 분당구 삼평동",
+   "n": 0,
+   "items": [],
+   "err": "RuntimeError('{\"OpenAPI_ServiceResponse\": {\"cmmMsgHeader\": {\"errMsg\": \"LIMITED_NUMBER_OF_SERVICE_REQUESTS_EXCEEDS_ERROR\", \"returnAuthMsg\": \"\\\\uc77c\\\\uc77c \\\\uc11c\\\\ube44\\\\uc2a4 \\\\uc694\\\\uccad\\\\uc81c\\\\ud55c \\\\ud69f\\\\uc218 \\\\ucd08\\\\uacfc \\\\uc5d0\\\\ub7ec\", \"returnReasonCode\": \"22\"}}}')"
+  }
+ ]
+}
