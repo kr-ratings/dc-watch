@@ -29,7 +29,7 @@ jobs:
           SIDO="${{ github.event.inputs.sido }}"; EXC="${{ github.event.inputs.exclude }}"; SINCE="${{ github.event.inputs.since }}"
           if [ -f scan.args ] && [ "${{ github.event_name }}" = "push" ]; then . ./scan.args; fi
           python collector/regions.py || true
-          python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit 9000 --workers 2
+          python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit "${LIMIT:-9000}" --workers 2
           python collector/build.py || true
       - name: commit
         if: always()

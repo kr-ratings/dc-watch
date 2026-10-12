@@ -116,6 +116,9 @@ def main():
     a.since = st["since"]
     done = set(st["done"])
     todo = [u for u in units if f"{u[1]}-{u[2]}" not in done]
+    # 지난번에 일시 오류로 못 받은 단위를 먼저 다시 받는다
+    errs = set(st.get("errors", {}))
+    todo.sort(key=lambda u: 0 if f"{u[1]}-{u[2]}" in errs else 1)
     print(f"units {len(units)}, todo {len(todo)}", flush=True)
     found = {h["mgmPmsrgstPk"]: h for h in load_json(OUT, {"items": []}).get("items", [])}
     q = Quota(a.limit)
