@@ -170,7 +170,49 @@ def t_open():
     return res
 
 
+def t_reach():
+    """해외(GitHub) 서버에서 각 원출처에 접속되는지 3회씩 확인."""
+    from urllib.parse import urlencode
+    hubq = urlencode({"serviceKey": K, "_type": "json", "numOfRows": 1, "pageNo": 1, "sigunguCd": "41450", "bjdongCd": "11000"})
+    urls = {
+        "ipinfo": "https://ipinfo.io/json",
+        "dgk_https_api": "https://apis.data.go.kr/1613000/ArchPmsHubService/getApBasisOulnInfo?" + hubq,
+        "dgk_http_api": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApBasisOulnInfo?" + hubq,
+        "dgk_www": "https://www.data.go.kr/",
+        "assembly_https": "https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=1&pSize=1&AGE=22&BILL_NAME=%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0",
+        "assembly_http": "http://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=1&pSize=1&AGE=22&BILL_NAME=%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0",
+        "likms": "https://likms.assembly.go.kr/bill/main.do",
+        "kpx_smp": "https://new.kpx.or.kr/smpMonthly.es?mid=a10606080300&device=pc",
+        "epsis": "https://epsis.kpx.or.kr/epsisnew/selectEkgeGepGbaChart.do?menuId=060104",
+        "gnews": "https://news.google.com/rss/search?q=%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0&hl=ko&gl=KR&ceid=KR:ko",
+        "law": "https://www.law.go.kr/",
+        "hub_go_kr": "https://www.hub.go.kr/portal/main.do",
+        "kepco": "https://bigdata.kepco.co.kr/",
+    }
+    res = {}
+    for nm, u in urls.items():
+        tries = []
+        for _ in range(3):
+            t = time.time()
+            try:
+                r = S.get(u, timeout=(20, 60))
+                tries.append({"st": r.status_code, "s": round(time.time() - t, 1), "head": scrub(r.text[:160])})
+                if r.status_code < 500:
+                    break
+            except Exception as e:
+                tries.append({"err": type(e).__name__, "s": round(time.time() - t, 1)})
+            time.sleep(2)
+        res[nm] = tries
+    return res
+
+
 if __name__ == "__main__":
+    if os.environ.get("PROBE_MODE") == "reach":
+        rec("reach", t_reach)
+        os.makedirs("probe/out", exist_ok=True)
+        with open("probe/out/result.json", "w", encoding="utf-8") as f:
+            f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
+        raise SystemExit(0)
     if K:
         rec("hub_sites", t_sites)
         rec("hub_scan_cost", t_scan_cost)
