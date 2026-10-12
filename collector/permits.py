@@ -36,6 +36,8 @@ def call(q, op, **p):
     if head and head.get("resultCode") not in ("00", None):
         raise RuntimeError(f"{op} {head}")
     if not body and j.get("OpenAPI_ServiceResponse"):
+        if "LIMITED_NUMBER_OF_SERVICE_REQUESTS" in json.dumps(j):
+            raise QuotaExceeded()  # 포털 일일 한도에 걸리면 바로 멈추고 다음 실행에 이어서
         raise RuntimeError(scrub(json.dumps(j)[:300]))
     items = (body.get("items") or {})
     items = items.get("item", []) if isinstance(items, dict) else []

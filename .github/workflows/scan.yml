@@ -8,7 +8,7 @@ on:
   push:
     branches: [scan-run]
   schedule:
-    - cron: "40 15 * * *"   # 매일 00:40 KST(공공데이터포털 일일 한도 초기화 직후)
+    - cron: "40 15 * * *"   # 매일 00:40 KST(공공데이터포털 일일 한도 초기화 직후) · 운영계정이라 하루 최대 6만 건까지
 permissions:
   contents: write
 concurrency: {group: scan, cancel-in-progress: false}
@@ -29,7 +29,7 @@ jobs:
           SIDO="${{ github.event.inputs.sido }}"; EXC="${{ github.event.inputs.exclude }}"; SINCE="${{ github.event.inputs.since }}"
           if [ -f scan.args ] && [ "${{ github.event_name }}" = "push" ]; then . ./scan.args; fi
           python collector/regions.py || true
-          python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit "${LIMIT:-9000}" --workers 2 --only "${ONLY:-}"
+          python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit "${LIMIT:-60000}" --workers "${WORKERS:-3}" --only "${ONLY:-}"
           python collector/build.py || true
       - name: commit
         if: always()
