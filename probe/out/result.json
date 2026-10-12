@@ -1,0 +1,232 @@
+{
+ "keys": {
+  "data_go_kr": true,
+  "kepco": true
+ },
+ "hub_sites": {
+  "ok": false,
+  "err": "ConnectTimeout(MaxRetryError(\"HTTPSConnectionPool(host='apis.data.go.kr', port=443): Max retries exceeded with url: /1613000/ArchPmsHubService/getApBasisOulnInfo?serviceKey=***&_type=json&numOfRows=100&pageNo=1&sigunguCd=41450&bjdongCd=11000&bun=0607&ji=0002 (Caused by ConnectTimeoutError(<HTTPSConnection(host='apis.data.go.kr', port=443) at 0x7f97f9a7b8f0>, 'Connection to apis.data.go.kr timed out. (connect timeout=90)'))\"))",
+  "tb": "^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/requests/sessions.py\", line 784, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/requests/adapters.py\", line 717, in send\n    raise ConnectTimeout(e, request=request)\nrequests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='apis.data.go.kr', port=443): Max retries exceeded with url: /1613000/ArchPmsHubService/getApBasisOulnInfo?serviceKey=***&_type=json&numOfRows=100&pageNo=1&sigunguCd=41450&bjdongCd=11000&bun=0607&ji=0002 (Caused by ConnectTimeoutError(<HTTPSConnection(host='apis.data.go.kr', port=443) at 0x7f97f9a7b8f0>, 'Connection to apis.data.go.kr timed out. (connect timeout=90)'))\n",
+  "sec": 90.32
+ },
+ "hub_scan_cost": {
+  "ok": false,
+  "err": "ConnectTimeout(MaxRetryError(\"HTTPSConnectionPool(host='apis.data.go.kr', port=443): Max retries exceeded with url: /1613000/ArchPmsHubService/getApBasisOulnInfo?serviceKey=***&_type=json&numOfRows=1&pageNo=1&sigunguCd=41450&bjdongCd=11000 (Caused by ConnectTimeoutError(<HTTPSConnection(host='apis.data.go.kr', port=443) at 0x7f97f9a789e0>, 'Connection to apis.data.go.kr timed out. (connect timeout=90)'))\"))",
+  "tb": "^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/requests/sessions.py\", line 784, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/requests/adapters.py\", line 717, in send\n    raise ConnectTimeout(e, request=request)\nrequests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='apis.data.go.kr', port=443): Max retries exceeded with url: /1613000/ArchPmsHubService/getApBasisOulnInfo?serviceKey=***&_type=json&numOfRows=1&pageNo=1&sigunguCd=41450&bjdongCd=11000 (Caused by ConnectTimeoutError(<HTTPSConnection(host='apis.data.go.kr', port=443) at 0x7f97f9a789e0>, 'Connection to apis.data.go.kr timed out. (connect timeout=90)'))\n",
+  "sec": 90.64
+ },
+ "hub_dong_filter": {
+  "ok": false,
+  "err": "ConnectTimeout(MaxRetryError(\"HTTPSConnectionPool(host='apis.data.go.kr', port=443): Max retries exceeded with url: /1613000/ArchPmsHubService/getApBasisOulnInfo?serviceKey=***&_type=json&numOfRows=1000&pageNo=1&sigunguCd=41450&bjdongCd=11000 (Caused by ConnectTimeoutError(<HTTPSConnection(host='apis.data.go.kr', port=443) at 0x7f97f9934500>, 'Connection to apis.data.go.kr timed out. (connect timeout=90)'))\"))",
+  "tb": "^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/requests/sessions.py\", line 784, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/requests/adapters.py\", line 717, in send\n    raise ConnectTimeout(e, request=request)\nrequests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='apis.data.go.kr', port=443): Max retries exceeded with url: /1613000/ArchPmsHubService/getApBasisOulnInfo?serviceKey=***&_type=json&numOfRows=1000&pageNo=1&sigunguCd=41450&bjdongCd=11000 (Caused by ConnectTimeoutError(<HTTPSConnection(host='apis.data.go.kr', port=443) at 0x7f97f9934500>, 'Connection to apis.data.go.kr timed out. (connect timeout=90)'))\n",
+  "sec": 90.49
+ },
+ "kepco": {
+  "ok": true,
+  "res": {
+   "latest": "2026-07",
+   "tries": [
+    {
+     "ym": "2026-09",
+     "status": 404,
+     "n": 0,
+     "err": {
+      "errCd": "404",
+      "errMsg": "NotFound"
+     }
+    },
+    {
+     "ym": "2026-08",
+     "status": 404,
+     "n": 0,
+     "err": {
+      "errCd": "404",
+      "errMsg": "NotFound"
+     }
+    },
+    {
+     "ym": "2026-07",
+     "status": 200,
+     "n": 32,
+     "err": {}
+    }
+   ],
+   "gg_J_sample": [
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "XXX",
+     "biz": "정보통신업",
+     "custCnt": 5299,
+     "powerUsage": 63051086,
+     "bill": 10009801078,
+     "unitCost": 158.8
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "가평군",
+     "biz": "정보통신업",
+     "custCnt": 761,
+     "powerUsage": 1045071,
+     "bill": 177287194,
+     "unitCost": 169.6
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "고양시",
+     "biz": "정보통신업",
+     "custCnt": 3927,
+     "powerUsage": 25698589,
+     "bill": 4303215393,
+     "unitCost": 167.4
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "과천시",
+     "biz": "정보통신업",
+     "custCnt": 411,
+     "powerUsage": 5012928,
+     "bill": 812740852,
+     "unitCost": 162.1
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "광명시",
+     "biz": "정보통신업",
+     "custCnt": 822,
+     "powerUsage": 1466093,
+     "bill": 230617800,
+     "unitCost": 157.3
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "광주시",
+     "biz": "정보통신업",
+     "custCnt": 1769,
+     "powerUsage": 2532478,
+     "bill": 427813663,
+     "unitCost": 168.9
+    }
+   ],
+   "all_J": {
+    "status": 200,
+    "keys": [
+     "raw"
+    ],
+    "tot": [],
+    "n_data": 0
+   },
+   "cust_gg_J": {
+    "status": 200,
+    "data": [
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "가평군",
+      "biz": "정보통신업",
+      "new": 148,
+      "expansion": 0,
+      "cancel": 4
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "고양시 덕양구",
+      "biz": "정보통신업",
+      "new": 27,
+      "expansion": 0,
+      "cancel": 12
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "고양시 일산동구",
+      "biz": "정보통신업",
+      "new": 4903,
+      "expansion": 0,
+      "cancel": 0
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "고양시 일산서구",
+      "biz": "정보통신업",
+      "new": 1032,
+      "expansion": 0,
+      "cancel": 1003
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "과천시",
+      "biz": "정보통신업",
+      "new": 14,
+      "expansion": 0,
+      "cancel": 16
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "광명시",
+      "biz": "정보통신업",
+      "new": 146,
+      "expansion": 1,
+      "cancel": 9
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "광주시",
+      "biz": "정보통신업",
+      "new": 25,
+      "expansion": 0,
+      "cancel": 4
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "구리시",
+      "biz": "정보통신업",
+      "new": 48,
+      "expansion": 0,
+      "cancel": 0
+     }
+    ],
+    "other": {}
+   },
+   "contract_all": {
+    "status": 200,
+    "tot": [],
+    "other": {
+     "raw": "{\"totData\":[{\"year\":\"2026\",\"month\":\"07\",\"metro\":\"전체\",\"city\":\"전체\",\"cntr\":\"주택용\",\"custCnt\":16059383,\"powerUsage\":7906591158,\"bill\":1255531335945,\"unitCost\":158.8,\"cntrPwr\":97103529},{\"year\":\"2026\",\"month\":\"07\",\"metro\":\"전체\",\"city\":\"전체\",\"cntr\":\"일반용\",\"custCnt\":3621722,\"powerUsage\":12597199499,\"bill\":2336857482834,\"unitCost\":185.5,\"cntrPwr\":121800587},{\"year\":\"2026\",\"month\":\"07\",\"metro\":\"전체\",\"city\":\"전체\","
+    }
+   }
+  },
+  "sec": 4.81
+ },
+ "open_sources": {
+  "ok": false,
+  "err": "ConnectTimeout(MaxRetryError(\"HTTPSConnectionPool(host='open.assembly.go.kr', port=443): Max retries exceeded with url: /portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=1&pSize=20&AGE=22&BILL_NAME=%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.assembly.go.kr', port=443) at 0x7f97f9934770>, 'Connection to open.assembly.go.kr timed out. (connect timeout=60)'))\"))",
+  "tb": "^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/requests/sessions.py\", line 784, in send\n    r = adapter.send(request, **kwargs)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/requests/adapters.py\", line 717, in send\n    raise ConnectTimeout(e, request=request)\nrequests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='open.assembly.go.kr', port=443): Max retries exceeded with url: /portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=1&pSize=20&AGE=22&BILL_NAME=%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0 (Caused by ConnectTimeoutError(<HTTPSConnection(host='open.assembly.go.kr', port=443) at 0x7f97f9934770>, 'Connection to open.assembly.go.kr timed out. (connect timeout=60)'))\n",
+  "sec": 62.87
+ }
+}
