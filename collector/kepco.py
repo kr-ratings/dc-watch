@@ -61,7 +61,7 @@ def collect():
     recent = set(ms[-4:])  # 최근 몇 달은 다시 확인
     calls = 0
     for ym in ms:
-        if ym in d["ind"] and ym not in recent:
+        if ym in d["ind"] and d["ind"][ym].get("sido") and ym not in recent:
             continue
         y, m = ym.split("-")
         j = kcall("powerUsage/industryType.do", year=y, month=m, bizCd="J")
@@ -70,7 +70,8 @@ def collect():
             continue
         sido, sgg = {}, []
         for x in j["data"]:
-            if str(x.get("biz", "")).strip() != "정보통신업":
+            bz = str(x.get("biz", "")).replace(" ", "")
+            if not ("정보통신" in bz or ("방송통신" in bz and "정보서비스" in bz)):
                 continue
             mt, kwh, cust = metro_norm(x.get("metro")), int(x.get("powerUsage") or 0), int(x.get("custCnt") or 0)
             sido[mt] = sido.get(mt, 0) + kwh

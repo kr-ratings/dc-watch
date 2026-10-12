@@ -4,7 +4,8 @@ from common import get, load_json, save_json
 
 OUT = "data/policy.json"
 BILL_KW = ["데이터센터", "분산에너지", "전력계통", "전력망"]
-NEWS_Q = ["데이터센터 PF", "데이터센터 착공", "데이터센터 인수 OR 매각", "데이터센터 건축허가 OR 인허가", "데이터센터 전력 OR 수전", "AI 데이터센터 투자"]
+NEWS_Q = ["데이터센터 PF", "데이터센터 착공", "데이터센터 준공", "데이터센터 인수 OR 매각", "데이터센터 건축허가 OR 인허가", "데이터센터 전력계통영향평가 OR 수전", "데이터센터 임차 OR 코로케이션"]
+FOREIGN = re.compile(r"美|日|中|英|獨|미국|일본|중국|유럽|인도|베트남|말레이|싱가포르|대만|호주|태국|인니|인도네시아|사우디|UAE|텍사스|버지니아")
 
 
 def bills():
@@ -35,7 +36,7 @@ def news():
                 continue
             base = re.sub(r"\s+-\s+[^-]+$", "", title)
             key = re.sub(r"\W", "", base)[:40]
-            if key in seen or "데이터센터" not in base and "데이터 센터" not in base:
+            if key in seen or ("데이터센터" not in base and "데이터 센터" not in base) or FOREIGN.search(base):
                 continue
             seen.add(key)
             items.append({"t": base, "src": src, "u": link, "d": pub.astimezone(dt.timezone(dt.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M"), "q": q})
