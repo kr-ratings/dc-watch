@@ -29,8 +29,18 @@ jobs:
           SIDO="${{ github.event.inputs.sido }}"; EXC="${{ github.event.inputs.exclude }}"; SINCE="${{ github.event.inputs.since }}"
           if [ -f scan.args ] && [ "${{ github.event_name }}" = "push" ]; then . ./scan.args; fi
           python collector/regions.py || true
-          python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit "${LIMIT:-60000}" --workers "${WORKERS:-3}" --only "${ONLY:-}"
-          python collector/build.py || true
+          # 5천 건씩 나눠 돌고 그때마다 저장 · 커밋해 진척이 저장소에 바로 보이게 한다
+          git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
+          TOTAL="${LIMIT:-60000}"; CH=5000; N=$(( (TOTAL + CH - 1) / CH ))
+          for i in $(seq 1 $N); do
+            python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit $CH --workers "${WORKERS:-3}" --only "${ONLY:-}" || true
+            python collector/build.py || true
+            git add data/permits.json data/state data/bjd_units.json site/data/dash.json || true
+            git diff --cached --quiet || git commit -q -m "인허가 수집 $(date -u +%F) ($i/$N)"
+            git pull --rebase -X theirs -q origin main || true
+            git push -q origin HEAD:main || true
+            python -c "import json,sys;s=json.load(open('data/state/permit_scan.json'));sys.exit(0 if s.get('complete') or s.get('calls_last_run',0)<$CH else 1)" && break
+          done
       - name: commit
         if: always()
         run: |
