@@ -68,16 +68,17 @@ def collect():
         calls += 1
         if not j or not j.get("data"):
             continue
-        sido, sgg = {}, []
+        sido, sgg, won = {}, [], 0
         for x in j["data"]:
             bz = str(x.get("biz", "")).replace(" ", "")
             if not ("정보통신" in bz or ("방송통신" in bz and "정보서비스" in bz)):
                 continue
             mt, kwh, cust = metro_norm(x.get("metro")), int(x.get("powerUsage") or 0), int(x.get("custCnt") or 0)
             sido[mt] = sido.get(mt, 0) + kwh
+            won += int(float(x.get("bill") or 0))  # 응답에 요금이 있으면 정보통신업 실제 평균 단가를 계산
             sgg.append([mt, str(x.get("city", "")).strip(), kwh, cust])
         nat = {str(x.get("biz", "")).strip(): int(x.get("powerUsage") or 0) for x in (j.get("totData") or [])}
-        d["ind"][ym] = {"sido": sido, "sgg": sgg, "nat": nat}
+        d["ind"][ym] = {"sido": sido, "sgg": sgg, "nat": nat, "won": won}
         c = kcall("powerUsage/contractType.do", year=y, month=m)
         calls += 1
         if c:

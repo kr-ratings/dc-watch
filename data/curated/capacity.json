@@ -1,0 +1,338 @@
+{
+ "41360-25923-0230-0001": {
+  "mw": 100,
+  "it": null,
+  "basis": "미표기",
+  "txt": "100MW급(목표)",
+  "note": "우리금융 남양주 통합 IT센터 '최대 100MW급 전력 수급 목표'. 수전·IT 표기 없음",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "5대 시중은행 자체 IDC 건립 '박차'…전력 및 부지 확보 변수",
+    "u": "https://www.ddaily.co.kr/page/view/2026062310290287769",
+    "d": "2026-06-23",
+    "o": "디지털데일리"
+   }
+  ],
+  "addr": "경기도 남양주시 진건읍 진관리 230-1번지",
+  "checked": "2026-10-12"
+ },
+ "41196-10700-0048-0059": {
+  "mw": 9.8,
+  "it": 7,
+  "basis": "수전",
+  "note": "총 수전 9.8MW, IT Load 7MW (동양 부천삼정 AI 허브센터)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "유진그룹 동양, AI 데이터센터 첫 삽…\"3년 내 자산가치 1조 목표\"",
+    "u": "https://view.asiae.co.kr/article/2026052107570323067",
+    "d": "2026-05-21",
+    "o": "아시아경제"
+   }
+  ],
+  "addr": "경기도 부천시 오정구 삼정동 48-59번지",
+  "checked": "2026-10-12"
+ },
+ "41450-11000-0595-0000": {
+  "mw": 10,
+  "it": null,
+  "basis": "미표기",
+  "txt": "10MW 이하",
+  "note": "물류센터→엣지 데이터센터 전환, '10MW 이하 규모'로 보도(상한값)",
+  "conf": "low",
+  "src": [
+   {
+    "t": "하남 풍산동 물류센터, 데이터센터로 용도 변경 추진",
+    "u": "https://dealsite.co.kr/articles/157838",
+    "d": "2026-03-09",
+    "o": "딜사이트"
+   }
+  ],
+  "addr": "경기도 하남시 풍산동 595번지",
+  "checked": "2026-10-12"
+ },
+ "41173-10200-0869-0000": {
+  "mw": 90,
+  "it": 24,
+  "basis": "수전",
+  "note": "LG유플러스 평촌2센터. 수전 90MW(준공 시 전기공급계약 45MW), IT 24MW(1단계 12MW)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "[단독] 전력 규제에 발목…LG유플 데이터센터 10개월째 '반쪽 가동'",
+    "u": "https://www.hankyung.com/article/2025070492741",
+    "d": "2025-07-04",
+    "o": "한국경제"
+   },
+   {
+    "t": "Korea Data Center MarketBeat 2H 2023",
+    "u": "https://assets.cushmanwakefield.com/-/media/cw/marketbeat-pdfs/2023/q4/apac-and-gc/korea-data-center-2h-2023_eng.pdf",
+    "d": "",
+    "o": "Cushman & Wakefield"
+   }
+  ],
+  "addr": "경기도 안양시 동안구 관양동 869번지",
+  "checked": "2026-10-12"
+ },
+ "11560-12700-0077-0080": {
+  "mw": null,
+  "it": 26,
+  "basis": "IT",
+  "note": "액티스(에포크) 양평 데이터센터. IT 26MW(1단계 13MW), 수전 미확인",
+  "conf": "high",
+  "src": [
+   {
+    "t": "Korea Data Center MarketBeat 1H 2024",
+    "u": "https://assets.cushmanwakefield.com/-/media/cw/marketbeat-pdfs/2024/q2/apac-and-gc/korea-data-center-1h-2024-dc_eng.pdf?rev=48feda4df87c491b8bde011a76ab7324",
+    "d": "",
+    "o": "Cushman & Wakefield"
+   }
+  ],
+  "addr": "서울특별시 영등포구 양평동3가 77-80번지",
+  "checked": "2026-10-12"
+ },
+ "41150-11300-0805-0000": {
+  "mw": 100,
+  "it": null,
+  "basis": "수전",
+  "note": "케이스퀘어데이터센터 의정부. 154kV 2회선 총 100MW 전기사용계약 완료, IT 미공개",
+  "conf": "high",
+  "src": [
+   {
+    "t": "코람코, 의정부 100MW 데이터센터 개발...전력·인허가 확보 완료",
+    "u": "https://www.hankyung.com/article/202601287114r",
+    "d": "2026-01-28",
+    "o": "한국경제"
+   }
+  ],
+  "addr": "경기도 의정부시 산곡동 805번지",
+  "checked": "2026-10-12"
+ },
+ "41273-10700-0624-0003": {
+  "mw": 40,
+  "it": 25,
+  "basis": "수전",
+  "note": "이지스 안산 초지동 하이퍼스케일. 수전 40MW, IT 25MW(C&W)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "이지스자산운용, '하이퍼스케일' 안산 초지동 데이터센터 개발 착공",
+    "u": "https://www.smarttoday.co.kr/ko-kr/articles/74965",
+    "d": "2025-03-12",
+    "o": "스마트투데이"
+   },
+   {
+    "t": "Korea Data Center MarketBeat 1H 2025",
+    "u": "https://assets.cushmanwakefield.com/-/media/cw/marketbeat-pdfs/2025/q2/apac-and-gc/korea---data-center-1h-2025-eng_fin_.pdf?rev=0cb5fa8d986747a0b36fce070e4ffc2d",
+    "d": "",
+    "o": "Cushman & Wakefield"
+   }
+  ],
+  "addr": "경기도 안산시 단원구 초지동 624-3번지",
+  "checked": "2026-10-12"
+ },
+ "11560-10300-0094-0144": {
+  "mw": 10,
+  "it": 6.5,
+  "basis": "수전",
+  "note": "여의도 엣지 데이터센터(엣지코어PFV). 수전 10MW, IT 6.5MW 선임대 완료",
+  "conf": "high",
+  "src": [
+   {
+    "t": "도심 속 새로운 인프라, 엣지 데이터센터의 시작",
+    "u": "https://brunch.co.kr/@mastern/145",
+    "d": "2025-10-17",
+    "o": "마스턴투자운용"
+   }
+  ],
+  "addr": "서울특별시 영등포구 영등포동2가 94-144번지",
+  "checked": "2026-10-12"
+ },
+ "41285-10900-0186-0004": {
+  "mw": 80,
+  "it": null,
+  "basis": "미표기",
+  "note": "'일산 사리현동(80MW)' 언급(금융주선 이력). 기준 미표기",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "코람코운용, IDC 2본부 신설…'데이터센터 주도권 강화'",
+    "u": "https://www.newsis.com/view/NISX20260223_0003521952",
+    "d": "2026-02-23",
+    "o": "뉴시스"
+   }
+  ],
+  "addr": "경기도 고양시 일산동구 사리현동 186-4번지",
+  "checked": "2026-10-12"
+ },
+ "41196-10800-0222-0013": {
+  "mw": 99,
+  "it": null,
+  "basis": "미표기",
+  "note": "'부천 내동(99MW)' 언급(금융주선 이력). 기준 미표기",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "코람코운용, IDC 2본부 신설…'데이터센터 주도권 강화'",
+    "u": "https://www.newsis.com/view/NISX20260223_0003521952",
+    "d": "2026-02-23",
+    "o": "뉴시스"
+   }
+  ],
+  "addr": "경기도 부천시 오정구 내동 222-13번지",
+  "checked": "2026-10-12"
+ },
+ "41287-10500-0309-0056": {
+  "mw": 20,
+  "it": 12,
+  "basis": "미표기",
+  "txt": "IT 12 · 20MW(기준 미표기)",
+  "note": "일산 데이터센터(마그나PFV, GS건설). IT 12MW(C&W), '20MW'는 기준 미표기 보도",
+  "conf": "high",
+  "src": [
+   {
+    "t": "Korea Data Center MarketBeat 1H 2025",
+    "u": "https://assets.cushmanwakefield.com/-/media/cw/marketbeat-pdfs/2025/q2/apac-and-gc/korea---data-center-1h-2025-eng_fin_.pdf?rev=0cb5fa8d986747a0b36fce070e4ffc2d",
+    "d": "",
+    "o": "Cushman & Wakefield"
+   }
+  ],
+  "addr": "경기도 고양시 일산서구 덕이동 309-56번지",
+  "checked": "2026-10-12"
+ },
+ "11560-12100-0031-0000": {
+  "mw": 80,
+  "it": null,
+  "basis": "미표기",
+  "note": "'문래(80MW)' 언급(금융주선 이력). 기준 미표기",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "코람코운용, IDC 2본부 신설…'데이터센터 주도권 강화'",
+    "u": "https://www.newsis.com/view/NISX20260223_0003521952",
+    "d": "2026-02-23",
+    "o": "뉴시스"
+   }
+  ],
+  "addr": "서울특별시 영등포구 문래동3가 31번지",
+  "checked": "2026-10-12"
+ },
+ "41281-11000-0690-0000": {
+  "mw": 80,
+  "it": 54,
+  "basis": "수전",
+  "note": "이지스 고양 삼송 데이터센터. 수전 80MW, IT 54MW(C&W), 운영 LG CNS",
+  "conf": "high",
+  "src": [
+   {
+    "t": "이지스자산운용, 수도권 서북부 최대 데이터센터 준공",
+    "u": "https://marketin.edaily.co.kr/News/Read?newsId=04152486645514848",
+    "d": "2026-07-15",
+    "o": "이데일리"
+   },
+   {
+    "t": "Korea Data Center MarketBeat 1H 2025",
+    "u": "https://assets.cushmanwakefield.com/-/media/cw/marketbeat-pdfs/2025/q2/apac-and-gc/korea---data-center-1h-2025-eng_fin_.pdf?rev=0cb5fa8d986747a0b36fce070e4ffc2d",
+    "d": "",
+    "o": "Cushman & Wakefield"
+   }
+  ],
+  "addr": "경기도 고양시 덕양구 오금동 690번지",
+  "checked": "2026-10-12"
+ },
+ "41196-10700-0013-0015": {
+  "mw": null,
+  "it": 48,
+  "basis": "IT",
+  "note": "퍼시픽 PEACH 데이터센터. IT 48MW(1단계 6MW), 임차·운영 KT클라우드. 수전 미확인",
+  "conf": "high",
+  "src": [
+   {
+    "t": "Korea Data Center MarketBeat 1H 2024",
+    "u": "https://assets.cushmanwakefield.com/-/media/cw/marketbeat-pdfs/2024/q2/apac-and-gc/korea-data-center-1h-2024-dc_eng.pdf?rev=48feda4df87c491b8bde011a76ab7324",
+    "d": "",
+    "o": "Cushman & Wakefield"
+   }
+  ],
+  "addr": "경기도 부천시 오정구 삼정동 13-15번지",
+  "checked": "2026-10-12"
+ },
+ "41450-11000-0607-0002": {
+  "mw": 40,
+  "it": 25.44,
+  "basis": "수전",
+  "note": "하남 데이터센터(이지스 개발, 맥쿼리인프라 인수). 수전 40MW, 목표 IT 25.44MW, 임차 카카오",
+  "conf": "high",
+  "src": [
+   {
+    "t": "맥쿼리인프라펀드, 40MW 하이퍼스케일급 하남데이터센터 매매 계약 체결",
+    "u": "https://www.macquarie.com/kr/ko/news/2024/macquarie-asset-management-acquires-hanam-data-centre-in-korea.html",
+    "d": "2024-07-30",
+    "o": "맥쿼리 보도자료"
+   }
+  ],
+  "addr": "경기도 하남시 풍산동 607-2번지",
+  "checked": "2026-10-12"
+ },
+ "11560-11400-0093-0001": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "서울특별시 영등포구 당산동4가 93-1번지",
+  "checked": "2026-10-12"
+ },
+ "41150-10500-0522-0008": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 의정부시 용현동 522-8번지",
+  "checked": "2026-10-12"
+ },
+ "11530-10800-0094-0011": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "서울특별시 구로구 오류동 94-11번지",
+  "checked": "2026-10-12"
+ },
+ "41135-11400-0192-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 성남시 분당구 구미동 192-2번지",
+  "checked": "2026-10-12"
+ },
+ "11170-11700-0001-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "서울특별시 용산구 원효로3가 1-2번지",
+  "checked": "2026-10-12"
+ },
+ "41450-11000-0610-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 하남시 풍산동 610번지",
+  "checked": "2026-10-12"
+ }
+}
