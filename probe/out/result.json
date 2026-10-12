@@ -1,0 +1,16 @@
+{
+ "keys": {
+  "data_go_kr": true,
+  "kepco": true
+ },
+ "regcode": {
+  "ok": true,
+  "res": {
+   "StanReginCd": {
+    "status": 200,
+    "head": "{\"StanReginCd\":[{\"head\":[{\"totalCount\":213},{\"numOfRows\":\"5\",\"pageNo\":\"1\",\"type\":\"JSON\"},{\"RESULT\":{\"resultCode\":\"INFO-0\",\"resultMsg\":\"NOMAL SERVICE\"}}]},{\"row\":[{\"region_cd\":\"4159000000\",\"sido_cd\":\"41\",\"sgg_cd\":\"590\",\"umd_cd\":\"000\",\"ri_cd\":\"00\",\"locatjumin_cd\":\"4159000000\",\"locatjijuk_cd\":\"4159000000\",\"locatadd_nm\":\"경기도 화성시\",\"locat_order\":1,\"locat_rm\":\"\",\"locathigh_cd\":\"4100000000\",\"locallow_nm\":\"화성시\",\"adpt_de\":\"20010321\"},{\"region_cd\":\"4159711500\",\"sido_cd\":\"41\",\"sgg_cd\":\"597\",\"umd_cd\":\"115\",\"ri_cd\":\"00\",\"locatjumin_cd\":\"4159711500\",\"locatjijuk_cd\":\"4159711500\",\"locatadd_nm\":\"경기도 화성시 동탄구 여울동\",\"locat_order\":15,\"locat_rm\":\"\",\"locathigh_cd\":\"4159700000\",\"locallow_nm\":\"여울동\",\"adpt_de\":\"20260301"
+   }
+  },
+  "sec": 0.84
+ }
+}
