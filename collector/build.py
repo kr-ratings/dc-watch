@@ -40,6 +40,8 @@ def cap_from_titles(news):
 
 def capacity(h, news, cur):
     c = cur.get(f"{h.get('sigunguCd')}-{h.get('bjdongCd')}-{h.get('bun')}-{h.get('ji')}")
+    if c and c.get("noauto") and not (c.get("mw") or c.get("it")):   # 붙은 기사의 숫자가 다른 사업 것으로 확인된 대지
+        return {"none": True, "note": c.get("note") or "공개 자료에서 확인되지 않음", "checked": c.get("checked")}
     if c and (c.get("mw") or c.get("it")):
         return {k: c.get(k) for k in ("mw", "it", "basis", "txt", "note", "conf", "checked")} | {"src": (c.get("src") or [])[:2]}
     auto = cap_from_titles(news)

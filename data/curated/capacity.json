@@ -334,5 +334,1567 @@
   "src": [],
   "addr": "경기도 하남시 풍산동 610번지",
   "checked": "2026-10-12"
+ },
+ "36110-11800-0000-0000": {
+  "mw": 270,
+  "it": null,
+  "basis": "수전",
+  "txt": "최대 270MW",
+  "note": "네이버 각 세종: 수전 용량 최대 270MW 설계(각 춘천의 6.75배, 6차 증설 완료 기준), IT 용량 미공개",
+  "conf": "high",
+  "src": [
+   {
+    "t": "네이버 두 번째 IDC '각 세종', \"초대규모 AI , 클라우드 등 미래 산업 이끄는 글로벌 허브 될 것\"",
+    "u": "https://navercorp.com/media/pressReleasesDetail?seq=2255",
+    "d": "2023-11-08",
+    "o": "네이버"
+   },
+   {
+    "t": "네이버, 초대규모 AI 위한 하이퍼스케일 데이터센터 '각 세종' 개소",
+    "u": "https://www.smarttoday.co.kr/ko-kr/articles/37441",
+    "d": "2023-11-06",
+    "o": "스마트투데이"
+   },
+   {
+    "t": "네이버 '각 세종' 데이터센터…'AI·로봇·자율주행' 기술력 총집결",
+    "u": "https://news.mtn.co.kr/news-detail/2023110810434642270",
+    "d": "2023-11-08",
+    "o": "MTN 머니투데이방송"
+   }
+  ],
+  "addr": "세종특별자치시  집현동 블록",
+  "checked": "2026-10-13"
+ },
+ "44270-39032-0379-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (㈜아이디씨당진제일차 당진 송산2산단 동곡리 379 데이터센터; 154kV 전력망 확보만 언급, 2026-09 이에프디 100MW 건은 별도 부지)",
+  "conf": "none",
+  "src": [],
+  "addr": "충청남도 당진시 송산면 동곡리 379번지",
+  "checked": "2026-10-13"
+ },
+ "41273-10400-0670-0004": {
+  "mw": 80,
+  "it": null,
+  "basis": "수전",
+  "txt": null,
+  "note": "캄스퀘어안산데이터센터PFV(현대건설 시공) 안산 성곡동 670-4: 2023년 1월 한전과 80MW 전기사용계약(상용 80MW 중시화변전소+예비 80MW 성곡변전소), 부지 매각 당시 보도",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "[fn마켓워치]안산 IDC 부지 매물로",
+    "u": "https://www.fnnews.com/news/202302211502182296",
+    "d": "2023-02-21",
+    "o": "파이낸셜뉴스"
+   },
+   {
+    "t": "[IB토마토]안산 데이터센터, PF 완료…현대건설·공제회 협력 빛났다",
+    "u": "https://newstomato.com/ReadNews.aspx?no=1249683",
+    "d": "2025-01-06",
+    "o": "뉴스토마토"
+   }
+  ],
+  "addr": "경기도 안산시 단원구 성곡동 670-4번지",
+  "checked": "2026-10-13"
+ },
+ "48240-34023-1121-0000": {
+  "mw": 80,
+  "it": null,
+  "basis": "수전",
+  "txt": "1단계 80MW",
+  "note": "태왕디엔디(태왕이앤씨) 사천 스카이시티 AI데이터센터: 1단계 80MW 전력계통영향평가 통과·한전 전기사용계약 체결, 인근 120MW 추가로 총 200MW 클러스터 계획",
+  "conf": "high",
+  "src": [
+   {
+    "t": "반도체 훈풍 탄 건설사…주택사업 부진에 'AI데이터센터' 시장 진출",
+    "u": "https://www.imaeil.com/page/view/2026063014322374614",
+    "d": "2026-06-30",
+    "o": "매일신문"
+   },
+   {
+    "t": "태왕, 사천 AI데이터센터 청사진 공개…‘피지컬 AI’ 거점 조성 속도",
+    "u": "https://www.kukinews.com/article/view/kuk202607070169",
+    "d": "2026-07-07",
+    "o": "쿠키뉴스"
+   },
+   {
+    "t": "태왕디엔디, '사천 스카이시티 AI 데이터센터 서밋' 개최",
+    "u": "https://www.mt.co.kr/article/2026070914352722439",
+    "d": "2026-07-09",
+    "o": "머니투데이"
+   }
+  ],
+  "addr": "경상남도 사천시 축동면 사다리 1121번지",
+  "checked": "2026-10-13"
+ },
+ "28177-10400-0765-0018": {
+  "mw": 80,
+  "it": null,
+  "basis": "미표기",
+  "txt": "최대 80MW",
+  "note": "산은인프라자산운용(KDB인프라) 도화 래플스 데이터센터: 최대 80MW 규모(수전/IT 구분 없음)",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "\"학교 14개·아파트 5000세대 있는데\"…주민들 '반대' 현장 가보니[AIDC 시대의 공존법]②",
+    "u": "https://view.asiae.co.kr/article/2026081907142398428",
+    "d": "2026-08-20",
+    "o": "아시아경제"
+   }
+  ],
+  "addr": "인천광역시 미추홀구 도화동 765-18번지",
+  "checked": "2026-10-13"
+ },
+ "41461-25626-0448-0005": {
+  "mw": 80,
+  "it": 56,
+  "basis": "미표기",
+  "txt": "80MW급",
+  "note": "DC Connects·Wide Creek AMC(워버그핀커스 투자) 용인 Soul01 하이퍼스케일(약 5.8만㎡, 2025-09 착공): 80MW급, IT 56MW(2개 동, DCD가 DC Connects 웹사이트 인용; DCD 부제엔 58MW로 상충)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "Warburg Pincus Partners with DC Connects and Wide Creek AMC to Acquire Land to Develop 80MW Hyperscale Data Centre in South Korea",
+    "u": "https://warburgpincus.com/?p=23787",
+    "d": "2025-09-25",
+    "o": "Warburg Pincus"
+   },
+   {
+    "t": "Warburg Pincus and partners break ground on 80MW data center in South Korea",
+    "u": "https://www.datacenterdynamics.com/en/news/warburg-pincus-and-partners-break-ground-on-80mw-data-center-in-south-korea/",
+    "d": "2025-09-25",
+    "o": "DatacenterDynamics"
+   },
+   {
+    "t": "Warburg Pincus, DC Connects, and Wide Creek AMC acquire land for 80MW Hyperscale DC in South Korea",
+    "u": "https://w.media/warburg-pincus-dc-connects-and-wide-creek-amc-acquire-land-for-80mw-hyperscale-dc-in-south-korea/",
+    "d": "2025-09-25",
+    "o": "W.Media"
+   }
+  ],
+  "addr": "경기도 용인시 처인구 이동읍 덕성리 448-5번지",
+  "checked": "2026-10-13"
+ },
+ "41285-11200-0016-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (고양 문봉동 데이터센터개발사업)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 고양시 일산동구 문봉동 16-2번지",
+  "checked": "2026-10-13"
+ },
+ "11530-11200-0236-0007": {
+  "mw": 52,
+  "it": null,
+  "basis": "미표기",
+  "txt": null,
+  "note": "퍼시픽자산운용(퍼시픽디구로 제62호)·CPPIB 구로 항동 AI 데이터센터(현대건설 시공): 52MW 규모(수전/IT 구분 없음)",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "구로 항동 데이터센터, 현대건설 책임준공 '6000억 PF' 조달",
+    "u": "https://www.bloter.net/news/articleView.html?idxno=650439",
+    "d": "2025-12-26",
+    "o": "블로터"
+   }
+  ],
+  "addr": "서울특별시 구로구 항동 236-7번지",
+  "checked": "2026-10-13"
+ },
+ "48123-12800-0027-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (창원 IDC 클러스터; 2022년 창원시·LG CNS·안다자산운용 협약 '창원 IDC'(연면적 약 4.4만㎡)로 추정)",
+  "conf": "none",
+  "src": [],
+  "addr": "경상남도 창원시 성산구 성주동 27번지",
+  "checked": "2026-10-13"
+ },
+ "41820-25024-0036-0000": {
+  "mw": 120,
+  "it": null,
+  "basis": "미표기",
+  "txt": "단지 전체 120MW",
+  "note": "마스턴투자운용·엔필드 가평 하색리 데이터센터: 단지 전체 120MW(40MW 시설 3기), 이 허가(A-2동)의 개별 용량은 미공개",
+  "conf": "low",
+  "src": [
+   {
+    "t": "가평에 120㎿ 규모 초대형 데이터센터 건립",
+    "u": "https://www.twig24.com/news/local_govern/news_local/2023/08/07/20230807500126",
+    "d": "2023-08-07",
+    "o": "twig24"
+   },
+   {
+    "t": "가평 초대형 데이터센터 내년 초 착공…올초 관리계획 고시",
+    "u": "https://www.fnnews.com/news/202505060805112387",
+    "d": "2025-05-06",
+    "o": "파이낸셜뉴스"
+   }
+  ],
+  "addr": "경기도 가평군 가평읍 하색리 산36번지",
+  "checked": "2026-10-13"
+ },
+ "28275-10900-0381-0073": {
+  "mw": 50,
+  "it": null,
+  "basis": "수전",
+  "txt": null,
+  "note": "이도테라원 청라IDC PFV 원창동(청라) AI 데이터센터(kt cloud DBO·현대엔지니어링 시공, 2030 1Q 준공 목표): 수전용량 50MW",
+  "conf": "high",
+  "src": [
+   {
+    "t": "KT클라우드, 50MW 청라 AI데이터센터 구축…2030년 1분기 준공",
+    "u": "https://news.mtn.co.kr/news-detail/2026100709273543444",
+    "d": "2026-10-07",
+    "o": "MTN 머니투데이방송"
+   },
+   {
+    "t": "현대엔지니어링, 인천 원창동 50MW 데이터센터 수주…11월 착공",
+    "u": "https://newstomato.com/ReadNews.aspx?no=1315895",
+    "d": "2026-10-07",
+    "o": "뉴스토마토"
+   },
+   {
+    "t": "현대엔지니어링, 인천 원창동 데이터센터 수주...8700억 규모",
+    "u": "https://www.fnnews.com/news/202610070938582481",
+    "d": "2026-10-07",
+    "o": "파이낸셜뉴스"
+   },
+   {
+    "t": "현대엔지니어링, 8천700억 규모 인천 원창동 데이터센터 수주",
+    "u": "https://biz.sbs.co.kr/amp/article/20000338714",
+    "d": "2026-10-07",
+    "o": "SBS Biz"
+   }
+  ],
+  "addr": "인천광역시 서해구 원창동 381-73번지",
+  "checked": "2026-10-13"
+ },
+ "11545-10100-0345-0048": {
+  "mw": 40,
+  "it": 26,
+  "basis": "수전",
+  "txt": null,
+  "note": "가산아이윌 = 가산 AI 데이터센터(퍼시픽자산운용 발주·kt cloud 운영·DL건설 시공, 연면적 36,501㎡ 일치): 총 수전 40MW, IT 26MW",
+  "conf": "high",
+  "src": [
+   {
+    "t": "DL건설, '가산 AI 데이터센터' 준공…디지털 인프라 시공 역량 입증",
+    "u": "https://www.smarttoday.co.kr/ko-kr/articles/96519",
+    "d": "2025-11-18",
+    "o": "스마트투데이"
+   }
+  ],
+  "addr": "서울특별시 금천구 가산동 345-48번지",
+  "checked": "2026-10-13"
+ },
+ "43750-33031-0744-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "충청북도 진천군 문백면 태락리 744번지",
+  "checked": "2026-10-13"
+ },
+ "12790-41028-1154-0000": {
+  "mw": 40,
+  "it": null,
+  "basis": "수전",
+  "txt": null,
+  "note": "국가 AI컴퓨팅센터(코아크/KOACC, 삼성SDS 컨소시엄): 한전 40MW 전력공급 확정(수전 40MW), 2030년 80MW로 확대 예정",
+  "conf": "high",
+  "src": [
+   {
+    "t": "허허벌판에서 AI 허브로…해남 '국가 AI컴퓨팅센터' 착공 현장 가보니",
+    "u": "https://www.fnnews.com/news/202608031723268198",
+    "d": "2026-08-03",
+    "o": "파이낸셜뉴스"
+   },
+   {
+    "t": "국가 AI컴퓨팅센터 착공식…전남광주, AI 3대 강국 전략 거점 부상",
+    "u": "https://news.mtn.co.kr/news-detail/2026080317064897217",
+    "d": "2026-08-03",
+    "o": "MTN 머니투데이방송"
+   },
+   {
+    "t": "\"데이터센터 성공의 조건은?\" 한국 AI 데이터센터 지도–비트플래닛",
+    "u": "https://www.blockmedia.co.kr/archives/1141412",
+    "d": "2026-09-18",
+    "o": "블록미디어"
+   }
+  ],
+  "addr": "전남광주통합특별시 해남군 산이면 대진리 1154번지",
+  "checked": "2026-10-13"
+ },
+ "44710-32024-0005-0001": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (금산 대전IDC센터 2단지)",
+  "conf": "none",
+  "src": [],
+  "addr": "충청남도 금산군 제원면 명곡리 5-1번지",
+  "checked": "2026-10-13"
+ },
+ "26530-10500-0127-0017": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (부산 사상 ATOS DATACENTER)",
+  "conf": "none",
+  "src": [],
+  "addr": "부산광역시 사상구 감전동 127-17번지",
+  "checked": "2026-10-13"
+ },
+ "12790-41031-1147-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (BS산업 솔라시도 데이터센터파크 선도 데이터센터; 파크 전체는 40MW급 최대 25기 계획, 매칭된 아시아투데이 르포의 40MW는 국가AI컴퓨팅센터 수치)",
+  "conf": "none",
+  "src": [],
+  "addr": "전남광주통합특별시 해남군 산이면 상공리 1147번지",
+  "checked": "2026-10-13"
+ },
+ "12190-10100-2315-0007": {
+  "mw": 40,
+  "it": null,
+  "basis": "미표기",
+  "txt": "40MW급",
+  "note": "㈜전남클라우드데이터센터(KT·한국MS 협력) 광양 황금산단: 40MW급(2032년까지 2기 구축 계획 전체 기준, 수전/IT 구분 없음)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "전남 광양 황금산단에 40MW '클라우드데이터센터' 구축",
+    "u": "https://kpinews.kr/newsView/179568546253706",
+    "d": "2023-08-21",
+    "o": "KPI뉴스"
+   },
+   {
+    "t": "광양경제청, 2023년 1조 2천억 원 투자유치 성과",
+    "u": "https://www.kukinews.com/article/view/kuk202401030149",
+    "d": "2024-01-03",
+    "o": "쿠키뉴스"
+   }
+  ],
+  "addr": "전남광주통합특별시 광양시 황금동 2315-7번지",
+  "checked": "2026-10-13"
+ },
+ "41463-11600-0039-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (한국수출입은행 IT센터)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 용인시 기흥구 중동 39번지",
+  "checked": "2026-10-13"
+ },
+ "41597-11500-1028-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (화성 동탄 여울동 데이터센터)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 화성시 동탄구 여울동 1028-2번지",
+  "checked": "2026-10-13"
+ },
+ "28200-10100-1128-0004": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (유진그룹 동양 인천구월AI허브센터; 보도된 9.8MW/IT 7MW는 부천삼정 건으로 별개)",
+  "conf": "none",
+  "src": [],
+  "addr": "인천광역시 남동구 구월동 1128-4번지",
+  "checked": "2026-10-13"
+ },
+ "28275-11000-0541-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (인천 가좌동 데이터센터)",
+  "conf": "none",
+  "src": [],
+  "addr": "인천광역시 서해구 가좌동 541-2번지",
+  "checked": "2026-10-13"
+ },
+ "41610-33023-0228-0003": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (광주 도척면 방도리 데이터센터)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 광주시 도척면 방도리 228-3번지",
+  "checked": "2026-10-13"
+ },
+ "28720-35021-0490-0004": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (제2해양기상기지, 기상관측시설로 데이터센터 아님)",
+  "conf": "none",
+  "src": [],
+  "addr": "인천광역시 옹진군 덕적면 북리 490-4번지",
+  "checked": "2026-10-13"
+ },
+ "41480-31023-1239-0001": {
+  "mw": 200,
+  "it": null,
+  "basis": "수전",
+  "txt": null,
+  "note": "총 수전용량 200MW (LG유플러스 파주 AIDC, 월롱면 LG디스플레이 유휴부지; 캠퍼스 전체 기준, 1동 50MW 2027년 가동 예정)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "LGU+, '파주 AIDC' 완공 전인데 벌써 '조기 마감'…AI 인프라 구축에 2조 투입",
+    "u": "https://ceoscoredaily.com/page/view/2026080615372895232",
+    "d": "2026-08-06",
+    "o": "CEO스코어데일리"
+   },
+   {
+    "t": "[현장] 축구장 21배 'AI 요새' 짓는다…LGU+, 파주 AIDC로 5조 수주 '정조준'",
+    "u": "https://mobile.newsis.com/view/NISX20260605_0003658312",
+    "d": "2026-06-07",
+    "o": "뉴시스"
+   },
+   {
+    "t": "파주시, LG유플러스 '인공지능 데이터센터' 투자 유치",
+    "u": "https://www.wikitree.co.kr/articles/1047042",
+    "d": "2025-05-02",
+    "o": "위키트리"
+   }
+  ],
+  "addr": "경기도 파주시 월롱면 덕은리 1239-1번지",
+  "checked": "2026-10-13"
+ },
+ "28237-10400-0422-0000": {
+  "mw": 96,
+  "it": null,
+  "basis": "미표기",
+  "txt": "96MW급 캠퍼스",
+  "note": "디지털엣지·SK에코플랜트 부평 캠퍼스(SEL2 1단계 36MW + SEL3 2단계 60MW) 총 96MW, 수전/IT 구분 미표기 (인천투데이는 36+61=97MW로 보도)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "Digital Edge Secures Financing to Complete Major Data Center Campus",
+    "u": "https://www.digitaledgedc.com/?p=6782",
+    "d": "2025-07-10",
+    "o": "Digital Edge"
+   },
+   {
+    "t": "부평 청천동 데이터센터 2단계 착공··· 1단계 1.7배 높은 규모",
+    "u": "https://www.incheontoday.com/news/articleView.html?idxno=304324",
+    "d": "2025-06-23",
+    "o": "인천투데이"
+   },
+   {
+    "t": "SK에코플랜트, 부평 데이터센터 2단계 사업비 8000억 조달 성공",
+    "u": "https://www.theguru.co.kr/mobile/article.html?no=89250",
+    "d": "2025-07-11",
+    "o": "더구루"
+   }
+  ],
+  "addr": "인천광역시 부평구 청천동 422번지",
+  "checked": "2026-10-13"
+ },
+ "41273-10400-0644-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 사업자 특정 못함(안산 성곡동엔 캄스퀘어안산 670-4 80MW 전기사용계약, 케펠 60MW, 디지털엣지 SEL5 60MW 등 복수 사업이 있으나 644-2 지번과 연결 근거 없음)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 안산시 단원구 성곡동 644-2번지",
+  "checked": "2026-10-13"
+ },
+ "47190-25623-0551-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — (주)구미데이터인프라솔루션; 구미5산단 구미하이테크에너지 100MW급/퀀텀일레븐 1.3GW 계획과의 연결 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "경상북도 구미시 산동읍 적림리 551번지",
+  "checked": "2026-10-13"
+ },
+ "30230-11700-0274-0003": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 케이알로지스 평촌 데이터센터(대덕구 협약 기사에 MW 없음)",
+  "conf": "none",
+  "src": [],
+  "addr": "대전광역시 대덕구 평촌동 274-3번지",
+  "checked": "2026-10-13"
+ },
+ "26200-10300-0160-0001": {
+  "mw": 80,
+  "it": null,
+  "basis": "미표기",
+  "txt": null,
+  "note": "80MW 규모(수전/IT 미표기) — 창해개발·CCGI 부산 영도 AI 데이터센터(옛 STX조선 부지, 대평동1가 160-1), 포스코이앤씨 시공 MOU, 2028년 말 준공 목표",
+  "conf": "high",
+  "src": [
+   {
+    "t": "영도에 1조원 규모 초대형 데이터센터, 부산 성지되나?",
+    "u": "https://news.knn.co.kr/news/article/160728",
+    "d": "2024-07-31",
+    "o": "KNN"
+   },
+   {
+    "t": "POSCO E&C Signs MOU for Large-Scale AI Data Center in Yeongdo, Busan",
+    "u": "https://view.asiae.co.kr/en/article/2025051916091675379",
+    "d": "2025-05-19",
+    "o": "아시아경제"
+   }
+  ],
+  "addr": "부산광역시 영도구 대평동1가 160-1번지",
+  "checked": "2026-10-13"
+ },
+ "41271-10300-0000-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 카카오 데이터센터 안산(서버 12만대, 연면적 47,378㎡); 보도자료·기사에 MW 미공개",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 안산시 상록구 사동 블록",
+  "checked": "2026-10-13"
+ },
+ "44131-34026-0509-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "충청남도 천안시 동남구 성남면 용원리 509-2번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "41820-25024-0328-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 가평 데이터센터(A-1)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 가평군 가평읍 하색리 328번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "11545-10100-0319-0019": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (블로그 집계 수치만 있어 제외)",
+  "conf": "none",
+  "src": [],
+  "addr": "서울특별시 금천구 가산동 319-19번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "43750-33031-0742-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "충청북도 진천군 문백면 태락리 742번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "41465-10200-0023-0011": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 다우기술 다우 클라우드 데이터센터(죽전디지털밸리); 착공 반려 기사들에 MW 없음",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 용인시 수지구 죽전동 23-11번지",
+  "checked": "2026-10-13"
+ },
+ "26440-11300-1278-0006": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — PUS04",
+  "conf": "none",
+  "src": [],
+  "addr": "부산광역시 강서구 구랑동 1278-6번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "26380-10500-0914-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (블로그 집계 수치만 있어 제외)",
+  "conf": "none",
+  "src": [],
+  "addr": "부산광역시 사하구 장림동 914-2번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "44710-32024-0005-0008": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 대전IDC센터(1단지)",
+  "conf": "none",
+  "src": [],
+  "addr": "충청남도 금산군 제원면 명곡리 5-8번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "26410-11100-0075-0004": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 부산 금사 DC",
+  "conf": "none",
+  "src": [],
+  "addr": "부산광역시 금정구 금사동 75-4번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "41281-13200-0583-0000": {
+  "mw": 40,
+  "it": 24,
+  "basis": "수전",
+  "txt": null,
+  "note": "전력용량 40MW, IT 24MW (캐피탈랜드 코리아 데이터센터 2, 향동동 583; 2025-02 착공 보도된 에퀴닉스 SL3X)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "CapitaLand Korea Data Center 2",
+    "u": "https://www.capitaland.com/en/find-a-property/global-property-listing/data-centres/capitaland-koreadatacenter2.html",
+    "d": "2026-10-12",
+    "o": "CapitaLand(운영사 공식, 접속일)"
+   },
+   {
+    "t": "Global Data Centre Locations | CapitaLand South Korea",
+    "u": "https://www.capitaland.com/kr/ko/portfolio/data-centres/locations.html",
+    "d": "2026-10-12",
+    "o": "CapitaLand(운영사 공식, 접속일)"
+   }
+  ],
+  "addr": "경기도 고양시 덕양구 향동동 583번지",
+  "checked": "2026-10-13"
+ },
+ "41597-10600-0819-0003": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 화성 동탄2신도시 데이터센터",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 화성시 동탄구 영천동 819-3번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "41550-36024-0179-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 한화그룹 제2데이터센터",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 안성시 양성면 추곡리 179번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "26350-10500-1461-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — SK텔레콤 부산 데이터센터",
+  "conf": "none",
+  "src": [],
+  "addr": "부산광역시 해운대구 우동 1461번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "41597-10600-0819-0001": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 동탄 AI데이터센터",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 화성시 동탄구 영천동 819-1번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "41273-10400-0638-0005": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 아워디씨(아워써킷) 안산 성곡동 엣지DC: 딜북뉴스 2026-10-12 PF 1100억·10월 착공 보도, 본문 유료라 용량 확인 못함",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 안산시 단원구 성곡동 638-5번지",
+  "checked": "2026-10-13"
+ },
+ "11680-10600-0999-0008": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 대치동 엣지 데이터센터",
+  "conf": "none",
+  "src": [],
+  "addr": "서울특별시 강남구 대치동 999-8번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "41465-10200-1358-0000": {
+  "mw": 100,
+  "it": 64,
+  "basis": "수전",
+  "txt": null,
+  "note": "수전 용량 100MW, IT Load 64MW (용인 죽전 퍼시픽써니 데이터센터, 퍼시픽자산운용 발주·현대건설 시공)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "현대건설, 국내 최대 하이퍼스케일 데이터센터 준공… AI 인프라 시대 선도",
+    "u": "https://www.smarttoday.co.kr/ko-kr/articles/94370",
+    "d": "2025-10-24",
+    "o": "스마트투데이"
+   }
+  ],
+  "addr": "경기도 용인시 수지구 죽전동 1358번지",
+  "checked": "2026-10-13"
+ },
+ "47190-11300-0259-0001": {
+  "mw": 60,
+  "it": null,
+  "basis": "미표기",
+  "txt": "60MW급",
+  "note": "60MW 규모 AI 데이터센터 (삼성SDS 구미 AI 데이터센터, 옛 삼성전자 구미1사업장 부지) — 수전/IT 구분 미표기",
+  "conf": "high",
+  "src": [
+   {
+    "t": "삼성SDS, 옛 구미1사업장 부지에 AI 데이터센터…60MW 하이퍼스케일 추진 [CES 2026]",
+    "u": "https://www.ddaily.co.kr/page/view/2026010809063760230",
+    "d": "2026-01-08",
+    "o": "디지털데일리"
+   },
+   {
+    "t": "삼성SDS, 'CES 2026'에서 경상북도-구미시와 '구미 AI 데이터센터' 건립 MOU 체결",
+    "u": "https://www.etoday.co.kr/news/view/2543519",
+    "d": "2026-01-08",
+    "o": "이투데이"
+   }
+  ],
+  "addr": "경상북도 구미시 공단동 259-1번지",
+  "checked": "2026-10-13"
+ },
+ "44133-25622-0028-0003": {
+  "mw": 160,
+  "it": null,
+  "basis": "미표기",
+  "txt": "160MW급",
+  "note": "160MW급 전력 사용 시설, 1차분 80MW 한전 전기사용계약 (천안 직산읍 군서리 AI 데이터센터, ㈜금강·파인앤파트너스자산운용; 북천안 IDC로 추정)",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "천안에 '1조2000억' 민간자본 몰린다···'AI 데이터센터' 유치",
+    "u": "https://www.khan.co.kr/article/202601291419001",
+    "d": "2026-01-29",
+    "o": "경향신문"
+   },
+   {
+    "t": "천안에 1.2조원 'AI 데이터센터' 들어선다",
+    "u": "https://www.twig24.com/news/local_govern/2026/01/29/20260129500122",
+    "d": "2026-01-29",
+    "o": "트윅(TWIG24)"
+   }
+  ],
+  "addr": "충청남도 천안시 서북구 직산읍 군서리 28-3번지",
+  "checked": "2026-10-13"
+ },
+ "44800-25625-0000-0000": {
+  "mw": 120,
+  "it": null,
+  "basis": "수전",
+  "txt": "120MW 전력 공급",
+  "note": "홍성변전소에서 154kV로 120MW 전력 공급 계획 (Solis IDC 내포신도시 하이퍼스케일 데이터센터, 2021년 계획 기준; 원문 단위 표기 오류 있음)",
+  "conf": "low",
+  "src": [
+   {
+    "t": "SolisIDC 내포신도시 하이퍼스케일 데이터센터 기사(ETNews English, 헤드라인 페이지 미표시)",
+    "u": "https://english.etnews.com/20210310200002",
+    "d": "2021-03-10",
+    "o": "ETNews(전자신문 영문판)"
+   }
+  ],
+  "addr": "충청남도 홍성군 홍북읍 신경리 블록",
+  "checked": "2026-10-13"
+ },
+ "26440-10400-3734-0001": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (부산 에코델타시티 데이터산업존 내 사업, 해당 지번 사업자 특정 불가)",
+  "conf": "none",
+  "src": [],
+  "addr": "부산광역시 강서구 명지동 3734-1번지",
+  "checked": "2026-10-13"
+ },
+ "41273-10500-0726-0004": {
+  "mw": 60,
+  "it": null,
+  "basis": "미표기",
+  "txt": "60MW급",
+  "note": "60MW급 그린필드 데이터센터, 2030년 가동 목표 (Keppel DC Ansan, 케펠 KDCF III·신영·NH·현대건설 SPV) — 수전/IT 구분 미표기",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "Keppel enters South Korea's fast growing data centre market",
+    "u": "https://www.keppel.com/media/keppel-enters-south-koreas-fast-growing-data-centre-market/",
+    "d": "2026-06-09",
+    "o": "Keppel"
+   },
+   {
+    "t": "Keppel DC Ansan (726-4 Wonsi-dong, Ansan)",
+    "u": "https://www.datacentermap.com/south-korea/seoul/keppel-dc-ansan/",
+    "d": null,
+    "o": "Data Center Map"
+   },
+   {
+    "t": "싱가포르 운용사도 베팅했다…글로벌 'K데이터센터 쟁탈전'",
+    "u": "https://www.hankyung.com/article/2026072036591",
+    "d": "2026-07-20",
+    "o": "한국경제"
+   }
+  ],
+  "addr": "경기도 안산시 단원구 원시동 726-4번지",
+  "checked": "2026-10-13"
+ },
+ "31140-11400-0723-0009": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (SK AI DC 울산 B동으로 추정 — 프로젝트 전체 103MW는 A동(황성동 111-13) 항목에 기재, 중복 방지)",
+  "conf": "none",
+  "src": [],
+  "addr": "울산광역시 남구 황성동 723-9번지",
+  "checked": "2026-10-13"
+ },
+ "44131-34026-0099-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "충청남도 천안시 동남구 성남면 용원리 산99번지",
+  "checked": "2026-10-13"
+ },
+ "43130-41021-0000-0000": {
+  "mw": 80,
+  "it": 48,
+  "basis": "수전",
+  "txt": null,
+  "note": "수전 용량 80MW, IT 용량 48MW (㈜파워링크 충주 데이터센터, 동충주산업단지·연면적 42,496㎡)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "파워링크, 충주에 수전용량 80MW 규모 데이터센터 건립",
+    "u": "https://kpinews.kr/newsView/179549109483570",
+    "d": "2022-11-10",
+    "o": "KPI뉴스"
+   },
+   {
+    "t": "충주시, 4차산업 핵심인프라 '데이터센터' 투자협약 체결",
+    "u": "https://www.smarttoday.co.kr/ko-kr/articles/25195",
+    "d": "2022-11-11",
+    "o": "스마트투데이"
+   }
+  ],
+  "addr": "충청북도 충주시 산척면 송강리 블록",
+  "checked": "2026-10-13"
+ },
+ "51130-10700-0112-0001": {
+  "mw": 99,
+  "it": null,
+  "basis": "미표기",
+  "txt": "99MW급",
+  "note": "총 99MW(40MW급 3개 동), 최대 120MW 확장 가능 (메가데이타코리아 원주 AI 메가데이터센터) — 수전/IT 구분 미표기",
+  "conf": "high",
+  "src": [
+   {
+    "t": "원주 단구동에 1조4000억 규모 AI 데이터센터 착공",
+    "u": "https://www.fnnews.com/news/202601150949536569",
+    "d": "2026-01-15",
+    "o": "파이낸셜뉴스"
+   },
+   {
+    "t": "메가데이타코리아, 99MW 원주 AI 데이터센터 착공",
+    "u": "https://news.jkn.co.kr/post/856080",
+    "d": "2026-01-16",
+    "o": "재경일보"
+   }
+  ],
+  "addr": "강원특별자치도 원주시 단구동 산112-1번지",
+  "checked": "2026-10-13"
+ },
+ "47111-25628-0000-0000": {
+  "mw": 40,
+  "it": 32,
+  "basis": "수전",
+  "txt": null,
+  "note": "수전 용량 40MW, IT 부하 32MW — 1단계 (포항 AI 데이터센터, 네오에이아이클라우드·AI Factory Pohang PFV, 광명일반산단; 2단계 260MW 확장 계획)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "현대건설, 대한민국 1호 AI 전용 데이터센터 착수… 16.5개월 초단기 완공 도전",
+    "u": "https://economist.co.kr/article/view/ecn202609210026",
+    "d": "2026-09-21",
+    "o": "이코노미스트"
+   },
+   {
+    "t": "포항시, 글로벌 AI 데이터센터 구축 순항…AI산업 거점도시 본격 시동",
+    "u": "https://www.heraldk.com/article/2026030912394930326",
+    "d": "2026-03-09",
+    "o": "헤럴드경제"
+   },
+   {
+    "t": "포항 광명산단 데이터센터 착공 등 글로벌 AI시대 핵심 인프라 구축",
+    "u": "https://m.go.seoul.co.kr/news/2026/07/31/20260731022002",
+    "d": "2026-07-31",
+    "o": "서울신문"
+   }
+  ],
+  "addr": "경상북도 포항시 남구 오천읍 광명리 블록",
+  "checked": "2026-10-13"
+ },
+ "51130-33023-1312-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "강원특별자치도 원주시 지정면 가곡리 1312번지",
+  "checked": "2026-10-13"
+ },
+ "41597-11200-0000-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 화성시 동탄구 송동 블록",
+  "checked": "2026-10-13"
+ },
+ "26440-11300-1168-0002": {
+  "mw": null,
+  "it": 80,
+  "basis": "IT",
+  "txt": "캠퍼스 전체 IT 80MW",
+  "note": "원아시아(OneAsia) 부산 데이터센터 캠퍼스 전체 IT 용량 80MW 계획 — 본 허가(A동·변전소)는 캠퍼스 일부",
+  "conf": "low",
+  "src": [
+   {
+    "t": "OneAsia to break into South Korea with $600m data park",
+    "u": "https://thetechcapital.com/oneasia-to-break-into-south-korea-with-600m-data-park/",
+    "d": "2021-11-01",
+    "o": "The Tech Capital"
+   },
+   {
+    "t": "OneAsia announces South Korean data center in Busan",
+    "u": "https://datacenterdynamics.com/en/news/oneasia-announces-south-korean-data-center-in-busan",
+    "d": "2021-11-01",
+    "o": "DatacenterDynamics"
+   }
+  ],
+  "addr": "부산광역시 강서구 구랑동 1168-2번지",
+  "checked": "2026-10-13"
+ },
+ "31140-11400-0111-0013": {
+  "mw": 103,
+  "it": null,
+  "basis": "미표기",
+  "txt": "최대 103MW",
+  "note": "SK AI DC 울산(SK텔레콤·SK브로드밴드·AWS) 1단계 40MW→최대 103MW, A동=1단계(2027.5 준공 목표)로 추정 — 수전/IT 구분 미표기, 프로젝트 전체 수치",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "SK·AWS, 울산에 초대형 AI 데이터센터 건립…수조원 투입",
+    "u": "https://dealsite.co.kr/articles/143077",
+    "d": "2025-06-16",
+    "o": "딜사이트"
+   },
+   {
+    "t": "아마존·SK, 7조규모 AI데이터센터 울산에",
+    "u": "https://v.daum.net/v/20250616002924937",
+    "d": "2025-06-16",
+    "o": "경상일보"
+   },
+   {
+    "t": "'韓 최초 AI 데이터센터' 2027년 5월 완성된다",
+    "u": "https://www.fnnews.com/news/202511171041595230",
+    "d": "2025-11-17",
+    "o": "파이낸셜뉴스"
+   }
+  ],
+  "addr": "울산광역시 남구 황성동 111-13번지",
+  "checked": "2026-10-13"
+ },
+ "41650-36023-1070-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 포천시 영중면 거사리 1070번지",
+  "checked": "2026-10-13"
+ },
+ "44200-35033-0000-0000": {
+  "mw": 20,
+  "it": null,
+  "basis": "수전",
+  "txt": "수전 20MW급",
+  "note": "수전전력 20MW급 (메타인프라 아산 AI DC, 캡스톤메타IDC PFV, 아산스마트밸리 일반산단)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "[인터뷰] 손태영 메타인프라 대표",
+    "u": "https://www.kharn.kr/mobile/article.html?no=30173",
+    "d": "2026-02-27",
+    "o": "칸(KHARN)"
+   },
+   {
+    "t": "[DCWA에서 만난 사람들] 손태영 메타인프라 대표",
+    "u": "https://kharn.kr/news/article.html?no=29156",
+    "d": "2025-11-09",
+    "o": "칸(KHARN)"
+   }
+  ],
+  "addr": "충청남도 아산시 음봉면 산동리 블록",
+  "checked": "2026-10-13"
+ },
+ "41173-10400-1026-0011": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (코스콤 차세대 안양 데이터센터, PUE 1.5 목표만 공개)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 안양시 동안구 호계동 1026-11번지",
+  "checked": "2026-10-13"
+ },
+ "26350-10500-1453-0000": {
+  "mw": 4.5,
+  "it": null,
+  "basis": "미표기",
+  "txt": null,
+  "note": "디지털엣지 PUS1(부산 센텀) 데이터센터 용량 4.5MW(계획 업데이트) — 본 허가는 PUS1 증축, 수전/IT 구분 미표기",
+  "conf": "low",
+  "src": [
+   {
+    "t": "PUS1 data sheet",
+    "u": "https://digitaledgedc.com/wp-content/uploads/2026/04/PUS1.pdf",
+    "d": "2024-11",
+    "o": "Digital Edge"
+   }
+  ],
+  "addr": "부산광역시 해운대구 우동 1453번지",
+  "checked": "2026-10-13"
+ },
+ "41630-33021-0440-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 양주시 광적면 가납리 440-2번지",
+  "checked": "2026-10-13"
+ },
+ "47900-25324-0869-0000": {
+  "mw": 10,
+  "it": 6,
+  "basis": "수전",
+  "txt": null,
+  "note": "총 수전 용량 10MW, IT 용량 6MW (kt cloud 경북 AI 클라우드 데이터센터, 예천·연면적 9,828㎡)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "KT클라우드, '경북 AI 클라우드 데이터센터' 준공",
+    "u": "https://www.inews24.com/view/1849618",
+    "d": "2025-05-29",
+    "o": "아이뉴스24"
+   },
+   {
+    "t": "kt cloud, 전국 최초 민·관 협력 '경북 AI 클라우드 데이터센터' 준공",
+    "u": "https://biz.newdaily.co.kr/site/data/html/2025/05/29/2025052900074.amp.html",
+    "d": "2025-05-29",
+    "o": "뉴데일리"
+   }
+  ],
+  "addr": "경상북도 예천군 호명읍 금능리 869번지",
+  "checked": "2026-10-13"
+ },
+ "44200-25331-2074-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (코레일 철도 IT운영센터)",
+  "conf": "none",
+  "src": [],
+  "addr": "충청남도 아산시 배방읍 장재리 2074번지",
+  "checked": "2026-10-13"
+ },
+ "12840-36021-0306-0007": {
+  "mw": 10,
+  "it": null,
+  "basis": "미표기",
+  "txt": null,
+  "note": "10MW 규모 데이터센터 2개 동 (황룡면 AI 데이터센터, ㈜디에느·㈜에이파사드, 부지 3,440㎡) — 인근 베네포스 200MW 사업과 별개",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "김한종 장성군수, 군정 복귀 첫 보고는 AI 데이터센터…\"주민 소통이 우선\"",
+    "u": "https://kpinews.kr/newsView/1065596970200507",
+    "d": "2026-06-15",
+    "o": "KPI뉴스"
+   }
+  ],
+  "addr": "전남광주통합특별시 장성군 황룡면 월평리 306-7번지",
+  "checked": "2026-10-13"
+ },
+ "41570-10900-6877-0009": {
+  "mw": null,
+  "it": 64,
+  "basis": "IT",
+  "txt": "IT 최대 64MW",
+  "note": "IT 용량 최대 64MW (디지털리얼티 Digital Seoul 2/ICN11 김포 데이터센터, 건축주 디지털서울2(유)); 1단계 12MW, 수전 용량 미공개",
+  "conf": "high",
+  "src": [
+   {
+    "t": "디지털 리얼티, 김포에 64㎿ 규모 데이터 센터 착공",
+    "u": "https://mobile.newsis.com/view/NISX20210802_0001535252",
+    "d": "2021-08-02",
+    "o": "뉴시스"
+   },
+   {
+    "t": "Digital Realty to Build Second Data Center (64MW) in South Korea",
+    "u": "https://w.media/digital-realty-to-build-second-data-center-64mw-in-south-korea/",
+    "d": "2021-07-30",
+    "o": "W.Media"
+   },
+   {
+    "t": "디지털리얼티, 김포에 두 번째 데이터센터 착공",
+    "u": "https://byline.network/2022/09/29-186",
+    "d": "2022-09-29",
+    "o": "바이라인네트워크"
+   },
+   {
+    "t": "김포 데이터센터 건립 두고 주민 반발",
+    "u": "https://www.fnnews.com/news/202410271825186696",
+    "d": "2024-10-27",
+    "o": "파이낸셜뉴스"
+   }
+  ],
+  "addr": "경기도 김포시 구래동 6877-9번지",
+  "checked": "2026-10-13"
+ },
+ "41273-10400-0668-0001": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (시화IDC, 사업자 미확인)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 안산시 단원구 성곡동 668-1번지",
+  "checked": "2026-10-13"
+ },
+ "51130-11700-1858-0004": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (원주 반곡동 방송통신시설, 사업자 미확인)",
+  "conf": "none",
+  "src": [],
+  "addr": "강원특별자치도 원주시 반곡동 1858-4번지",
+  "checked": "2026-10-13"
+ },
+ "44270-32021-1414-0000": {
+  "mw": 160,
+  "it": null,
+  "basis": "미표기",
+  "txt": "160MW급",
+  "note": "160MW급 (지엔씨에너지·디씨코리아 SPC 당진 석문국가산단 AI 데이터센터, 2031년까지 약 2조원; 수전/IT 구분 없음)",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "충남 ‘AI 대전환’ 선언 3주 만에 4조 유치",
+    "u": "https://www.twig24.com/news/local_cc/chungnam_cc/2025/12/05/20251205027010",
+    "d": "2025-12-05",
+    "o": "트윅(TWIG24)"
+   },
+   {
+    "t": "충남도, ‘인공지능 대전환’ 선포 16일 만에 ‘AI데이터센터’ 유치",
+    "u": "https://www.heraldk.com/article/2025120318400050975",
+    "d": "2025-12-03",
+    "o": "heraldk"
+   }
+  ],
+  "addr": "충청남도 당진시 석문면 통정리 1414번지",
+  "checked": "2026-10-13"
+ },
+ "28237-10400-0414-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 인접 422번지 SEL3와 같은 사업으로 보이나 확인 안 됨(중복 집계 방지)",
+  "conf": "none",
+  "src": [],
+  "addr": "인천광역시 부평구 청천동 414-2번지",
+  "checked": "2026-10-13",
+  "noauto": true
+ },
+ "51150-34024-0300-0031": {
+  "mw": 80,
+  "it": null,
+  "basis": "미표기",
+  "txt": null,
+  "note": "1단계 80MW 규모 (강릉디씨피에프 안인진리 AI 데이터센터 특화단지 1단계, 연면적 52,491㎡ 일치; 전체 1GW 계획). MTN은 2~5단계 940MW로 보도해 1단계 수치 불일치 가능",
+  "conf": "medium",
+  "src": [
+   {
+    "t": "\"국내 5대 기업\" vs \"글로벌 빅테크\"…강원 최대 이슈 '동해안 AI 전쟁'",
+    "u": "https://www.fnnews.com/news/202605190605393645",
+    "d": "2026-05-19",
+    "o": "파이낸셜뉴스"
+   },
+   {
+    "t": "\"강릉을 AI 산업 개척자로\"…13조 데이터센터·시범도시 동시 승부",
+    "u": "https://news.mtn.co.kr/news-detail/2026031913385767317",
+    "d": "2026-03-19",
+    "o": "머니투데이방송(MTN)"
+   }
+  ],
+  "addr": "강원특별자치도 강릉시 강동면 안인진리 300-31번지",
+  "checked": "2026-10-13"
+ },
+ "12840-32028-0000-0000": {
+  "mw": 26,
+  "it": null,
+  "basis": "수전",
+  "txt": "수전용량 26MW급",
+  "note": "수전 26MW급 (장성 파인데이터센터, 파인디씨PFV·대우건설, 광주연구개발특구 첨단3지구; IT 용량 미공개)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "대우건설, 전남 첫 데이터센터 ‘장성 파인데이터센터’ 착공…사업다각화 속도",
+    "u": "https://www.smarttoday.co.kr/ko-kr/articles/99134",
+    "d": "2025-12-16",
+    "o": "스마트투데이"
+   },
+   {
+    "t": "대우건설, 데이터센터 '개발 주체'로…전남 장성 첫 선",
+    "u": "https://news.bizwatch.co.kr/article/real_estate/2025/12/16/0033",
+    "d": "2025-12-16",
+    "o": "비즈워치"
+   },
+   {
+    "t": "CJ올리브네트웍스, 장성 파인데이터센터 MEP 구축 참여",
+    "u": "https://byline.network/2025/12/16-580/",
+    "d": "2025-12-16",
+    "o": "바이라인네트워크"
+   }
+  ],
+  "addr": "전남광주통합특별시 장성군 남면 삼태리 블록",
+  "checked": "2026-10-13"
+ },
+ "28275-11000-0585-0049": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (인천 가좌 테크센터; 교보AIM 주도 가좌동 데이터센터로 추정)",
+  "conf": "none",
+  "src": [],
+  "addr": "인천광역시 서해구 가좌동 585-49번지",
+  "checked": "2026-10-13"
+ },
+ "26440-10900-1711-0004": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (명지녹산 데이터센터, 사업자 미확인)",
+  "conf": "none",
+  "src": [],
+  "addr": "부산광역시 강서구 송정동 1711-4번지",
+  "checked": "2026-10-13"
+ },
+ "11545-10100-0345-0026": {
+  "mw": null,
+  "it": 30,
+  "basis": "IT",
+  "txt": "IT 최대 30MW",
+  "note": "IT 용량 최대 30MW (효성-STT GDC 'STT Seoul 1' 가산; 수전 용량 미공개)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "효성 조현준 회장, 전력기기 이어 AI 승부수 띄운다 … 서울 한복판에 데이터센터 구축",
+    "u": "https://biz.newdaily.co.kr/site/data/html/2026/06/17/2026061700040.html",
+    "d": "2026-06-17",
+    "o": "뉴데일리"
+   },
+   {
+    "t": "[오늘의 DT인] \"데이터가 21세기 원유\"… 20조 '韓 AI 데이터센터' 시장 정조준",
+    "u": "https://www.dt.co.kr/article/12068084",
+    "d": "2026-06-17",
+    "o": "디지털타임스"
+   }
+  ],
+  "addr": "서울특별시 금천구 가산동 345-26번지",
+  "checked": "2026-10-13"
+ },
+ "41273-10400-0640-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 붙은 기사(코람코·DCI 40MW)는 인근 712번지 사업",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 안산시 단원구 성곡동 640번지",
+  "checked": "2026-10-13",
+  "noauto": true
+ },
+ "26440-11300-1278-0005": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (PUS05 PROJECT 데이터센터 05, 사업자 미확인)",
+  "conf": "none",
+  "src": [],
+  "addr": "부산광역시 강서구 구랑동 1278-5번지",
+  "checked": "2026-10-13"
+ },
+ "41173-10400-0555-0044": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (블로그 집계 수치만 있어 제외)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 안양시 동안구 호계동 555-44번지",
+  "checked": "2026-10-13",
+  "recheck": true
+ },
+ "48870-32024-0837-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (함양 휴천일반산업단지 AI 데이터센터)",
+  "conf": "none",
+  "src": [],
+  "addr": "경상남도 함양군 휴천면 목현리 837번지",
+  "checked": "2026-10-13"
+ },
+ "41273-10400-0712-0000": {
+  "mw": 40,
+  "it": null,
+  "basis": "수전",
+  "txt": null,
+  "note": "수전 40MW (코람코자산운용·DCI '안산 시화 AI 데이터센터', 연면적 26,810㎡ 일치; IT 용량 미공개)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "코람코·DCI, 40MW '안산 시화 AI 데이터센터' 착공",
+    "u": "https://www.fnnews.com/news/202606080750188129",
+    "d": "2026-06-08",
+    "o": "파이낸셜뉴스"
+   },
+   {
+    "t": "코람코·DCI, 40MW '안산 시화 AI 데이터센터' 착공",
+    "u": "https://view.asiae.co.kr/article/2026060808294403849",
+    "d": "2026-06-08",
+    "o": "아시아경제"
+   },
+   {
+    "t": "Koramco and DCI break ground on 40MW data center in Seoul, South Korea",
+    "u": "https://www.datacenterdynamics.com/en/news/koramco-and-dci-break-ground-on-40mw-data-center-in-seoul-south-korea/",
+    "d": "2026-06-08",
+    "o": "DatacenterDynamics"
+   },
+   {
+    "t": "코람코, 호주 DCI와 안산 데이터센터 개발 '맞손'",
+    "u": "https://www.theguru.co.kr/news/article.html?no=90458",
+    "d": "2025-08-11",
+    "o": "더구루"
+   }
+  ],
+  "addr": "경기도 안산시 단원구 성곡동 712번지",
+  "checked": "2026-10-13"
+ },
+ "52130-14800-0036-0033": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (군산 비응도동, 사업자 미확인)",
+  "conf": "none",
+  "src": [],
+  "addr": "전북특별자치도 군산시 비응도동 36-33번지",
+  "checked": "2026-10-13"
+ },
+ "41281-13200-0585-0000": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (캐피탈랜드 코리아 데이터센터 1, 향동 585). 인접 583번지 DC2는 24MW/전력 40MW로 공개됐으나 별개 부지",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 고양시 덕양구 향동동 585번지",
+  "checked": "2026-10-13"
+ },
+ "11545-10100-0459-0002": {
+  "mw": 20,
+  "it": null,
+  "basis": "미표기",
+  "txt": null,
+  "note": "20MW (DCI·대림 SEL01 가산 데이터센터; 수전/IT 구분 없음)",
+  "conf": "high",
+  "src": [
+   {
+    "t": "DCI Data Centers developing new 40MW hyperscale facility in South Korea",
+    "u": "https://w.media/dci-data-centers-developing-new-40mw-hyperscale-facility-in-south-korea/",
+    "d": "2025-08-12",
+    "o": "W.Media"
+   },
+   {
+    "t": "Koramco and DCI break ground on 40MW data center in Seoul, South Korea",
+    "u": "https://www.datacenterdynamics.com/en/news/koramco-and-dci-break-ground-on-40mw-data-center-in-seoul-south-korea/",
+    "d": "2026-06-08",
+    "o": "DatacenterDynamics"
+   }
+  ],
+  "addr": "서울특별시 금천구 가산동 459-2번지",
+  "checked": "2026-10-13"
+ },
+ "41570-10900-6871-0018": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (김포 구래동 엣지 데이터센터)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 김포시 구래동 6871-18번지",
+  "checked": "2026-10-13"
+ },
+ "41597-11500-1028-0001": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (화성 동탄 여울동 데이터센터)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 화성시 동탄구 여울동 1028-1번지",
+  "checked": "2026-10-13"
+ },
+ "28125-12500-0036-0005": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (인천 항동7가 36-5)",
+  "conf": "none",
+  "src": [],
+  "addr": "인천광역시 제물포구 항동7가 36-5번지",
+  "checked": "2026-10-13"
+ },
+ "41250-10900-0330-0002": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 (동두천시 데이터센터)",
+  "conf": "none",
+  "src": [],
+  "addr": "경기도 동두천시 상봉암동 330-2번지",
+  "checked": "2026-10-13"
+ },
+ "12840-36021-0488-0001": {
+  "mw": null,
+  "it": null,
+  "basis": null,
+  "txt": null,
+  "note": "공개 보도에서 용량 확인 안 됨 — 인근 200MW급 전체 사업 계획 보도는 있으나 이 허가(소규모)와의 연결 확인 안 됨",
+  "conf": "none",
+  "src": [],
+  "addr": "전남광주통합특별시 장성군 황룡면 월평리 488-1번지",
+  "checked": "2026-10-13",
+  "noauto": true
  }
 }
