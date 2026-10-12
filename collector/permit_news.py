@@ -51,7 +51,22 @@ def search(q):
 CONV = re.compile(r"용도\s?변경|전환|리모델링|개조")
 
 
-def find(row, ambiguous=False):
+def _dates(h):
+    out = []
+    for k in ("archPmsDay", "realStcnsDay", "useAprDay"):
+        v = str(h.get(k) or "").strip()
+        if re.fullmatch(r"\d{8}", v):
+            out.append(dt.date(int(v[:4]), int(v[4:6]), int(v[6:])))
+    return out
+
+
+def _gap(h, d):
+    ds = _dates(h)
+    return min(abs((x - d).days) for x in ds) if ds else 99999
+
+
+def find(row, siblings=()):
+    ambiguous = bool(siblings)
     dong = (row.get("dongNmAddr") or "").split()[0] if row.get("dongNmAddr") else ""
     city = city_short(row.get("sggNm"))
     ds = dong_short(dong)
@@ -75,8 +90,10 @@ def find(row, ambiguous=False):
             if not ok and d_hit and c_hit:           # 동 + 시군이 맞는 기사
                 if not ambiguous:
                     ok = True
-                else:                                # 같은 동에 데이터센터가 여럿이면 신축/전환 성격이 맞을 때만
-                    ok = bool(CONV.search(t)) == conv
+                else:                                # 같은 동에 데이터센터가 여럿이면 신축/전환 성격이 맞고,
+                    ad = dt.date.fromisoformat(a["d"])  # 기사 날짜가 이 건의 허가·착공·준공일과 가장 가까울 때만
+                    mine = _gap(row, ad)
+                    ok = bool(CONV.search(t)) == conv and mine <= 400 and all(mine <= _gap(o, ad) for o in siblings)
             if not ok:
                 continue
             sc = 3 * b_hit + 2 * d_hit + c_hit
@@ -97,13 +114,14 @@ def collect(max_refresh=60):
                    key=lambda h: db[h["mgmPmsrgstPk"]].get("checked", ""))
     dongs = {}
     for h in rows:
-        dongs.setdefault((h.get("sigunguCd"), h.get("bjdongCd")), set()).add((h.get("bun"), h.get("ji")))
+        dongs.setdefault((h.get("sigunguCd"), h.get("bjdongCd")), []).append(h)
     if os.environ.get("FORCE"):
         todo, stale = rows, []
     n = 0
     for h in todo + stale[:max_refresh]:
         try:
-            res = find(h, ambiguous=len(dongs.get((h.get("sigunguCd"), h.get("bjdongCd")), ())) > 1)
+            sib = [o for o in dongs.get((h.get("sigunguCd"), h.get("bjdongCd")), []) if (o.get("bun"), o.get("ji")) != (h.get("bun"), h.get("ji"))]
+            res = find(h, siblings=sib)
         except Exception as e:
             print("err", h.get("bldNm"), repr(e)[:120]); continue
         res["checked"] = today.isoformat()

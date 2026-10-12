@@ -42,7 +42,7 @@ def permits():
                      "dcArea": round(float(h.get("dcFlrArea") or 0)), "plat": round(float(h.get("platArea") or 0)),
                      "vl": h.get("vlRat"), "pms": pms, "stc": stc, "sched": ymd(h.get("stcnsSchedDay")), "apr": apr, "stage": stage,
                      "zone": (h.get("jiyukCdNm") or "").strip(), "crtn": ymd(h.get("crtnDay")),
-                     "news": [{k: a[k] for k in ("t", "src", "d", "u")} for a in (pn.get(h["mgmPmsrgstPk"], {}).get("items") or [])]})
+                     "news": [{k: a[k] for k in ("t", "src", "d", "u")} for a in (pn.get(str(h["mgmPmsrgstPk"]), {}).get("items") or [])]})
     rows.sort(key=lambda r: r["pms"] or "", reverse=True)
     tot = collections.Counter(short(u[0]) for u in units)
     done = collections.Counter()

@@ -160,6 +160,13 @@ td.dt{font-family:var(--f-mono);font-size:.8rem;font-variant-numeric:tabular-num
 .st{font-size:.72rem;font-weight:600;padding:2px 7px;border-radius:4px;border:1px solid currentColor;white-space:nowrap}
 .st.s-p{color:var(--warn)} .st.s-s{color:var(--accent)} .st.s-d{color:var(--ok)}
 .kd{font-size:.68rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:4px}
+td.nw{white-space:normal;min-width:16em;max-width:24em}
+td.nw a{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:var(--fg);text-decoration:none;font-size:.78rem;line-height:1.45;word-break:keep-all}
+td.nw a + a{margin-top:5px}
+td.nw a:hover{color:var(--accent);text-decoration:underline}
+td.nw a:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-radius:2px}
+td.nw a small{color:var(--muted);font-family:var(--f-mono);font-size:.7rem;margin-right:4px}
+td.nw .more{font-size:.7rem;color:var(--muted)}
 .dim{color:var(--muted)}
 .empty{padding:28px;text-align:center;color:var(--muted)}
 
@@ -281,7 +288,7 @@ footer .ct{white-space:nowrap}
   </section>
 
   <section aria-labelledby="h-list">
-    <div class="sec-head"><h2 id="h-list">데이터센터 인허가 목록</h2><span class="note">층별 용도에 '데이터센터'가 들어간 허가 대장 · 지도 링크는 대지 위치 검색</span></div>
+    <div class="sec-head"><h2 id="h-list">데이터센터 인허가 목록</h2><span class="note">층별 용도에 '데이터센터'가 들어간 허가 대장 · 관련 기사는 건물명 · 위치로 자동 검색(이름 + 지역이 맞는 기사만)</span></div>
     <div class="filters">
       <div class="seg" role="group" aria-label="단계">
         <button type="button" data-st="all" aria-pressed="true">전체</button>
@@ -304,6 +311,7 @@ footer .ct{white-space:nowrap}
           <th scope="col" data-k="stc"><button type="button">착공</button></th>
           <th scope="col" data-k="apr"><button type="button">준공</button></th>
           <th scope="col" data-k="stage"><button type="button">단계</button></th>
+          <th scope="col" data-k="newsd"><button type="button">관련 기사</button></th>
         </tr></thead>
         <tbody id="tb"></tbody>
       </table>
@@ -377,6 +385,7 @@ footer .ct{white-space:nowrap}
       <div><b>데이터센터 인허가</b>건축 인허가 대장에서 주용도가 '방송통신시설'이고 층별 용도에 '데이터센터'가 있는 건입니다. 업무시설 등 다른 주용도 건물 안의 소규모 전산실은 잡히지 않습니다.</div>
       <div><b>허가 · 착공 · 준공</b>대장의 건축허가일 · 실제착공일 · 사용승인일입니다. 착공일이 비어 있으면 '착공 전', 사용승인일이 있으면 '준공'으로 분류합니다.</div>
       <div><b>연면적</b>MW(수전 · IT 용량)는 인허가 대장에 없어 건물 연면적으로 규모를 비교합니다. 같은 연면적이라도 층고 · 랙 밀도에 따라 용량은 크게 다릅니다.</div>
+      <div><b>관련 기사</b>건물명에 드러난 사업자 · 브랜드와 시 · 군 · 동 이름으로 구글 뉴스를 매주 다시 검색해, 제목에 데이터센터와 이름 · 지역이 함께 나오는 기사만 붙입니다. 같은 동에 데이터센터가 여럿이면 신축 · 전환 성격이 맞는 기사만 남겨, 확신이 없으면 비워 둡니다.</div>
       <div><b>대수선 · 용도변경</b>기존 건물을 데이터센터로 바꾸는 건도 함께 나오며, 구분 칸에 표시합니다.</div>
       <div><b>정보통신업 전력사용량</b>한전 산업분류(한국표준산업분류 J) 기준 월 사용량입니다. 2017년 7월 이전은 같은 대분류의 옛 이름(출판 · 영상 · 방송통신 · 정보서비스업)입니다.</div>
       <div><b>SMP</b>계통한계가격. 전력시장에서 시간대별로 정해지는 도매 전력가격의 월평균입니다.</div>
@@ -486,7 +495,7 @@ const tf={st:"all",rg:"all",q:""}; let sortK="pms", sortD=-1;
 function renderTable(){
   const q=tf.q.trim();
   let rows=D.permits.rows.filter(r=>(tf.st==="all"||r.stage===tf.st)&&rgMatch(r.sd,tf.rg)&&(!q||[r.nm,r.addr,r.sg,r.dong].join(" ").includes(q)));
-  const key=r=>sortK==="share"?(r.area?r.dcArea/r.area:0):r[sortK];
+  const key=r=>sortK==="share"?(r.area?r.dcArea/r.area:0):sortK==="newsd"?((r.news||[])[0]||{}).d:r[sortK];
   rows.sort((a,b)=>{ const x=key(a),y=key(b); if(x==null||x==="") return 1; if(y==null||y==="") return -1; return (typeof x==="number"?x-y:String(x).localeCompare(String(y),"ko"))*sortD; });
   const stc={"착공 전":"s-p","공사 중":"s-s","준공":"s-d"};
   $("#tb").innerHTML=rows.length?rows.map(r=>{ const share=r.area?Math.min(100,r.dcArea/r.area*100):null;
@@ -494,7 +503,8 @@ function renderTable(){
     <td class="rg">${esc(r.sd)} ${esc(r.sg)}<small>${esc(r.addr.replace(/^\S+\s+\S+\s+/,""))} · <a href="https://map.kakao.com/?q=${encodeURIComponent(r.addr)}" target="_blank" rel="noopener">지도</a></small></td>
     <td class="num">${fmt(r.area)}</td><td class="num">${share==null?"–":fmt(share,0)+"%"}</td>
     <td class="dt">${r.pms||"–"}</td><td class="dt">${r.stc||(r.sched?`<span class="dim">예정 ${r.sched}</span>`:"–")}</td><td class="dt">${r.apr||"–"}</td>
-    <td><span class="st ${stc[r.stage]}">${r.stage}</span></td></tr>`; }).join(""):`<tr><td colspan="8" class="empty">조건에 맞는 인허가가 없습니다. 단계나 지역을 바꿔 보세요.</td></tr>`;
+    <td><span class="st ${stc[r.stage]}">${r.stage}</span></td>
+    <td class="nw">${(r.news||[]).length?r.news.slice(0,2).map(a=>`<a href="${esc(a.u)}" target="_blank" rel="noopener" title="${esc(a.src)} · ${a.d}"><small>${a.d.slice(2).replace(/-/g,".")}</small>${esc(a.t)}</a>`).join("")+(r.news.length>2?`<span class="more">외 ${r.news.length-2}건</span>`:""):`<span class="dim">–</span>`}</td></tr>`; }).join(""):`<tr><td colspan="9" class="empty">조건에 맞는 인허가가 없습니다. 단계나 지역을 바꿔 보세요.</td></tr>`;
   $("#count").textContent=`${rows.length}건 / 전체 ${D.permits.rows.length}건`;
   document.querySelectorAll("th[data-k]").forEach(th=>th.setAttribute("aria-sort",th.dataset.k===sortK?(sortD>0?"ascending":"descending"):"none"));
 }
@@ -588,7 +598,7 @@ function init(d){
   document.querySelectorAll("[data-st]").forEach(b=>b.addEventListener("click",()=>{ tf.st=b.dataset.st; document.querySelectorAll("[data-st]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderTable(); }));
   $("#ls-rg").addEventListener("change",e=>{ tf.rg=e.target.value; renderTable(); });
   $("#q").addEventListener("input",e=>{ tf.q=e.target.value; renderTable(); });
-  document.querySelectorAll("th[data-k] button").forEach(b=>b.addEventListener("click",()=>{ const k=b.parentElement.dataset.k; if(sortK===k) sortD*=-1; else { sortK=k; sortD=["area","share","pms","stc","apr"].includes(k)?-1:1; } renderTable(); }));
+  document.querySelectorAll("th[data-k] button").forEach(b=>b.addEventListener("click",()=>{ const k=b.parentElement.dataset.k; if(sortK===k) sortD*=-1; else { sortK=k; sortD=["area","share","pms","stc","apr","newsd"].includes(k)?-1:1; } renderTable(); }));
   let rz; new ResizeObserver(()=>{ clearTimeout(rz); rz=setTimeout(drawCharts,120); }).observe(document.querySelector(".wrap"));
 }
 if(window.DASH) init(window.DASH);
