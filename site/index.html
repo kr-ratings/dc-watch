@@ -477,11 +477,19 @@ function renderKPI(){
 let pmMode="area";
 function renderPM(){
   const rg=$("#pm-rg").value||"all", R=D.permits.rows.filter(r=>rgMatch(r.sd,rg));
-  const yr0=2020, yr1=+today().slice(0,4), yrs=[]; for(let y=yr0;y<=yr1;y++) yrs.push(y);
+  const yr1=+today().slice(0,4), ys0=R.flatMap(r=>["pms","stc","apr"].map(k=>r[k]).filter(Boolean)).map(d=>+d.slice(0,4)).filter(y=>y>=2020), yr0=ys0.length?Math.min(...ys0):2020, yrs=[]; for(let y=yr0;y<=yr1;y++) yrs.push(y);
   const val=(k,y)=>{ const rs=R.filter(r=>r[k]&&+r[k].slice(0,4)===y); return pmMode==="area"?rs.reduce((s,r)=>s+r.area,0)/1e4:rs.length; };
   const S=[["pms","허가","var(--st-p)"],["stc","착공","var(--st-s)"],["apr","준공","var(--st-d)"]];
   const data=yrs.map(y=>S.map(([k])=>val(k,y)));
-  const box=$("#pm-chart"), W=Math.max(300,Math.round(box.clientWidth||600)), H=W<520?250:window.innerWidth>=1180?380:290;
+  $("#pm-foot").textContent=`건축 인허가 대장의 허가일 · 실제착공일 · 사용승인일을 연도별로 셌습니다. ${yr1}년은 올해 누적입니다. 같은 건물이 해마다 허가 → 착공 → 준공으로 넘어가므로 세 막대를 더하면 안 됩니다.`;
+  if(!D.permits.complete){ const cov=D.permits.coverage, done=Object.values(cov).reduce((a,v)=>a+v[0],0), tot=Object.values(cov).reduce((a,v)=>a+v[1],0);
+    $("#pm-foot").textContent+=` 지금은 전국 동 · 리 단위를 나눠 도는 첫 바퀴(${fmt(done/tot*100,0)}%)라 아직 돌지 않은 지역의 건은 빠져 있습니다.`; }
+  const box=$("#pm-chart"), W=Math.max(300,Math.round(box.clientWidth||600));
+  let H=W<520?250:290;
+  if(window.innerWidth>=1180){ // 옆 지도 카드와 높이를 맞춰 빈 공간 없이 채운다
+    const cc=box.closest(".card"), mc=$("#map").closest(".card"), cs=getComputedStyle(cc), n=cc.children.length;
+    const other=[...cc.children].filter(e=>e!==box).reduce((a,e)=>a+e.offsetHeight,0)+parseFloat(cs.rowGap||0)*(n-1)+parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+2;
+    H=Math.round(Math.max(320,Math.min(560,mc.offsetHeight-other))); }
   const m={l:40,r:8,t:22,b:30}, iw=W-m.l-m.r, ih=H-m.t-m.b;
   const {mx,st}=niceMax(Math.max(1,...data.flat()));
   const Y=v=>m.t+ih-(v/mx)*ih, band=iw/yrs.length, gw=Math.min(84,band*.72), bw=gw/3;
@@ -504,9 +512,6 @@ function renderPM(){
       tip.hidden=false; const tw=tip.offsetWidth, cx=m.l+band*i+band/2; let left=cx+gw/2+10; if(left+tw>W) left=Math.max(0,cx-gw/2-10-tw); tip.style.left=left+"px"; tip.style.top=m.t+"px"; };
     h.addEventListener("pointerenter",show); h.addEventListener("pointerdown",show);
     h.addEventListener("pointerleave",()=>{ tip.hidden=true; box.querySelectorAll(".hl").forEach(e=>e.classList.remove("on")); }); });
-  $("#pm-foot").textContent=`건축 인허가 대장의 허가일 · 실제착공일 · 사용승인일을 연도별로 셌습니다. ${yr1}년은 올해 누적입니다. 같은 건물이 해마다 허가 → 착공 → 준공으로 넘어가므로 세 막대를 더하면 안 됩니다.`;
-  if(!D.permits.complete){ const cov=D.permits.coverage, done=Object.values(cov).reduce((a,v)=>a+v[0],0), tot=Object.values(cov).reduce((a,v)=>a+v[1],0);
-    $("#pm-foot").textContent+=` 지금은 전국 동 · 리 단위를 나눠 도는 첫 바퀴(${fmt(done/tot*100,0)}%)라 아직 돌지 않은 지역의 건은 빠져 있습니다.`; }
 }
 /* ── 목록 ── */
 const capVal=c=>!c||c.none?null:(c.mw??c.it);
@@ -592,7 +597,7 @@ function renderMap(){
   const pj=GEO.proj, LL=(lon,lat)=>[(lon-pj.lon0)*pj.kx,(pj.lat0-lat)*1000];
   const rg=$("#pm-rg").value||"all", S=bySite(D.permits.rows.filter(r=>r.ll&&rgMatch(r.sd,rg)));
   S.forEach(x=>{ [x.x,x.y]=LL(...x.top.ll); x.rp=(4+Math.sqrt(x.area/1e4)*2.1)*(mapView==="all"?.62:1); });
-  const W=Math.max(280,Math.round(box.clientWidth||400)), H=Math.round(Math.min(560,Math.max(340,W*(mapView==="all"?1.18:0.98))));
+  const W=Math.max(280,Math.round(box.clientWidth||400)), H=window.innerWidth>=1180?Math.round(Math.min(480,Math.max(400,W*.8))):Math.round(Math.min(560,Math.max(340,W*(mapView==="all"?1.18:0.98))));
   let vb;
   if(mapView==="all"){ const [x0,y0]=LL(124.55,38.78),[x1,y1]=LL(130.15,33.05); vb=[x0,y0,x1-x0,y1-y0]; }
   else { const cs=S.filter(x=>CAP.has(x.top.sd)), xs=cs.length?cs.map(x=>x.x):[LL(126.98,37.55)[0]], ys=cs.length?cs.map(x=>x.y):[LL(126.98,37.55)[1]];
@@ -632,7 +637,7 @@ function renderMap(){
       tip.hidden=false; const bb=box.getBoundingClientRect(), cr=c.getBoundingClientRect(), tw=tip.offsetWidth, th=tip.offsetHeight; let left=cr.right-bb.left+8; if(left+tw>bb.width) left=Math.max(0,cr.left-bb.left-8-tw); tip.style.left=left+"px"; tip.style.top=Math.max(0,Math.min(bb.height-th,cr.top-bb.top-10))+"px"; };
     c.addEventListener("pointerenter",show); c.addEventListener("pointerdown",show); c.addEventListener("pointerleave",()=>{ tip.hidden=true; }); });
   const tot=bySite(D.permits.rows.filter(r=>rgMatch(r.sd,rg))).length, cap=S.filter(x=>CAP.has(x.top.sd)).length;
-  $("#map-foot").textContent=`${tot}곳(같은 대지의 여러 인허가는 하나로)${mapView==="cap"&&S.length>cap?` · 수도권 밖 ${S.length-cap}곳은 '전국'에서`:""}. 위치는 법정동 · 리 대표점 기준이라 실제 대지와 수백 m~1km 다를 수 있고, 같은 동의 여러 사업장은 겹치지 않게 조금씩 떨어뜨렸습니다. 색은 같은 대지의 가장 최근 인허가 단계입니다. 경계: 통계청 SGIS(공공누리 1유형) · vuski/admdongkor, Natural Earth.`;
+  $("#map-foot").textContent=`${tot}곳(같은 대지의 인허가는 하나로)${mapView==="cap"&&S.length>cap?` · 수도권 밖 ${S.length-cap}곳은 '전국'에서`:""} · 위치는 법정동 대표점 기준이라 실제 대지와 수백 m 다를 수 있음 · 경계: 통계청 SGIS · vuski/admdongkor, Natural Earth`;
 }
 
 /* ── 전력 여건 ── */
@@ -708,7 +713,7 @@ function renderNews(){
   $("#news-note").textContent="PF · 착공 · 준공 · 인수 · 인허가 · 전력 키워드 · 매일 갱신";
 }
 
-function drawCharts(){ renderPM(); renderMap(); renderAbsorb(); renderScatter(); }
+function drawCharts(){ renderMap(); renderPM(); renderAbsorb(); renderScatter(); }
 function init(d){
   D=d;
   rgOptions($("#pm-rg"),D.permits.rows); rgOptions($("#ls-rg"),D.permits.rows);
@@ -719,7 +724,7 @@ function init(d){
   renderKPI(); renderTable(); renderTimeline(); renderNews(); renderDecomp(); drawCharts();
   tg.addEventListener("change",renderTimeline);
   document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{ pmMode=b.dataset.m; document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderPM(); }));
-  $("#pm-rg").addEventListener("change",()=>{ renderPM(); renderMap(); });
+  $("#pm-rg").addEventListener("change",()=>{ renderMap(); renderPM(); });
   document.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>{ mapView=b.dataset.v; document.querySelectorAll("[data-v]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderMap(); }));
   document.querySelectorAll("[data-st]").forEach(b=>b.addEventListener("click",()=>{ tf.st=b.dataset.st; document.querySelectorAll("[data-st]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderTable(); }));
   $("#ls-rg").addEventListener("change",e=>{ tf.rg=e.target.value; renderTable(); });
