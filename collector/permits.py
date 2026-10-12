@@ -96,9 +96,14 @@ def main():
         units = [u for u in units if not str(u[1]).startswith(ex)]
     until = dt.date.today().strftime("%Y%m%d")
     st = load_json(STATE, {})
-    tag = f"{a.since}|{a.sido}|{a.exclude_sgg}"
-    if a.restart or st.get("tag") != tag:
-        st = {"tag": tag, "since": a.since, "done": [], "errors": {}, "started": until}
+    if a.restart or not st:
+        st = {"since": a.since, "done": [], "errors": {}, "started": until, "pass": 1}
+    elif st.get("complete"):
+        # 한 바퀴를 다 돌았으면 직전 회차 시작일(7일 겹침)부터 바뀐 대장만 다시 훑는다
+        prev = dt.datetime.strptime(st["started"], "%Y%m%d").date() - dt.timedelta(days=7)
+        st = {"since": prev.strftime("%Y%m%d"), "done": [], "errors": {}, "started": until, "pass": st.get("pass", 1) + 1,
+              "last_complete": st["started"]}
+    a.since = st["since"]
     done = set(st["done"])
     todo = [u for u in units if f"{u[1]}-{u[2]}" not in done]
     print(f"units {len(units)}, todo {len(todo)}", flush=True)

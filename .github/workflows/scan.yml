@@ -7,6 +7,8 @@ on:
       since: {description: "대장 변경일 기준 시작일", required: false, default: "20200101"}
   push:
     branches: [scan-run]
+  schedule:
+    - cron: "40 15 * * *"   # 매일 00:40 KST(공공데이터포털 일일 한도 초기화 직후)
 permissions:
   contents: write
 concurrency: {group: scan, cancel-in-progress: false}
@@ -26,12 +28,13 @@ jobs:
         run: |
           SIDO="${{ github.event.inputs.sido }}"; EXC="${{ github.event.inputs.exclude }}"; SINCE="${{ github.event.inputs.since }}"
           if [ -f scan.args ] && [ "${{ github.event_name }}" = "push" ]; then . ./scan.args; fi
+          python collector/regions.py || true
           python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit 9000 --workers 4
       - name: commit
         if: always()
         run: |
           git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
-          git add data/permits.json data/state || true
+          git add data/permits.json data/state data/bjd_units.json || true
           git diff --cached --quiet || git commit -m "인허가 수집 $(date -u +%F)"
           git pull --rebase -q origin main || true
           git push origin HEAD:main
