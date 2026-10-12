@@ -18,6 +18,7 @@
   --up:#c8302f; --down:#2453c4; --flat:#6b7383;
   --ok:#1f7a4d; --warn:#a26a00; --bad:#b3401f;
   --st-p:#9aabdc; --st-s:#3354c4; --st-d:#0e8f7b;
+  --hr0:#cf3f3a; --hr1:#d6940c; --hr2:#3c9a52; --cable:#1b88ad;
   --cap:#3354c4; --reg:#0e8f7b; --warm:#d4682a; --gray:#7b8494;
   --sf1:#f3cdb6; --sf2:#fbe9de; --sf3:#d9efe9; --sf4:#b4e0d4;
   --tip-shadow:rgba(27,34,48,.14);
@@ -32,6 +33,7 @@
   --up:#ff7a72; --down:#7aa2ff; --flat:#8b93a3;
   --ok:#5fd19a; --warn:#f0bb4a; --bad:#ff8a63;
   --st-p:#a3b1e0; --st-s:#5f7be0; --st-d:#2fa88f;
+  --hr0:#ff6f63; --hr1:#f2b440; --hr2:#5fc477; --cable:#56c2e4;
   --cap:#5f7be0; --reg:#2fa88f; --warm:#dc7334; --gray:#8b93a3;
   --sf1:#5b3423; --sf2:#3b2b23; --sf3:#1e3b34; --sf4:#256052;
   --land:#232b38; --land2:#1c222d; --bd:#4a5468; --bd2:#343d4e;
@@ -42,6 +44,7 @@
   --up:#ff7a72; --down:#7aa2ff; --flat:#8b93a3;
   --ok:#5fd19a; --warn:#f0bb4a; --bad:#ff8a63;
   --st-p:#a3b1e0; --st-s:#5f7be0; --st-d:#2fa88f;
+  --hr0:#ff6f63; --hr1:#f2b440; --hr2:#5fc477; --cable:#56c2e4;
   --cap:#5f7be0; --reg:#2fa88f; --warm:#dc7334; --gray:#8b93a3;
   --sf1:#5b3423; --sf2:#3b2b23; --sf3:#1e3b34; --sf4:#256052;
   --land:#232b38; --land2:#1c222d; --bd:#4a5468; --bd2:#343d4e;
@@ -93,6 +96,7 @@ h2{font-size:.78rem;font-weight:600;letter-spacing:.08em;color:var(--muted);marg
 .card-head h3{margin:0;font-size:.95rem;font-weight:600}
 .card-head .note{font-size:.74rem;color:var(--muted)}
 .foot{margin:0;font-size:.72rem;color:var(--muted);line-height:1.6;word-break:keep-all}
+.foot .src{display:block;margin-top:2px;opacity:.85}
 .chart{position:relative;width:100%;min-width:0}
 .chart svg{display:block;width:100%;height:auto;overflow:visible}
 .chart text{font-family:var(--f-sans);font-variant-numeric:tabular-nums}
@@ -212,6 +216,27 @@ h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;verti
 .map .ml{font-family:var(--f-sans);fill:var(--muted);paint-order:stroke;stroke:var(--land);stroke-linejoin:round}
 .map .ml.k2{fill:var(--fg);font-weight:600}
 .map .pt{cursor:pointer}
+.map .sb{cursor:pointer}
+.map .cb{fill:none;stroke:var(--cable);stroke-linecap:round;stroke-linejoin:round}
+.map .cbh{fill:none;stroke:transparent;stroke-width:9px;cursor:pointer;pointer-events:stroke}
+.map .cbh:hover + .cb,.map .cb.on{stroke-opacity:1;stroke-width:2.2px}
+.map .lp{cursor:pointer}
+.map .ml.cbl{fill:var(--cable);font-weight:600}
+.layers{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.ly{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:4px 10px 4px 8px;border:1px solid var(--line);border-radius:999px;font-size:.76rem;font-weight:600;color:var(--fg);background:var(--surface);transition:opacity .15s,border-color .15s}
+.ly:hover{border-color:var(--bd)}
+.ly small{font-weight:400;color:var(--muted);font-size:.7rem}
+.ly[aria-pressed="false"]{opacity:.42}
+.ly[aria-pressed="false"] .lsw{filter:grayscale(1)}
+.ly:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ly .lsw{display:inline-flex;align-items:center;gap:3px;flex:none}
+.ly .lsw i{flex:none}
+.ly .lsw .dot{width:8px;height:8px}
+.ly .lsw .sq{width:7px;height:7px;border-radius:1.5px;display:inline-block}
+.ly .lsw .cl{width:14px;height:0;border-top:1.6px solid var(--cable);display:inline-block}
+.ly .lsw .lp{width:7px;height:7px;border-radius:50%;border:1.6px solid var(--cable);background:var(--surface);display:inline-block;box-sizing:border-box}
+.ly .lsw .dia{width:8px;height:8px}
+@media (max-width:640px){ .ly{font-size:.74rem} }
 .map .inset{fill:none;stroke:var(--bd);stroke-dasharray:3 3;stroke-width:.8px}
 .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 .mk{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px 16px}
@@ -329,12 +354,11 @@ footer .ct{white-space:nowrap}
         </div>
       </div>
       <div class="map" id="map"></div>
-      <div class="legend">
-        <span><i class="dot" style="background:var(--st-p)"></i>착공 전</span>
-        <span><i class="dot" style="background:var(--st-s)"></i>공사 중</span>
-        <span><i class="dot" style="background:var(--st-d)"></i>준공</span>
-        <span>원 크기 = 연면적</span>
-        <span><i class="dia"></i>분산에너지특화지역</span>
+      <div class="layers" role="group" aria-label="지도에 표시할 항목(누르면 켜고 끔)">
+        <button type="button" class="ly" data-ly="dc" aria-pressed="true"><span class="lsw"><i class="dot" style="background:var(--st-p)"></i><i class="dot" style="background:var(--st-s)"></i><i class="dot" style="background:var(--st-d)"></i></span>데이터센터<small>착공 전 · 공사 중 · 준공</small></button>
+        <button type="button" class="ly" data-ly="sub" aria-pressed="true"><span class="lsw"><i class="sq" style="background:var(--hr0)"></i><i class="sq" style="background:var(--hr1)"></i><i class="sq" style="background:var(--hr2)"></i></span>345kV 변전소 여유<small>0 · 300MW 미만 · 이상</small></button>
+        <button type="button" class="ly" data-ly="cab" aria-pressed="true"><span class="lsw"><i class="cl"></i><i class="lp"></i></span>해저케이블 · 육양국<small>점선 = 예정</small></button>
+        <button type="button" class="ly" data-ly="zone" aria-pressed="true"><span class="lsw"><i class="dia"></i></span>분산에너지특화지역</button>
       </div>
       <p class="foot" id="map-foot"></p>
     </div>
@@ -636,7 +660,7 @@ function renderDecomp(){
   el.textContent=`${base} 다만 최근 1년 수도권 증가분 ${sgn(X.tot,0)}MW 중 ${fmt(A,0)}MW(${fmt(p,0)}%)는 그 기간 대형 데이터센터가 새로 가동된 ${X.a.length}개 시 · 군 · 구(${names})에서 나왔고(이 지역들은 고객 수가 거의 그대로인데 사용량만 급증), 그 밖의 지역은 합쳐서 ${sgn(X.rest,1)}MW로 사실상 늘지 않았습니다.${p>=70?" 순증분은 사실상 데이터센터 몫으로 추정됩니다.":""}`;
 }
 /* ── 지도 ── */
-let mapView="all", GEO=null;
+let mapView="all", GEO=null; const LAY={dc:true,sub:true,cab:true,zone:true};
 function renderMap(){
   const box=$("#map"); if(!GEO){ box.innerHTML=`<div class="placeholder">지도 불러오는 중…</div>`; return; }
   const pj=GEO.proj, LL=(lon,lat)=>[(lon-pj.lon0)*pj.kx,(pj.lat0-lat)*1000];
@@ -673,10 +697,25 @@ function renderMap(){
   Object.values(grp).forEach(g=>{ if(g.length<2) return; const rr=Math.max(...g.map(x=>x.rp))*1.15*u; g.forEach((x,i)=>{ const a=-Math.PI/2+i*2*Math.PI/g.length; x.x+=Math.cos(a)*rr; x.y+=Math.sin(a)*rr; }); });
   const C={"착공 전":"var(--st-p)","공사 중":"var(--st-s)","준공":"var(--st-d)"};
   const Z=((D.zones||{}).items||[]).map((z,i)=>{ const [zx,zy]=LL(...z.ll); return {...z,i,zx,zy}; });
-  Z.forEach(z=>{ const r=(mapView==="all"?5.5:7)*u; s+=`<path class="zn" data-z="${z.i}" d="M${z.zx},${z.zy-r}L${z.zx+r},${z.zy}L${z.zx},${z.zy+r}L${z.zx-r},${z.zy}Z" fill="var(--warm)" fill-opacity=".9" stroke="var(--surface)" stroke-width="1.2" vector-effect="non-scaling-stroke" style="cursor:pointer"/>`;
+  const LY=D.layers||{}, CB=LY.cables||[], LPs=LY.landings||[], SB=LY.subs||[], hk=b=>b.mw>=300?2:b.mw>0?1:0;
+  let lpS=""; // 육양국은 맨 위에 그린다
+  const pth=ps=>"M"+ps.map(p=>LL(p[0],p[1]).map(v=>v.toFixed(1)).join(",")).join("L");
+  if(LAY.cab){
+    const R=(mapView==="all"?1.7:2.2)*1000;
+    s+=`<defs><radialGradient id="cbg"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="cbm" maskUnits="userSpaceOnUse" x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}">${LPs.map(l=>{ const [lx,ly]=LL(...l.ll); return `<circle cx="${lx.toFixed(0)}" cy="${ly.toFixed(0)}" r="${R}" fill="url(#cbg)"/>`; }).join("")}</mask></defs><g mask="url(#cbm)">`;
+    CB.forEach((c,i)=>(c.paths||[]).forEach(ps=>{ const d=pth(ps); s+=`<path class="cbh" data-c="${i}" d="${d}"/><path class="cb" data-c="${i}" d="${d}" stroke-width="1.1" stroke-opacity="${c.planned?.75:.6}"${c.planned?' stroke-dasharray="4 3"':""} vector-effect="non-scaling-stroke"/>`; }));
+    s+=`</g>`;
+    const LO={"busan-south-korea":[10,17,"start"],"geoje-south-korea":[0,15,"middle"],"shindu-ri-south-korea":[-8,3.5,"end"],"gunsan-south-korea":[-8,3.5,"end"]};
+    LPs.forEach((l,i)=>{ const [lx,ly]=LL(...l.ll), r=(mapView==="all"?3.4:4.4)*u, pl=l.cables.every(id=>(CB.find(c=>c.id===id)||{}).planned);
+      lpS+=`<g class="lp" data-l="${i}"><circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="${(r+3*u).toFixed(1)}" fill="transparent"/><circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="${r.toFixed(1)}" fill="var(--surface)" stroke="var(--cable)" stroke-width="1.8" vector-effect="non-scaling-stroke"${pl?' stroke-dasharray="2 2"':""}/><circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="${(r*.4).toFixed(1)}" fill="var(--cable)"/></g>`;
+      if(mapView==="all"){ const o=LO[l.id]||[7,3.5,"start"]; lpS+=`<text class="ml cbl" x="${(lx+o[0]*u).toFixed(1)}" y="${(ly+o[1]*u).toFixed(1)}" text-anchor="${o[2]}" style="font-size:${9*u}px;stroke-width:${3*u}px">${esc(l.nm.replace("(새만금)",""))} ${pl?"예정":l.cables.length}</text>`; } });
+  }
+  if(LAY.zone) Z.forEach(z=>{ const r=(mapView==="all"?5.5:7)*u; s+=`<path class="zn" data-z="${z.i}" d="M${z.zx},${z.zy-r}L${z.zx+r},${z.zy}L${z.zx},${z.zy+r}L${z.zx-r},${z.zy}Z" fill="var(--warm)" fill-opacity=".9" stroke="var(--surface)" stroke-width="1.2" vector-effect="non-scaling-stroke" style="cursor:pointer"/>`;
     if(mapView==="all") s+=`<text class="ml" x="${z.zx+8*u}" y="${z.zy+3.5*u}" style="font-size:${9.5*u}px;stroke-width:${3*u}px;fill:var(--warm);font-weight:600">${esc(z.nm.replace(" 분산특구",""))}</text>`; });
-  S.slice().sort((a,b)=>b.area-a.area).forEach(x=>{ s+=`<circle class="pt" data-s="${esc(x.top.site)}" cx="${x.x.toFixed(1)}" cy="${x.y.toFixed(1)}" r="${(x.rp*u).toFixed(1)}" fill="${C[x.stage]}" fill-opacity=".88" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`; });
-  s+=`</svg><div class="tip" hidden></div>`;
+  if(LAY.dc) S.slice().sort((a,b)=>b.area-a.area).forEach(x=>{ s+=`<circle class="pt" data-s="${esc(x.top.site)}" cx="${x.x.toFixed(1)}" cy="${x.y.toFixed(1)}" r="${(x.rp*u).toFixed(1)}" fill="${C[x.stage]}" fill-opacity=".88" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`; });
+  if(LAY.sub) SB.forEach((b,i)=>{ const [bx,by]=LL(...b.ll), k=hk(b), hh=[2.6,3.0,3.5][k]*u*(mapView==="all"?1:1.25);
+    s+=`<rect class="sb" data-b="${i}" x="${(bx-hh).toFixed(1)}" y="${(by-hh).toFixed(1)}" width="${(2*hh).toFixed(1)}" height="${(2*hh).toFixed(1)}" rx="${(.8*u).toFixed(2)}" fill="var(--hr${k})" stroke="var(--surface)" stroke-width="1.1" vector-effect="non-scaling-stroke"/>`; });
+  s+=lpS+`</svg><div class="tip" hidden></div>`;
   box.innerHTML=s;
   const tip=box.querySelector(".tip"), bySiteKey=Object.fromEntries(S.map(x=>[x.top.site,x]));
   box.querySelectorAll(".pt").forEach(c=>{ const show=()=>{ const x=bySiteKey[c.dataset.s], r=x.top, cp=x.cap;
@@ -688,8 +727,20 @@ function renderMap(){
       tip.innerHTML=`<div class="t">${esc(z.nm)}<small>${esc(z.date.slice(0,7).replace("-","."))} 지정</small></div><div class="r"><i></i><span>구역</span><b>${esc(z.area)}</b></div><div class="r"><i></i><span>유형</span><b>${esc(z.type)}</b></div><div style="margin-top:5px;color:var(--muted);word-break:keep-all">${esc(z.desc)}${z.dc?" · 데이터센터 유치 연계":""}</div>`;
       tip.hidden=false; const bb=box.getBoundingClientRect(), cr=c.getBoundingClientRect(), tw=tip.offsetWidth, th=tip.offsetHeight; let left=cr.right-bb.left+8; if(left+tw>bb.width) left=Math.max(0,cr.left-bb.left-8-tw); tip.style.left=left+"px"; tip.style.top=Math.max(0,Math.min(bb.height-th,cr.top-bb.top-10))+"px"; };
     c.addEventListener("pointerenter",show); c.addEventListener("pointerdown",show); c.addEventListener("pointerleave",()=>{ tip.hidden=true; }); });
+  const place=c=>{ tip.hidden=false; const bb=box.getBoundingClientRect(), cr=c.getBoundingClientRect(), tw=tip.offsetWidth, th=tip.offsetHeight; let left=cr.right-bb.left+8; if(left+tw>bb.width) left=Math.max(0,cr.left-bb.left-8-tw); tip.style.left=left+"px"; tip.style.top=Math.max(0,Math.min(bb.height-th,cr.top-bb.top-10))+"px"; };
+  const on=(sel,fn,off)=>box.querySelectorAll(sel).forEach(c=>{ const show=()=>{ fn(c); place(c); }; c.addEventListener("pointerenter",show); c.addEventListener("pointerdown",show); c.addEventListener("pointerleave",()=>{ tip.hidden=true; if(off) off(c); }); });
+  const sq=k=>`<i style="width:9px;height:9px;border-radius:2px;display:inline-block;background:var(--hr${k})"></i>`;
+  on(".sb",c=>{ const b=SB[+c.dataset.b], k=hk(b);
+    tip.innerHTML=`<div class="t">${esc(b.mem.join(" · "))} 변전소<small>345kV</small></div><div class="r">${sq(k)}<span>공급 여유</span><b>${b.mw.toLocaleString()}MW</b></div><div class="r"><i></i><span>관할</span><b style="font-weight:500;max-width:220px;text-align:right">${esc(b.sv.slice(0,6).join(" · "))}${b.sv.length>6?` 외 ${b.sv.length-6}곳`:""}</b></div>${b.mem.length>1?`<div style="margin-top:5px;color:var(--muted)">한전이 ${b.mem.length}개 변전소를 한 묶음으로 공개</div>`:""}${b.approx?`<div style="margin-top:3px;color:var(--muted)">위치는 관할 지역 기준(대략)</div>`:""}`; });
+  const own=s=>{ const a=String(s||"").split(",").map(x=>x.trim()).filter(Boolean); return a.slice(0,4).join(", ")+(a.length>4?` 외 ${a.length-4}`:""); };
+  const hl=(i,v)=>box.querySelectorAll(`.cb[data-c="${i}"]`).forEach(p=>p.classList.toggle("on",v));
+  on(".cbh",c=>{ const k=CB[+c.dataset.c]; hl(c.dataset.c,true);
+    tip.innerHTML=`<div class="t">${esc(k.nm)}<small>${k.planned?`${k.rfs} 개통 예정`:`${k.rfs} 개통`}</small></div><div class="r"><i></i><span>국내 육양</span><b>${esc(k.kr.map(id=>(LPs.find(l=>l.id===id)||{nm:id}).nm).join(" · "))}</b></div><div class="r"><i></i><span>연결</span><b>${esc((k.to||[]).join(" · "))}</b></div>${k.owners?`<div style="margin-top:5px;color:var(--muted);max-width:260px">${esc(own(k.owners))}</div>`:""}`; }, c=>hl(c.dataset.c,false));
+  on(".lp",c=>{ const l=LPs[+c.dataset.l], cs=l.cables.map(id=>CB.find(k=>k.id===id)).filter(Boolean);
+    tip.innerHTML=`<div class="t">${esc(l.nm)} 육양국<small>국제 해저케이블 ${cs.length}개</small></div>${cs.map(k=>`<div class="r"><i></i><span>${esc(k.nm.replace(/ Cable System$/,"").replace(/\s*\(.*?\)$/,"").slice(0,30))}</span><b>${k.planned?`'${String(k.rfs).slice(2)} 예정`:`'${String(k.rfs).slice(2)}`}</b></div>`).join("")}`; });
   const tot=bySite(D.permits.rows.filter(r=>rgMatch(r.sd,rg))).length, cap=S.filter(x=>CAP.has(x.top.sd)).length;
-  $("#map-foot").textContent=`${tot}곳(같은 대지의 인허가는 하나로)${mapView==="cap"&&S.length>cap?` · 수도권 밖 ${S.length-cap}곳은 '전국'에서`:""} · ◆ 분산에너지특화지역 ${Z.length}곳: 한전 외 민간 사업자와 전력 직접거래 허용(세부 기준 마련 중${mapView==="cap"?" · '전국'에서 모두 보임":""}) · AI 데이터센터 특구는 2027.3 법 시행 뒤 지정 · 위치는 법정동 대표점 기준 · 경계: 통계청 SGIS · vuski/admdongkor, Natural Earth`;
+  const nOk=SB.filter(b=>b.mw>0).length, lpT=LPs.map(l=>`${l.nm.replace("(새만금)","")} ${l.cables.every(id=>(CB.find(c=>c.id===id)||{}).planned)?"예정":l.cables.length}`).join(" · "), hu=yd(LY.hr_updated||"");
+  $("#map-foot").innerHTML=`데이터센터 ${tot}곳(같은 대지의 인허가는 하나로, 원 크기 = 연면적)${mapView==="cap"&&S.length>cap?` · 수도권 밖 ${S.length-cap}곳은 '전국'에서`:""} · 345kV 변전소 ${SB.length}곳 중 여유 있는 곳 ${nOk}곳(한전 ${hu}) · 국제 해저케이블 ${CB.length}개(${esc(lpT)}) · 분산에너지특화지역 ${Z.length}곳: 한전 외 민간 사업자와 전력 직접거래 허용(세부 기준 마련 중) · AI 데이터센터 특구는 2027.3 법 시행 뒤 지정<span class="src">위치: 사업장 법정동 대표점 · 변전소 OpenStreetMap · 해저케이블 TeleGeography Submarine Cable Map(CC BY-NC-SA 3.0) · 경계: 통계청 SGIS · vuski/admdongkor, Natural Earth</span>`;
 }
 
 /* ── 전력 여건 ── */
@@ -792,6 +843,7 @@ function init(d){
   document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{ pmMode=b.dataset.m; document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderPM(); }));
   $("#pm-rg").addEventListener("change",()=>{ renderMap(); renderPM(); });
   document.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>{ mapView=b.dataset.v; document.querySelectorAll("[data-v]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderMap(); }));
+  document.querySelectorAll("[data-ly]").forEach(b=>b.addEventListener("click",()=>{ const k=b.dataset.ly; LAY[k]=!LAY[k]; b.setAttribute("aria-pressed",LAY[k]); renderMap(); }));
   document.querySelectorAll("[data-st]").forEach(b=>b.addEventListener("click",()=>{ tf.st=b.dataset.st; document.querySelectorAll("[data-st]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderTable(); }));
   $("#ls-rg").addEventListener("change",e=>{ tf.rg=e.target.value; renderTable(); });
   $("#q").addEventListener("input",e=>{ tf.q=e.target.value; renderTable(); });

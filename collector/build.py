@@ -301,6 +301,21 @@ def power(kep):
     return {"smp": p.get("smp", {}), "gen": gen2, "self": self_suf, "self_year": years[-1] if years else None, "updated": p.get("updated")}
 
 
+def layers():
+    """지도 겹 레이어: 345kV 변전소 공급 여유(한전, 위치는 OSM) · 국제 해저케이블과 육양국(TeleGeography)."""
+    hr, g = load_json("data/kepco_headroom.json", {}), load_json("data/geo_subs.json", {})
+    serve = {}
+    for sd, gs in (hr.get("sgg") or {}).items():
+        for sg, subs in gs.items():
+            for nm in subs:
+                serve.setdefault(nm, set()).add(sg.replace(sd, "").strip() or sg)
+    subs = [{"nm": k, "mw": v, "ll": g[k]["ll"], "approx": g[k]["approx"], "mem": [m["nm"] for m in g[k]["members"]],
+             "sv": sorted(serve.get(k, []))} for k, v in (hr.get("subs") or {}).items() if k in g]
+    cb = load_json("data/cables.json", {})
+    return {"subs": subs, "hr_updated": hr.get("updated"), "cb_src": cb.get("src"), "landings": cb.get("landings", []),
+            "cables": [{k: c.get(k) for k in ("id", "nm", "rfs", "planned", "owners", "to", "kr", "paths")} for c in cb.get("cables", [])]}
+
+
 def zones():
     z = load_json("data/curated/zones.json", {"items": []})
     pts = load_json("data/geo_bjd_pts.json", {})
@@ -323,7 +338,7 @@ def main():
                            load_json("data/curated/dc_operating.json", {"items": []})["items"])
     out = {"built": dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M"),
            "permits": perm, "kepco": kep, "power": power(kep), "policy": load_json("data/policy.json", {}),
-           "timeline": load_json("data/curated/policy_timeline.json", {"items": []}), "zones": zones()}
+           "timeline": load_json("data/curated/policy_timeline.json", {"items": []}), "zones": zones(), "layers": layers()}
     out["policy"]["news"] = out["policy"].get("news", [])[:60]
     out["policy"].pop("bills", None)
     save_json("site/data/dash.json", out)
