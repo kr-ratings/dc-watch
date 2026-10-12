@@ -25,7 +25,7 @@ jobs:
           python collector/power.py || true
           python collector/policy.py || true
           python collector/kepco.py || true
-          python collector/permit_news.py || true
+          FORCE="${{ github.event_name == 'push' && '1' || '' }}" python collector/permit_news.py || true
           python collector/build.py || true
       - name: commit
         run: |

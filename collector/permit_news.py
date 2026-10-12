@@ -48,18 +48,20 @@ def search(q):
     return out
 
 
-def find(row, unique_city=False):
+CONV = re.compile(r"용도\s?변경|전환|리모델링|개조")
+
+
+def find(row, ambiguous=False):
     dong = (row.get("dongNmAddr") or "").split()[0] if row.get("dongNmAddr") else ""
     city = city_short(row.get("sggNm"))
     ds = dong_short(dong)
     brands = brand_tokens(row.get("bldNm"), dong, city)
+    conv = (row.get("archGbCdNm") or "") in ("대수선", "용도변경") or "용도변경" in (row.get("bldNm") or "")
     qs = []
     if brands:
         qs.append(" ".join(brands[:3]) + " 데이터센터")
     dong_q = re.sub(r"\d+가$", "", dong)
     qs.append(f"{city} {dong_q} 데이터센터")
-    if unique_city:
-        qs.append(f"{city} 데이터센터")
     cand = {}
     for q in qs:
         for a in search(q):
@@ -69,8 +71,13 @@ def find(row, unique_city=False):
             b_hit = bool(brands) and any(b.lower() in t.lower() for b in brands)
             d_hit = bool(ds) and ds in t
             c_hit = bool(city) and city in t
-            # 브랜드가 맞거나, 동과 시군이 함께 맞거나, 그 시군에 데이터센터가 하나뿐일 때만 붙인다
-            if not (b_hit or (d_hit and c_hit) or (c_hit and unique_city)):
+            ok = b_hit and (c_hit or d_hit)          # 이름 + 지역이 함께 맞는 기사
+            if not ok and d_hit and c_hit:           # 동 + 시군이 맞는 기사
+                if not ambiguous:
+                    ok = True
+                else:                                # 같은 동에 데이터센터가 여럿이면 신축/전환 성격이 맞을 때만
+                    ok = bool(CONV.search(t)) == conv
+            if not ok:
                 continue
             sc = 3 * b_hit + 2 * d_hit + c_hit
             key = re.sub(r"\W", "", t)[:40]
@@ -88,14 +95,15 @@ def collect(max_refresh=60):
     todo = [h for h in rows if h["mgmPmsrgstPk"] not in db]
     stale = sorted((h for h in rows if h["mgmPmsrgstPk"] in db and db[h["mgmPmsrgstPk"]].get("checked", "") <= (today - dt.timedelta(days=7)).isoformat()),
                    key=lambda h: db[h["mgmPmsrgstPk"]].get("checked", ""))
-    cities = {}
+    dongs = {}
     for h in rows:
-        c = city_short(h.get("sggNm"))
-        cities.setdefault(c, set()).add((h.get("platPlc") or "").split("번지")[0])
+        dongs.setdefault((h.get("sigunguCd"), h.get("bjdongCd")), set()).add((h.get("bun"), h.get("ji")))
+    if os.environ.get("FORCE"):
+        todo, stale = rows, []
     n = 0
     for h in todo + stale[:max_refresh]:
         try:
-            res = find(h, unique_city=len(cities.get(city_short(h.get("sggNm")), ())) == 1)
+            res = find(h, ambiguous=len(dongs.get((h.get("sigunguCd"), h.get("bjdongCd")), ())) > 1)
         except Exception as e:
             print("err", h.get("bldNm"), repr(e)[:120]); continue
         res["checked"] = today.isoformat()
