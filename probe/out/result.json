@@ -1,0 +1,48 @@
+{
+ "keys": {
+  "data_go_kr": true,
+  "kepco": true
+ },
+ "err": {
+  "ok": true,
+  "res": {
+   "11110-10300-json": {
+    "st": 200,
+    "ct": "application/json",
+    "len": 24914,
+    "head": "{\"response\":{\"header\":{\"resultCode\":\"00\",\"resultMsg\":\"NORMAL SERVICE\"},\"body\":{\"items\":{\"item\":[{\"rnum\":1,\"platPlc\":\"서울특별시 종로구 궁정동 1-2번지\",\"sigunguCd\":\"11110\",\"bjdongCd\":\"10300\",\"platGbCd\":\"0\",\"bun\":\"0001\",\"ji\":\"0002\",\"mgmPmsrgstPk\":1000000000000000948174,\"bldNm\":\" \",\"splotNm\":\" \",\"block\":\" \",\"lot\":\""
+   },
+   "11110-10300-None": {
+    "st": 200,
+    "ct": "application/xml;charset=UTF-8",
+    "len": 36526,
+    "head": "<response><header><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg></header><body><items><item><rnum>1</rnum><platPlc>서울특별시 종로구 궁정동 1-2번지</platPlc><sigunguCd>11110</sigunguCd><bjdongCd>10300</bjdongCd><platGbCd>0</platGbCd><bun>0001</bun><ji>0002</ji><mgmPmsrgstPk>10000000000000009481"
+   },
+   "11110-10400-json": {
+    "st": 200,
+    "ct": "application/json",
+    "len": 73284,
+    "head": "{\"response\":{\"header\":{\"resultCode\":\"00\",\"resultMsg\":\"NORMAL SERVICE\"},\"body\":{\"items\":{\"item\":[{\"rnum\":1,\"platPlc\":\"서울특별시 종로구 효자동 25번지\",\"sigunguCd\":\"11110\",\"bjdongCd\":\"10400\",\"platGbCd\":\"0\",\"bun\":\"0025\",\"ji\":\"0000\",\"mgmPmsrgstPk\":1002100016407,\"bldNm\":\" \",\"splotNm\":\" \",\"block\":\" \",\"lot\":\" \",\"jimokC"
+   },
+   "11110-10400-None": {
+    "st": 200,
+    "ct": "application/xml;charset=UTF-8",
+    "len": 107336,
+    "head": "<response><header><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg></header><body><items><item><rnum>1</rnum><platPlc>서울특별시 종로구 효자동 25번지</platPlc><sigunguCd>11110</sigunguCd><bjdongCd>10400</bjdongCd><platGbCd>0</platGbCd><bun>0025</bun><ji>0000</ji><mgmPmsrgstPk>1002100016407</mgmPms"
+   },
+   "11140-13800-json": {
+    "st": 200,
+    "ct": "application/json",
+    "len": 73642,
+    "head": "{\"response\":{\"header\":{\"resultCode\":\"00\",\"resultMsg\":\"NORMAL SERVICE\"},\"body\":{\"items\":{\"item\":[{\"rnum\":1,\"platPlc\":\"서울특별시 중구 필동2가 \",\"sigunguCd\":\"11140\",\"bjdongCd\":\"13800\",\"platGbCd\":\"0\",\"bun\":\"0000\",\"ji\":\"0000\",\"mgmPmsrgstPk\":10031627,\"bldNm\":\" \",\"splotNm\":\"81-11\",\"block\":\" \",\"lot\":\" \",\"jimokCdNm\":"
+   },
+   "11140-13800-None": {
+    "st": 200,
+    "ct": "application/xml;charset=UTF-8",
+    "len": 107694,
+    "head": "<response><header><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg></header><body><items><item><rnum>1</rnum><platPlc>서울특별시 중구 필동2가 </platPlc><sigunguCd>11140</sigunguCd><bjdongCd>13800</bjdongCd><platGbCd>0</platGbCd><bun>0000</bun><ji>0000</ji><mgmPmsrgstPk>10031627</mgmPmsrgstPk><b"
+   }
+  },
+  "sec": 2.2
+ }
+}
