@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   push:
     branches: [collect-run]
+  schedule:
+    - cron: "20 22 * * *"   # 매일 07:20 KST
 permissions:
   contents: write
 concurrency: {group: collect, cancel-in-progress: false}
@@ -23,9 +25,10 @@ jobs:
           python collector/power.py || true
           python collector/policy.py || true
           python collector/kepco.py || true
+          python collector/build.py || true
       - name: commit
         run: |
           git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
-          git add data/*.json
+          git add data/*.json site/data/dash.json
           git diff --cached --quiet || git commit -m "전력·정책 자료 수집 $(date -u +%F)"
           for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && break; sleep 5; done
