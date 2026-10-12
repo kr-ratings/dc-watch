@@ -374,7 +374,7 @@ footer .ct{white-space:nowrap}
     <div class="sec-head"><h2 id="h-ict">정보통신업 전기 사용량 — 늘어나는 수요와 짓고 있는 물량</h2><span class="note" id="ict-note"></span></div>
     <div class="two">
       <div class="card">
-        <div class="card-head"><h3>해마다 새로 가동된 데이터센터 용량(추정)</h3><span class="note">정보통신업 전기 사용량 증가분 · MW 환산</span></div>
+        <div class="card-head"><h3>데이터센터 신규 가동(추정, MW)</h3><span class="note">정보통신업 전기 사용량 증가분 기준</span></div>
         <p class="explain" id="ict-ex"></p>
         <div class="mk" id="ict-k"></div>
         <div class="chart-top"><span class="legend" style="margin-left:0">
@@ -710,23 +710,24 @@ function placeLabels(pts,W,H,m){ // 점 옆에 이름이 서로 겹치지 않게
     const cand=[[7,4,"start",x+7,x+7+w,y-8,y+4],[-7,4,"end",x-7-w,x-7,y-8,y+4],[0,-8,"middle",x-w/2,x+w/2,y-19,y-7],[0,16,"middle",x-w/2,x+w/2,y+5,y+17],
       [-3,-8,"start",x-3,x-3+w,y-19,y-7],[-3,16,"start",x-3,x-3+w,y+5,y+17],[3,-8,"end",x+3-w,x+3,y-19,y-7],[3,16,"end",x+3-w,x+3,y+5,y+17]];
     let best=null,bc=Infinity; for(const c of cand){ const v=cost({x0:c[3],x1:c[4],y0:c[5],y1:c[6]}); if(v<bc){bc=v;best=c;} if(v===0) break; }
+    if(bc>0&&!CAP.has(p.sd)) return; // 겹치면 이름은 생략(점을 누르면 보임)
     boxes.push({x0:best[3],x1:best[4],y0:best[5],y1:best[6]}); out.push({p,dx:best[0],dy:best[1],an:best[2]}); });
   return out;
 }
 function renderScatter(){
   const S=D.power.self, K=D.kepco, tot12=K.nat.slice(-12).reduce((a,b)=>a+b,0);
   const pts=Object.keys(S).map(sd=>({sd,lb:sd==="전남광주"?"전남광주":sd,x:S[sd],y:(K.sido[sd]||[]).slice(-12).reduce((a,b)=>a+(b||0),0)/K.hours.slice(-12).reduce((a,b)=>a+b,0)/1e3})).filter(p=>p.y>0);
-  const box=$("#sc-chart"), W=Math.max(300,Math.round(box.clientWidth||520)), H=W<520?350:340, m={l:42,r:12,t:38,b:36}, iw=W-m.l-m.r, ih=H-m.t-m.b;
-  const xmax=Math.ceil(Math.max(...pts.map(p=>p.x))/50)*50, ylo=Math.log10(Math.min(...pts.map(p=>p.y))*.7), yhi=Math.log10(Math.max(...pts.map(p=>p.y))*1.5);
-  const X=v=>m.l+v/xmax*iw, Y=v=>m.t+ih-(Math.log10(v)-ylo)/(yhi-ylo)*ih;
+  const box=$("#sc-chart"), W=Math.max(300,Math.round(box.clientWidth||520)), H=W<520?380:380, m={l:42,r:12,t:30,b:36}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const xmax=Math.ceil(Math.max(...pts.map(p=>p.x))/50)*50, ymx0=Math.max(...pts.map(p=>p.y))*1.1, ystep=ymx0>800?200:ymx0>300?100:50, ymax=Math.ceil(ymx0/ystep)*ystep;
+  const X=v=>m.l+v/xmax*iw, Y=v=>m.t+ih-v/ymax*ih;
   pts.forEach(p=>{p.px=X(p.x);p.py=Y(p.y);});
   let s=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="시도별 전력자립도와 정보통신업 전력사용량">`;
   s+=`<rect x="${m.l}" y="${m.t}" width="${X(100)-m.l}" height="${ih}" fill="var(--sf2)" opacity=".7"/><rect x="${X(100)}" y="${m.t}" width="${W-m.r-X(100)}" height="${ih}" fill="var(--sf3)" opacity=".55"/>`;
-  [5,10,20,50,100,200,500,1000,2000].filter(v=>Math.log10(v)<=yhi&&Math.log10(v)>=ylo).forEach(v=>{ s+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke-opacity=".6"/><text class="ax" x="${m.l-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`; });
+  Array.from({length:Math.round(ymax/ystep)+1},(_,i)=>i*ystep).forEach(v=>{ s+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}" stroke-opacity=".6"/><text class="ax" x="${m.l-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`; });
   for(let v=0;v<=xmax;v+=50) s+=`<text class="ax" x="${X(v)}" y="${H-m.b+15}" text-anchor="middle">${v}%</text>`;
   s+=`<line x1="${X(100)}" x2="${X(100)}" y1="${m.t}" y2="${H-m.b}" stroke="var(--fg)" stroke-opacity=".55" stroke-dasharray="3 3"/>`;
   s+=`<text class="ax" x="${X(100)-6}" y="${m.t+13}" text-anchor="end">${W<520?"← 부족":"← 다른 지역 전기를 끌어다 씀"}</text><text class="ax" x="${X(100)+6}" y="${m.t+13}">${W<520?"남음 →":"전기가 남음 →"}</text>`;
-  s+=`<text x="2" y="${m.t-22}" style="font-size:11.5px;font-weight:600;fill:var(--fg)">↑ 세로: 정보통신업 전기 사용량<tspan style="font-weight:400;fill:var(--muted)"> (MW, 최근 12개월 평균)</tspan></text><text class="ax" x="2" y="${m.t-8}">${W<520?"로그 눈금 — 한 칸 올라갈 때마다 약 2~2.5배":"로그 눈금 — 한 칸 올라갈 때마다 약 2~2.5배(값 차이가 커서 서울 · 경기와 나머지를 함께 보이게 함)"}</text>`;
+  s+=`<text x="2" y="${m.t-14}" style="font-size:11.5px;font-weight:600;fill:var(--fg)">↑ 세로: 정보통신업 전기 사용량<tspan style="font-weight:400;fill:var(--muted)"> (MW, 최근 12개월 평균)</tspan></text>`;
   s+=`<text x="${m.l+iw/2}" y="${H-4}" text-anchor="middle" style="font-size:11.5px;font-weight:600;fill:var(--fg)">가로: 전력자립도 →<tspan style="font-weight:400;fill:var(--muted)"> (지역 발전량 ÷ 판매량)</tspan></text>`;
   pts.forEach(p=>{ const c=CAP.has(p.sd)?"var(--cap)":"var(--reg)"; s+=`<circle cx="${p.px.toFixed(1)}" cy="${p.py.toFixed(1)}" r="${CAP.has(p.sd)?6:5}" fill="${c}" stroke="var(--surface)" stroke-width="1.5"/>`; });
   placeLabels(pts,W,H,m).forEach(({p,dx,dy,an})=>{ s+=`<text class="lbl${CAP.has(p.sd)?"":" dim"}" x="${(p.px+dx).toFixed(1)}" y="${(p.py+dy).toFixed(1)}" text-anchor="${an}">${p.lb}</text>`; });
