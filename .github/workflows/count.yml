@@ -1,0 +1,41 @@
+name: count-permits
+on:
+  workflow_dispatch:
+    inputs:
+      attempt: {description: "서버 연결이 안 돼 다시 띄운 횟수(자동)", required: false, default: "1"}
+  push:
+    branches: [count-run]
+permissions:
+  contents: write
+  actions: write
+concurrency: {group: scan, cancel-in-progress: false}
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install requests
+      - name: count
+        env:
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+        run: |
+          python collector/count_units.py --workers 3 || true
+          echo "STOP=$(python -c "import json;print(json.load(open('data/state/unit_counts.json')).get('stop',''))")" >> "$GITHUB_ENV"
+      - name: commit
+        if: always()
+        run: |
+          git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
+          git add data/state/unit_counts.json || true
+          git diff --cached --quiet || git commit -q -m "전국 인허가 건수 집계 $(date -u +%F)"
+          for i in 1 2 3; do git pull --rebase -X theirs -q origin main && git push -q origin HEAD:main && break; sleep 5; done
+      - name: retry on a fresh runner
+        if: env.STOP == 'conn' && (github.event.inputs.attempt || '1') < '5'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sleep 60
+          gh workflow run count.yml --ref main -f attempt=$(( ${{ github.event.inputs.attempt || '1' }} + 1 ))

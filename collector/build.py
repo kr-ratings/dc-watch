@@ -149,7 +149,9 @@ def permits():
     for k in st.get("done", []):
         done[code2sd.get(k, "?")] += 1
     cov = {sd: [done.get(sd, 0), n] for sd, n in tot.items()}
-    return {"headroom": hr.summary(), "rows": rows, "since": d.get("since"), "updated": d.get("updated"), "coverage": cov,
+    uc = load_json("data/state/unit_counts.json", {})
+    scanned = {k: uc.get(k) for k in ("since", "until", "total", "n", "units", "complete")} if uc.get("total") else None
+    return {"headroom": hr.summary(), "rows": rows, "since": d.get("since"), "updated": d.get("updated"), "coverage": cov, "scanned": scanned,
             "pass": st.get("pass", 1), "complete": st.get("complete", False), "last_complete": st.get("last_complete")}
 
 
