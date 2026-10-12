@@ -1,0 +1,1281 @@
+{
+ "keys": {
+  "data_go_kr": true,
+  "kepco": true
+ },
+ "hub_sites": {
+  "ok": true,
+  "res": {
+   "하남 풍산동 607-2": {
+    "basis": {
+     "head": {
+      "resultCode": "00",
+      "resultMsg": "NORMAL SERVICE"
+     },
+     "total": "5",
+     "items": [
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 135,
+       "platArea": 6637.5,
+       "archPmsDay": "20220708",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20231020"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": "하남 IDC 신축공사",
+       "mainPurpsCd": "24000",
+       "mainPurpsCdNm": "방송통신시설",
+       "archGbCdNm": "신축",
+       "totArea": 41919.45,
+       "platArea": 6637.5,
+       "archPmsDay": "20210202",
+       "stcnsSchedDay": "20210915",
+       "realStcnsDay": "20210909",
+       "useAprDay": "20231128",
+       "crtnDay": "20231128"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 63,
+       "platArea": 6637.5,
+       "archPmsDay": "20211130",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20240624"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 162,
+       "platArea": 6637.5,
+       "archPmsDay": "20210630",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20231020"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 108,
+       "platArea": 6637.5,
+       "archPmsDay": "20211115",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20231008"
+      }
+     ],
+     "raw": null
+    },
+    "dong": {
+     "total": "21",
+     "items": [
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 27,
+       "crtnDay": "20220909"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 27,
+       "crtnDay": "20220909"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 27,
+       "crtnDay": "20220909"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 9,
+       "crtnDay": "20220909"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 27,
+       "crtnDay": "20220909"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 27,
+       "crtnDay": "20220909"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 27,
+       "crtnDay": "20220909"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 27,
+       "crtnDay": "20220909"
+      }
+     ]
+    },
+    "flr": {
+     "total": "34",
+     "items": [
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": "3",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": "신축",
+       "crtnDay": "20220909",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": "6",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": "신축",
+       "crtnDay": "20220909",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": "1",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": "신축",
+       "crtnDay": "20220909",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": "4",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": "신축",
+       "crtnDay": "20220909",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": "7",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": "신축",
+       "crtnDay": "20220909",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "경기도 하남시 풍산동 607-2번지",
+       "bldNm": "10",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": "신축",
+       "crtnDay": "20220909",
+       "flrGbCdNm": "지상"
+      }
+     ]
+    },
+    "title": {
+     "head": {
+      "cmmMsgHeader": {
+       "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+       "returnAuthMsg": "등록되지 않은 서비스키",
+       "returnReasonCode": "30"
+      }
+     },
+     "total": null,
+     "items": [],
+     "raw": null
+    }
+   },
+   "구로 개봉동 166-2": {
+    "basis": {
+     "head": {
+      "resultCode": "00",
+      "resultMsg": "NORMAL SERVICE"
+     },
+     "total": "11",
+     "items": [
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 0,
+       "platArea": 0,
+       "archPmsDay": "20221229",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20221229"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 122.76,
+       "platArea": 3354,
+       "archPmsDay": "20250122",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20250122"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 0,
+       "platArea": 3354,
+       "archPmsDay": "20250821",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20260812"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "한국 컨벤션 웨딩",
+       "mainPurpsCd": "05000",
+       "mainPurpsCdNm": "문화및집회시설",
+       "archGbCdNm": "증축",
+       "totArea": 10384.66,
+       "platArea": 3354,
+       "archPmsDay": "20101203",
+       "stcnsSchedDay": "20101220",
+       "realStcnsDay": "20101220",
+       "useAprDay": "20110916",
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "구로 데이터센터",
+       "mainPurpsCd": "24000",
+       "mainPurpsCdNm": "방송통신시설",
+       "archGbCdNm": "신축",
+       "totArea": 19255.39,
+       "platArea": 3354,
+       "archPmsDay": "20221229",
+       "stcnsSchedDay": "20240401",
+       "realStcnsDay": "20231229",
+       "useAprDay": " ",
+       "crtnDay": "20250519"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 9,
+       "platArea": 3354,
+       "archPmsDay": "20251211",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20251211"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "Z5000",
+       "mainPurpsCdNm": "문화및집회시설",
+       "archGbCdNm": "증축",
+       "totArea": 8953.18,
+       "platArea": 3354,
+       "archPmsDay": "20020326",
+       "stcnsSchedDay": "20030501",
+       "realStcnsDay": "20030506",
+       "useAprDay": " ",
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "개봉웨딩홀",
+       "mainPurpsCd": "14000",
+       "mainPurpsCdNm": "업무시설",
+       "archGbCdNm": "증축",
+       "totArea": 8953.18,
+       "platArea": 3354,
+       "archPmsDay": "20040820",
+       "stcnsSchedDay": "20040820",
+       "realStcnsDay": "20040820",
+       "useAprDay": "20041119",
+       "crtnDay": "20220813"
+      }
+     ],
+     "raw": null
+    },
+    "dong": {
+     "total": "20",
+     "items": [
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "한국 컨벤션 웨딩",
+       "mainPurpsCd": "04000",
+       "mainPurpsCdNm": "제2종근린생활시설",
+       "totArea": 1431.48,
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "개봉웨딩홀",
+       "mainPurpsCd": "14000",
+       "mainPurpsCdNm": "업무시설",
+       "totArea": 8593.18,
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 18,
+       "crtnDay": "20250821"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 27,
+       "crtnDay": "20250821"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 9,
+       "crtnDay": "20251211"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "Z5000",
+       "mainPurpsCdNm": "문화및집회시설",
+       "totArea": 8953.18,
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 18,
+       "crtnDay": "20250122"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 5.76,
+       "crtnDay": "20250122"
+      }
+     ]
+    },
+    "flr": {
+     "total": "47",
+     "items": [
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "1",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": " ",
+       "crtnDay": "20251211",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "1",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": " ",
+       "crtnDay": "20260303",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "2동",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": " ",
+       "crtnDay": "20250310",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "1동",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": " ",
+       "crtnDay": "20250310",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "1",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": " ",
+       "crtnDay": "20250122",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 구로구 개봉동 166-2번지",
+       "bldNm": "6",
+       "mainPurpsCd": "28004",
+       "mainPurpsCdNm": "공사용가설건축물",
+       "archGbCdNm": " ",
+       "crtnDay": "20250122",
+       "flrGbCdNm": "지상"
+      }
+     ]
+    },
+    "title": {
+     "head": {
+      "cmmMsgHeader": {
+       "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+       "returnAuthMsg": "등록되지 않은 서비스키",
+       "returnReasonCode": "30"
+      }
+     },
+     "total": null,
+     "items": [],
+     "raw": null
+    }
+   },
+   "안산 단원구 성곡동 670-4": {
+    "basis": {
+     "head": {
+      "resultCode": "00",
+      "resultMsg": "NORMAL SERVICE"
+     },
+     "total": "5",
+     "items": [
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 261,
+       "platArea": 0,
+       "archPmsDay": "20241230",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20241230"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": "성곡동 670-4",
+       "mainPurpsCd": "24000",
+       "mainPurpsCdNm": "방송통신시설",
+       "archGbCdNm": "신축",
+       "totArea": 76459.01,
+       "platArea": 13340.6,
+       "archPmsDay": "20241008",
+       "stcnsSchedDay": "20241223",
+       "realStcnsDay": "20241218",
+       "useAprDay": " ",
+       "crtnDay": "20241218"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 27,
+       "platArea": 13340.6,
+       "archPmsDay": "20241203",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20251121"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 315,
+       "platArea": 13340.6,
+       "archPmsDay": "20250218",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20250218"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 180,
+       "platArea": 5369.3,
+       "archPmsDay": "20171121",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20231207"
+      }
+     ],
+     "raw": null
+    },
+    "dong": {
+     "total": "19",
+     "items": [
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": "성곡동 670-4",
+       "mainPurpsCd": "24000",
+       "mainPurpsCdNm": "방송통신시설",
+       "totArea": 76459.01,
+       "crtnDay": "20241008"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 18,
+       "crtnDay": "20241203"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 9,
+       "crtnDay": "20241203"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 36,
+       "crtnDay": "20241230"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 9,
+       "crtnDay": "20241230"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 36,
+       "crtnDay": "20241230"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 54,
+       "crtnDay": "20241230"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 54,
+       "crtnDay": "20241230"
+      }
+     ]
+    },
+    "flr": {
+     "total": "33",
+     "items": [
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": "주건축물제1동",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20241008",
+       "flrGbCdNm": "지하"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": "주건축물제1동",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20241008",
+       "flrGbCdNm": "지하"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": "주건축물제1동",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20241008",
+       "flrGbCdNm": "옥탑"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": "주건축물제1동",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20241008",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": "주건축물제1동",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20241008",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "경기도 안산시 단원구 성곡동 670-4번지",
+       "bldNm": "주건축물제1동",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20241008",
+       "flrGbCdNm": "지상"
+      }
+     ]
+    },
+    "title": {
+     "head": {
+      "cmmMsgHeader": {
+       "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+       "returnAuthMsg": "등록되지 않은 서비스키",
+       "returnReasonCode": "30"
+      }
+     },
+     "total": null,
+     "items": [],
+     "raw": null
+    }
+   },
+   "금천 가산동 319-19": {
+    "basis": {
+     "head": {
+      "resultCode": "00",
+      "resultMsg": "NORMAL SERVICE"
+     },
+     "total": "20",
+     "items": [
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 43.4,
+       "platArea": 6141.5,
+       "archPmsDay": "19981031",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 18,
+       "platArea": 6141,
+       "archPmsDay": "20231030",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20250324"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 18,
+       "platArea": 6141,
+       "archPmsDay": "20220526",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20230629"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 9,
+       "platArea": 6141,
+       "archPmsDay": "20220802",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20250703"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 106.3,
+       "platArea": 6141,
+       "archPmsDay": "20090224",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 18,
+       "platArea": 6141,
+       "archPmsDay": "20240605",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20240730"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": "케이스퀘어데이터센터 가산",
+       "mainPurpsCd": "24000",
+       "mainPurpsCdNm": "방송통신시설",
+       "archGbCdNm": "신축",
+       "totArea": 41214.54,
+       "platArea": 6141,
+       "archPmsDay": "20220331",
+       "stcnsSchedDay": "20220801",
+       "realStcnsDay": "20220905",
+       "useAprDay": "20250626",
+       "crtnDay": "20250626"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "archGbCdNm": " ",
+       "totArea": 27,
+       "platArea": 6141,
+       "archPmsDay": "20231012",
+       "stcnsSchedDay": " ",
+       "realStcnsDay": " ",
+       "useAprDay": " ",
+       "crtnDay": "20241219"
+      }
+     ],
+     "raw": null
+    },
+    "dong": {
+     "total": "37",
+     "items": [
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 18,
+       "crtnDay": "20240605"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 9,
+       "crtnDay": "20250602"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": "18000",
+       "mainPurpsCdNm": "창고시설",
+       "totArea": 106.3,
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": " ",
+       "mainPurpsCdNm": " ",
+       "totArea": 43.4,
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 27,
+       "crtnDay": "20220813"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": "케이스퀘어데이터센터 가산",
+       "mainPurpsCd": "24000",
+       "mainPurpsCdNm": "방송통신시설",
+       "totArea": 41214.54,
+       "crtnDay": "20250626"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 18,
+       "crtnDay": "20240110"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": " ",
+       "mainPurpsCd": "28000",
+       "mainPurpsCdNm": "가설건축물",
+       "totArea": 18,
+       "crtnDay": "20231016"
+      }
+     ]
+    },
+    "flr": {
+     "total": "50",
+     "items": [
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": "케이스퀘어데이터센터 가산",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20250626",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": "케이스퀘어데이터센터 가산",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20250626",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": "케이스퀘어데이터센터 가산",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20250626",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": "케이스퀘어데이터센터 가산",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20250626",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": "케이스퀘어데이터센터 가산",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20250626",
+       "flrGbCdNm": "지상"
+      },
+      {
+       "platPlc": "서울특별시 금천구 가산동 319-19번지",
+       "bldNm": "케이스퀘어데이터센터 가산",
+       "mainPurpsCd": "24005",
+       "mainPurpsCdNm": "데이터센터",
+       "archGbCdNm": "신축",
+       "crtnDay": "20250626",
+       "flrGbCdNm": "지하"
+      }
+     ]
+    },
+    "title": {
+     "head": {
+      "cmmMsgHeader": {
+       "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+       "returnAuthMsg": "등록되지 않은 서비스키",
+       "returnReasonCode": "30"
+      }
+     },
+     "total": null,
+     "items": [],
+     "raw": null
+    }
+   }
+  },
+  "sec": 5.5
+ },
+ "hub_scan_cost": {
+  "ok": true,
+  "res": {
+   "하남 풍산동": {
+    "total": "1141",
+    "rows_when_1000": 100,
+    "head": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    },
+    "total_with_startDate": "102",
+    "head_dt": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    }
+   },
+   "안산 성곡동": {
+    "total": "8701",
+    "rows_when_1000": 100,
+    "head": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    },
+    "total_with_startDate": "1460",
+    "head_dt": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    }
+   },
+   "서울 역삼동": {
+    "total": "9273",
+    "rows_when_1000": 100,
+    "head": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    },
+    "total_with_startDate": "705",
+    "head_dt": {
+     "resultCode": "00",
+     "resultMsg": "NORMAL SERVICE"
+    }
+   }
+  },
+  "sec": 8.82
+ },
+ "hub_dong_filter": {
+  "ok": false,
+  "err": "TypeError(\"'>=' not supported between instances of 'int' and 'str'\")",
+  "tb": "Traceback (most recent call last):\n  File \"/home/runner/work/dc-watch/dc-watch/probe/probe.py\", line 23, in rec\n    OUT[name] = {\"ok\": True, \"res\": fn()}\n                                    ^^^^\n  File \"/home/runner/work/dc-watch/dc-watch/probe/probe.py\", line 113, in t_dong_filter\n    if not its or len(allit) >= (a.get(\"total\") or 0):\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: '>=' not supported between instances of 'int' and 'str'\n",
+  "sec": 0.43
+ },
+ "kepco": {
+  "ok": true,
+  "res": {
+   "latest": "2026-07",
+   "tries": [
+    {
+     "ym": "2026-09",
+     "status": 404,
+     "n": 0,
+     "err": {
+      "errCd": "404",
+      "errMsg": "NotFound"
+     }
+    },
+    {
+     "ym": "2026-08",
+     "status": 404,
+     "n": 0,
+     "err": {
+      "errCd": "404",
+      "errMsg": "NotFound"
+     }
+    },
+    {
+     "ym": "2026-07",
+     "status": 200,
+     "n": 32,
+     "err": {}
+    }
+   ],
+   "gg_J_sample": [
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "XXX",
+     "biz": "정보통신업",
+     "custCnt": 5299,
+     "powerUsage": 63051086,
+     "bill": 10009801078,
+     "unitCost": 158.8
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "가평군",
+     "biz": "정보통신업",
+     "custCnt": 761,
+     "powerUsage": 1045071,
+     "bill": 177287194,
+     "unitCost": 169.6
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "고양시",
+     "biz": "정보통신업",
+     "custCnt": 3927,
+     "powerUsage": 25698589,
+     "bill": 4303215393,
+     "unitCost": 167.4
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "과천시",
+     "biz": "정보통신업",
+     "custCnt": 411,
+     "powerUsage": 5012928,
+     "bill": 812740852,
+     "unitCost": 162.1
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "광명시",
+     "biz": "정보통신업",
+     "custCnt": 822,
+     "powerUsage": 1466093,
+     "bill": 230617800,
+     "unitCost": 157.3
+    },
+    {
+     "year": "2026",
+     "month": "07",
+     "metro": "경기도",
+     "city": "광주시",
+     "biz": "정보통신업",
+     "custCnt": 1769,
+     "powerUsage": 2532478,
+     "bill": 427813663,
+     "unitCost": 168.9
+    }
+   ],
+   "all_J": {
+    "status": 200,
+    "keys": [
+     "raw"
+    ],
+    "tot": [],
+    "n_data": 0
+   },
+   "cust_gg_J": {
+    "status": 200,
+    "data": [
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "가평군",
+      "biz": "정보통신업",
+      "new": 148,
+      "expansion": 0,
+      "cancel": 4
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "고양시 덕양구",
+      "biz": "정보통신업",
+      "new": 27,
+      "expansion": 0,
+      "cancel": 12
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "고양시 일산동구",
+      "biz": "정보통신업",
+      "new": 4903,
+      "expansion": 0,
+      "cancel": 0
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "고양시 일산서구",
+      "biz": "정보통신업",
+      "new": 1032,
+      "expansion": 0,
+      "cancel": 1003
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "과천시",
+      "biz": "정보통신업",
+      "new": 14,
+      "expansion": 0,
+      "cancel": 16
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "광명시",
+      "biz": "정보통신업",
+      "new": 146,
+      "expansion": 1,
+      "cancel": 9
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "광주시",
+      "biz": "정보통신업",
+      "new": 25,
+      "expansion": 0,
+      "cancel": 4
+     },
+     {
+      "year": "2026",
+      "month": "07",
+      "metro": "경기도",
+      "city": "구리시",
+      "biz": "정보통신업",
+      "new": 48,
+      "expansion": 0,
+      "cancel": 0
+     }
+    ],
+    "other": {}
+   },
+   "contract_all": {
+    "status": 200,
+    "tot": [],
+    "other": {
+     "raw": "{\"totData\":[{\"year\":\"2026\",\"month\":\"07\",\"metro\":\"전체\",\"city\":\"전체\",\"cntr\":\"주택용\",\"custCnt\":16059383,\"powerUsage\":7906591158,\"bill\":1255531335945,\"unitCost\":158.8,\"cntrPwr\":97103529},{\"year\":\"2026\",\"month\":\"07\",\"metro\":\"전체\",\"city\":\"전체\",\"cntr\":\"일반용\",\"custCnt\":3621722,\"powerUsage\":12597199499,\"bill\":2336857482834,\"unitCost\":185.5,\"cntrPwr\":121800587},{\"year\":\"2026\",\"month\":\"07\",\"metro\":\"전체\",\"city\":\"전체\","
+    }
+   }
+  },
+  "sec": 5.23
+ },
+ "open_sources": {
+  "ok": true,
+  "res": {
+   "kpx_smp": {
+    "status": 200,
+    "len": 68952,
+    "sample": "2026.png\" alt=\"과학기술정보통신부 WA(WEB접근성) 품질인증 마크,웹와치(WebWatch) 2026.1.21 ~ 2027.1.20\" title=\"WA 품질인증 마크, 웹와치(WebWatch) 2026.1.21 ~ 2027.1.20\"> </a></li> </ul> </div> <script> $(document).ready(function(){ $(\"."
+   },
+   "epsis_region_gen": {
+    "status": 200,
+    "len": 407364,
+    "grid": "gridData); rMateGridH5.setAssetsPath(\"/epsisnew/resources/js/rMateGridH5/Assets/\"); // 사용자가 import를 완료하면 불려집니다. var importCompleteHandler = function() { } var layoutCompleteHandler = function(event) { dataGrid = gridRoot.getDataGrid(); // 그리드 객체 if(\"\" == \"001010\" && \"\" != \"eng\"){ dataGrid.addEventListener(\"change\", selectionChangeHandler); gridRoot.addEventListener(\"importComplete\", importCompleteHandler); } } gridRoot.addEventListener(\"layoutComplete\", layoutCompleteHandler); } function showLoadingBa",
+    "snip": " \"Value15\":value15, \"Value16\":value16, \"Value18\":value18 }); // if(chartKind==\"line\"){ lineChartLayoutMake(\"Date\",\"서울/부산/대구/인천/광주/대전/울산/경기/강원/충북/충남/전북/전남/경북/경남/제주/세종\",unit,\"eight\"); }else if(chartKind==\"column\"){ columnChartLayoutMake(\"Date\",\"서울/부산/대구/인천/광주/대전/울산/경기/강원/충북/충남/전북/전남/경북/경남/제주/세종\",unit,\"eight\"); } // document.getElementById(id).setLayout(layoutStr); ",
+    "ajax": [
+     "/epsisnew/insertCommExcount.ajax",
+     "/epsisnew/insertCommExcount.ajax",
+     "/epsisnew/changePc.ajax;jsessionid=B78A582B022E619BEB52E5B64B14A2E4"
+    ]
+   },
+   "assembly": {
+    "status": 200,
+    "count": 7,
+    "names": [
+     "인공지능데이터센터 구축 및 운영 활성화에 관한 법률안 / None",
+     "인공지능 데이터센터 진흥 및 기반 조성에 관한 법률안 / 대안반영폐기",
+     "인공지능 데이터센터 진흥에 대한 특별법안 / 대안반영폐기",
+     "인공지능 데이터센터 진흥 및 기반 조성에 관한 법률안 / 대안반영폐기",
+     "인공지능데이터센터 기반 구축 및 산업 육성에 관한 법률안 / 대안반영폐기"
+    ]
+   },
+   "gnews": {
+    "status": 200,
+    "items": 100,
+    "titles": [
+     "Google 뉴스",
+     "네오에이아이클라우드, 6,000억 규모 포항 AI 데이터센터 자금조달 완료 - 에너지경제신문",
+     "부동산 PF 다음은 ‘AI 데이터센터’…한투, 시장 27% 선점 - 쿠키뉴스",
+     "[연중기획-새로운 리스크, 새로운 규제 ⑧-2] AI 데이터센터 리스크, 설비 손실 넘어 서비스 중단까지 - 한국보험신문",
+     "[이슈] GS ‘동해시 AI데이터센터’ 착공 채비… 대형건설사 ‘수주 전쟁’ 가세 - 오늘경제"
+    ]
+   }
+  },
+  "sec": 5.09
+ }
+}
