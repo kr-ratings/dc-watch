@@ -5,12 +5,14 @@ on:
       sido: {description: "시도명(쉼표 구분, 비우면 전체)", required: false, default: ""}
       exclude: {description: "제외 시군구코드 접두", required: false, default: ""}
       since: {description: "대장 변경일 기준 시작일", required: false, default: "20200101"}
+      attempt: {description: "서버 연결이 안 돼 다시 띄운 횟수(자동)", required: false, default: "1"}
   push:
     branches: [scan-run]
   schedule:
     - cron: "40 15 * * *"   # 매일 00:40 KST(공공데이터포털 일일 한도 초기화 직후) · 운영계정이라 하루 최대 6만 건까지
 permissions:
   contents: write
+  actions: write
 concurrency: {group: scan, cancel-in-progress: false}
 jobs:
   scan:
@@ -29,18 +31,30 @@ jobs:
           SIDO="${{ github.event.inputs.sido }}"; EXC="${{ github.event.inputs.exclude }}"; SINCE="${{ github.event.inputs.since }}"
           if [ -f scan.args ] && [ "${{ github.event_name }}" = "push" ]; then . ./scan.args; fi
           python collector/regions.py || true
-          # 5천 건씩 나눠 돌고 그때마다 저장 · 커밋해 진척이 저장소에 바로 보이게 한다
+          # 5천 건 또는 25분마다 끊어 저장 · 커밋해 진척이 저장소에 바로 보이게 한다
           git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
-          TOTAL="${LIMIT:-60000}"; CH=5000; N=$(( (TOTAL + CH - 1) / CH ))
+          TOTAL="${LIMIT:-60000}"; CH=5000; N=$(( (TOTAL + CH - 1) / CH )); STOP=""
           for i in $(seq 1 $N); do
-            python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit $CH --workers "${WORKERS:-3}" --only "${ONLY:-}" || true
+            python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit $CH --max-seconds 1500 --workers "${WORKERS:-3}" --only "${ONLY:-}" || true
             python collector/build.py || true
             git add data/permits.json data/state data/bjd_units.json site/data/dash.json || true
-            git diff --cached --quiet || git commit -q -m "인허가 수집 $(date -u +%F) ($i/$N)"
+            git diff --cached --quiet || git commit -q -m "인허가 수집 $(date -u +%F) ($i)"
             git pull --rebase -X theirs -q origin main || true
             git push -q origin HEAD:main || true
-            python -c "import json,sys;s=json.load(open('data/state/permit_scan.json'));sys.exit(0 if s.get('complete') or s.get('calls_last_run',0)<$CH else 1)" && break
+            STOP=$(python -c "import json;print(json.load(open('data/state/permit_scan.json')).get('stop',''))")
+            echo "chunk $i stop=$STOP"
+            case "$STOP" in limit|time) ;; *) break ;; esac
           done
+          echo "STOP=$STOP" >> "$GITHUB_ENV"
+      - name: retry on a fresh runner
+        # 이 실행 환경에서만 서버 연결이 막히는 경우가 있어, 새 실행으로 두 번까지 다시 띄운다
+        if: env.STOP == 'conn' && (github.event.inputs.attempt || '1') < '3'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          N=$(( ${{ github.event.inputs.attempt || '1' }} + 1 ))
+          sleep 60
+          gh workflow run scan.yml --ref main -f attempt=$N -f since="${{ github.event.inputs.since || '20200101' }}"
       - name: commit
         if: always()
         run: |

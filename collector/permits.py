@@ -5,7 +5,7 @@
 - 주용도 방송통신시설(24000) 건만 층별개요를 받아 세부용도 '데이터센터'(24005)가 있는지 확인한다.
 - 하루 호출 한도를 넘지 않도록 상한을 두고, 다 못 돌면 상태 파일에 이어서 돌 위치를 남긴다.
 """
-import argparse, datetime as dt, json, os, sys, time
+import argparse, datetime as dt, json, os, re, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor
 from common import DGK, Quota, QuotaExceeded, get, load_json, save_json, scrub
 
@@ -23,7 +23,7 @@ def call(q, op, **p):
     j = None
     for i in range(3):
         q.take()
-        r = get(HUB + op, params)
+        r = get(HUB + op, params, tries=3, timeout=(10, 60))
         try:
             j = r.json()
             break
@@ -97,6 +97,7 @@ def main():
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--restart", action="store_true")
     ap.add_argument("--only", default="")         # 쉼표로 구분한 '시군구-법정동' 단위만 받기
+    ap.add_argument("--max-seconds", type=int, default=0)  # 이 시간이 지나면 다음 묶음을 시작하지 않고 저장 후 끝낸다
     a = ap.parse_args()
     if not DGK:
         print("DATA_GO_KR_KEY 없음"); return
@@ -119,9 +120,9 @@ def main():
     a.since = st["since"]
     done = set(st["done"])
     todo = [u for u in units if f"{u[1]}-{u[2]}" not in done]
-    # 지난번에 일시 오류로 못 받은 단위를 먼저 다시 받는다
+    # 지난번에 오류가 난 단위는 맨 뒤에서 다시 받는다(무거운 단위가 앞을 막지 않게)
     errs = set(st.get("errors", {}))
-    todo.sort(key=lambda u: 0 if f"{u[1]}-{u[2]}" in errs else 1)
+    todo.sort(key=lambda u: 1 if f"{u[1]}-{u[2]}" in errs else 0)
     if a.only:
         only = set(x.strip() for x in a.only.split(","))
         todo = [u for u in todo if f"{u[1]}-{u[2]}" in only]
@@ -130,23 +131,43 @@ def main():
     q = Quota(a.limit)
     t0 = time.time()
 
+    lock = threading.Lock()
+    conn = {"fail": 0}
+    CONN_MAX = 12   # 연결 자체가 연달아 이만큼 실패하면 이 실행 환경에서 서버에 닿지 않는 것으로 보고 멈춘다
+
     def work(u):
+        if conn["fail"] >= CONN_MAX:
+            return u, None, "conn"
         try:
-            return u, scan_unit(q, u, a.since, until), None
+            res = u, scan_unit(q, u, a.since, until), None
+            with lock:
+                conn["fail"] = 0
+            return res
         except QuotaExceeded:
             return u, None, "quota"
         except Exception as e:
-            return u, None, scrub(repr(e))[:200]
+            msg = scrub(repr(e))[:200]
+            if re.search(r"ConnectTimeout|ConnectionError|Max retries|NewConnectionError", msg):
+                with lock:
+                    conn["fail"] += 1
+            return u, None, msg
 
-    stop = False
+    reason = "pass"
+    deadline = t0 + a.max_seconds if a.max_seconds else None
     with ThreadPoolExecutor(a.workers) as ex:
         for i in range(0, len(todo), 40):
-            if stop:
+            if reason != "pass":
+                break
+            if deadline and time.time() > deadline:
+                reason = "time"
                 break
             for u, hits, err in ex.map(work, todo[i:i + 40]):
                 key = f"{u[1]}-{u[2]}"
                 if err == "quota":
-                    stop = True
+                    reason = "limit" if q.used >= a.limit else "quota"
+                    continue
+                if err == "conn":
+                    reason = "conn"
                     continue
                 if err:
                     st["errors"][key] = err
@@ -160,9 +181,13 @@ def main():
             save_json(STATE, st)
             save_json(OUT, {"updated": until, "since": a.since, "items": sorted(found.values(), key=lambda h: (h.get("archPmsDay") or ""), reverse=True)})
             print(f"{min(i + 40, len(todo))}/{len(todo)} calls {q.used} hits {len(found)} dc {sum(1 for h in found.values() if h.get('dc'))} {int(time.time() - t0)}s", flush=True)
+    if reason == "pass" and conn["fail"] >= CONN_MAX:
+        reason = "conn"
     st["complete"] = len(done) >= len(units)
+    st["stop"] = "done" if st["complete"] else reason   # done · pass(남은 건 오류 단위뿐) · limit · time · quota(포털 한도) · conn(서버 연결 안 됨)
+    st["calls_last_run"] = q.used
     save_json(STATE, st)
-    print("complete" if st["complete"] else "partial", q.used)
+    print("stop", st["stop"], "calls", q.used, "done", len(done), "/", len(units), "errors", len(st["errors"]))
 
 
 if __name__ == "__main__":
