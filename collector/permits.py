@@ -150,7 +150,21 @@ def main():
             if re.search(r"ConnectTimeout|ConnectionError|Max retries|NewConnectionError", msg):
                 with lock:
                     conn["fail"] += 1
-            return u, None, msg
+                return u, None, msg
+        # 대장이 너무 많아 서버가 빈 응답을 주는 단위(가산 · 죽전 등)는 연도별로 나눠 다시 받는다
+        try:
+            got = {}
+            for y in range(int(a.since[:4]), int(until[:4]) + 1):
+                s_, e_ = max(a.since, f"{y}0101"), min(until, f"{y}1231")
+                for h in scan_unit(q, u, s_, e_):
+                    got[h["mgmPmsrgstPk"]] = h
+            with lock:
+                conn["fail"] = 0
+            return u, list(got.values()), None
+        except QuotaExceeded:
+            return u, None, "quota"
+        except Exception as e2:
+            return u, None, "연도별 재시도 실패: " + scrub(repr(e2))[:180]
 
     reason = "pass"
     deadline = t0 + a.max_seconds if a.max_seconds else None

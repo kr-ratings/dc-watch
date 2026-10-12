@@ -31,10 +31,12 @@ jobs:
           SIDO="${{ github.event.inputs.sido }}"; EXC="${{ github.event.inputs.exclude }}"; SINCE="${{ github.event.inputs.since }}"
           if [ -f scan.args ] && [ "${{ github.event_name }}" = "push" ]; then . ./scan.args; fi
           python collector/regions.py || true
-          # 5천 건 또는 25분마다 끊어 저장 · 커밋해 진척이 저장소에 바로 보이게 한다
+          # 5천 건 또는 25분마다 끊어 저장 · 커밋해 진척이 저장소에 바로 보이게 한다.
+          # 하루 호출 상한은 포털이 정한다(넘으면 LIMITED_NUMBER 응답 → quota로 멈추고 다음 날 0시 40분에 이어서).
           git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
-          TOTAL="${LIMIT:-60000}"; CH=5000; N=$(( (TOTAL + CH - 1) / CH )); STOP=""
-          for i in $(seq 1 $N); do
+          CH=5000; STOP=""; i=0; START=$(date +%s)
+          while :; do
+            i=$((i+1))
             python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit $CH --max-seconds 1500 --workers "${WORKERS:-3}" --only "${ONLY:-}" || true
             python collector/build.py || true
             git add data/permits.json data/state data/bjd_units.json site/data/dash.json || true
@@ -44,15 +46,17 @@ jobs:
             STOP=$(python -c "import json;print(json.load(open('data/state/permit_scan.json')).get('stop',''))")
             echo "chunk $i stop=$STOP"
             case "$STOP" in limit|time) ;; *) break ;; esac
+            # 실행 시간 제한(340분) 전에 끊고 새 실행으로 이어 받는다
+            if [ $(( $(date +%s) - START )) -gt 17400 ]; then STOP=continue; break; fi
           done
           echo "STOP=$STOP" >> "$GITHUB_ENV"
-      - name: retry on a fresh runner
-        # 이 실행 환경에서만 서버 연결이 막히는 경우가 있어, 새 실행으로 네 번까지 다시 띄운다
-        if: env.STOP == 'conn' && (github.event.inputs.attempt || '1') < '5'
+      - name: continue on a fresh run
+        # 서버 연결이 막힌 실행 환경이면 새 실행으로 네 번까지, 시간이 다 돼 끊었으면 바로 이어서 새 실행을 띄운다
+        if: (env.STOP == 'conn' && (github.event.inputs.attempt || '1') < '5') || env.STOP == 'continue'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          N=$(( ${{ github.event.inputs.attempt || '1' }} + 1 ))
+          if [ "$STOP" = conn ]; then N=$(( ${{ github.event.inputs.attempt || '1' }} + 1 )); else N=1; fi
           sleep 60
           gh workflow run scan.yml --ref main -f attempt=$N -f since="${{ github.event.inputs.since || '20200101' }}"
       - name: commit
