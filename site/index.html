@@ -130,6 +130,8 @@ input[type=search]{min-width:0;width:200px}
 
 
 .filters{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center;margin-bottom:10px}
+.funnel{margin:0 0 12px;font-size:.84rem;color:var(--muted);line-height:1.6;word-break:keep-all}
+.funnel b{font-weight:600;color:var(--fg);font-variant-numeric:tabular-nums}
 .count{font-size:.82rem;color:var(--muted);white-space:nowrap;margin-left:auto}
 .table-box{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:auto;max-height:72vh}
 table{width:100%;border-collapse:separate;border-spacing:0;font-size:.84rem}
@@ -341,6 +343,7 @@ footer .ct{white-space:nowrap}
 
   <section aria-labelledby="h-list">
     <div class="sec-head"><h2 id="h-list">데이터센터 인허가 목록</h2><span class="note">층별 용도에 '데이터센터'가 들어간 허가 대장 · 용량은 기사 · 공개 보고서로 확인된 값만(매주 재검색) · 관련 기사는 이름 + 지역이 맞는 것만 자동 연결</span></div>
+    <p class="funnel" id="funnel"></p>
     <div class="filters">
       <div class="seg" role="group" aria-label="단계">
         <button type="button" data-st="all" aria-pressed="true">전체</button>
@@ -565,6 +568,12 @@ function capCell(c){
   return `<td class="cp"${tt(c.note)}><span class="v">${v}</span>${sub?`<small>${sub}</small>`:""}</td>`;
 }
 const tf={st:"all",rg:"all",q:""}; let sortK="pms", sortD=-1;
+function renderFunnel(){
+  const P=D.permits||{}, S=P.scanned, nDc=(P.rows||[]).length, man=n=>{const m=Math.floor(n/1e4), r=n%1e4; return m?`${m.toLocaleString()}만${r?` ${r.toLocaleString()}`:""}`:n.toLocaleString();};
+  const up=String(P.updated||"").replace(/^\d{2}(\d{2})(\d{2})(\d{2})$/,"'$1.$2.$3");
+  const head=S&&S.total?`2020년 이후 전국 건축 인허가 <b>${man(S.total)}건</b>(전국 ${S.units.toLocaleString()}개 동 · 리 전수) 중 `:"";
+  $("#funnel").innerHTML=`${head}주용도 방송통신시설 <b>${(P.n_bc||0).toLocaleString()}건</b> → 층별 용도에 '데이터센터'가 있는 <b>${nDc.toLocaleString()}건</b> · 매일 새벽 전국을 다시 확인해 갱신${up?`(마지막 갱신 ${up})`:""}`;
+}
 function renderTable(){
   const q=tf.q.trim();
   let rows=D.permits.rows.filter(r=>(tf.st==="all"||r.stage===tf.st)&&rgMatch(r.sd,tf.rg)&&(!q||[r.nm,r.addr,r.sg,r.dong].join(" ").includes(q)));
@@ -778,7 +787,7 @@ function init(d){
   $("#pm-note").textContent=`국토교통부 건축HUB · ${D.permits.since?.slice(0,4)}년 이후 대장 · 매일 자동 갱신`;
   const tg=$("#tl-tag"), have=new Set((D.timeline?.items||[]).map(x=>x.tag)); tg.innerHTML=`<option value="all">전체</option>`+TAGS.filter(x=>have.has(x)).map(x=>`<option>${x}</option>`).join("");
   $("#law-note").textContent=`정부 · 국회 발표와 보도로 확인 · 매주 월요일 재확인`; $("#tl-chk").textContent=`마지막 확인 ${D.timeline?.checked||"–"}`;
-  renderKPI(); renderTable(); renderTimeline(); renderNews(); renderDecomp(); renderHeadroom(); drawCharts();
+  renderKPI(); renderFunnel(); renderTable(); renderTimeline(); renderNews(); renderDecomp(); renderHeadroom(); drawCharts();
   tg.addEventListener("change",renderTimeline);
   document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{ pmMode=b.dataset.m; document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderPM(); }));
   $("#pm-rg").addEventListener("change",()=>{ renderMap(); renderPM(); });

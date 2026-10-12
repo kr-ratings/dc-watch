@@ -19,7 +19,7 @@ def main():
     if not DGK:
         print("DATA_GO_KR_KEY 없음"); return
     units = load_json("data/bjd_units.json", [])
-    until = dt.date.today().strftime("%Y%m%d")
+    until = (dt.datetime.utcnow() + dt.timedelta(hours=9)).strftime("%Y%m%d")   # 한국 날짜 기준
     st = load_json(OUT, {})
     if st.get("since") != a.since or st.get("complete"):
         st = {"since": a.since, "until": until, "counts": {}, "errors": {}}

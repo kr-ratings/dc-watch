@@ -5,6 +5,8 @@ on:
       attempt: {description: "서버 연결이 안 돼 다시 띄운 횟수(자동)", required: false, default: "1"}
   push:
     branches: [count-run]
+  schedule:
+    - cron: "10 17 * * *"   # 매일 02:10 KST — 새벽 인허가 수집 뒤 전국 건수를 다시 센다
 permissions:
   contents: write
   actions: write

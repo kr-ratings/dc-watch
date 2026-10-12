@@ -108,7 +108,7 @@ def main():
     if a.exclude_sgg:
         ex = tuple(x.strip() for x in a.exclude_sgg.split(","))
         units = [u for u in units if not str(u[1]).startswith(ex)]
-    until = dt.date.today().strftime("%Y%m%d")
+    until = (dt.datetime.utcnow() + dt.timedelta(hours=9)).strftime("%Y%m%d")   # 한국 날짜 기준
     st = load_json(STATE, {})
     if a.restart or not st:
         st = {"since": a.since, "done": [], "errors": {}, "started": until, "pass": 1}

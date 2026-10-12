@@ -151,7 +151,7 @@ def permits():
     cov = {sd: [done.get(sd, 0), n] for sd, n in tot.items()}
     uc = load_json("data/state/unit_counts.json", {})
     scanned = {k: uc.get(k) for k in ("since", "until", "total", "n", "units", "complete")} if uc.get("total") else None
-    return {"headroom": hr.summary(), "rows": rows, "since": d.get("since"), "updated": d.get("updated"), "coverage": cov, "scanned": scanned,
+    return {"headroom": hr.summary(), "rows": rows, "since": d.get("since"), "updated": d.get("updated"), "coverage": cov, "scanned": scanned, "n_bc": len(d["items"]),
             "pass": st.get("pass", 1), "complete": st.get("complete", False), "last_complete": st.get("last_complete")}
 
 
