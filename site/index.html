@@ -676,7 +676,7 @@ function renderMap(){
       tip.hidden=false; const bb=box.getBoundingClientRect(), cr=c.getBoundingClientRect(), tw=tip.offsetWidth, th=tip.offsetHeight; let left=cr.right-bb.left+8; if(left+tw>bb.width) left=Math.max(0,cr.left-bb.left-8-tw); tip.style.left=left+"px"; tip.style.top=Math.max(0,Math.min(bb.height-th,cr.top-bb.top-10))+"px"; };
     c.addEventListener("pointerenter",show); c.addEventListener("pointerdown",show); c.addEventListener("pointerleave",()=>{ tip.hidden=true; }); });
   const tot=bySite(D.permits.rows.filter(r=>rgMatch(r.sd,rg))).length, cap=S.filter(x=>CAP.has(x.top.sd)).length;
-  $("#map-foot").textContent=`${tot}곳(같은 대지의 인허가는 하나로)${mapView==="cap"&&S.length>cap?` · 수도권 밖 ${S.length-cap}곳은 '전국'에서`:""} · ◆ 분산에너지특화지역 ${Z.length}곳(${mapView==="cap"?"'전국'에서 모두 보임 · ":""}AI 데이터센터 특구는 2027.3 법 시행 뒤 지정) · 위치는 법정동 대표점 기준 · 경계: 통계청 SGIS · vuski/admdongkor, Natural Earth`;
+  $("#map-foot").textContent=`${tot}곳(같은 대지의 인허가는 하나로)${mapView==="cap"&&S.length>cap?` · 수도권 밖 ${S.length-cap}곳은 '전국'에서`:""} · ◆ 분산에너지특화지역 ${Z.length}곳: 한전 외 민간 사업자와 전력 직접거래 허용(세부 기준 마련 중${mapView==="cap"?" · '전국'에서 모두 보임":""}) · AI 데이터센터 특구는 2027.3 법 시행 뒤 지정 · 위치는 법정동 대표점 기준 · 경계: 통계청 SGIS · vuski/admdongkor, Natural Earth`;
 }
 
 /* ── 전력 여건 ── */
