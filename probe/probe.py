@@ -278,8 +278,8 @@ if __name__ == "__main__":
         with open("probe/out/result.json", "w", encoding="utf-8") as f:
             f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
         raise SystemExit(0)
-    if KE:
-        rec("raw2", t_raw2)
+    if K:
+        rec("regcode", t_regcode)
     os.makedirs("probe/out", exist_ok=True)
     with open("probe/out/result.json", "w", encoding="utf-8") as f:
         f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
