@@ -15,7 +15,8 @@ title = re.search(r"<title>.*?</title>", h).group(0)
 font = re.search(r'<link rel="preconnect".*?display=swap">', h, re.S).group(0)
 style = re.search(r"<style>.*?</style>", h, re.S).group(0)
 body = re.search(r"<body>(.*)</body>", h, re.S).group(1).replace("<!--DRAFT-->", draft)
-data = "<script>window.DASH=" + json.dumps(d, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/") + ";</script>"
+geo = open("site/data/geo.json", encoding="utf-8").read().strip()
+data = ("<script>window.DASH=" + json.dumps(d, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/") + ";\nwindow.GEO_DATA=" + geo.replace("</", "<\\/") + ";</script>")
 body = body.replace("<script>\nconst $=", data + "\n<script>\nconst $=", 1)
 out = sys.argv[1] if len(sys.argv) > 1 else "preview.html"
 open(out, "w", encoding="utf-8").write(title + "\n" + font + "\n" + style + "\n" + body)
