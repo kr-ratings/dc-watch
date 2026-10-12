@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>데이터센터 개발 · 전력 현황 대시보드 (개발중)</title>
-<meta name="description" content="건축 인허가에서 용도가 데이터센터인 건의 허가 · 착공 · 준공, 정보통신업 전기 사용량 증가(MW), 전기요금 · SMP, 시 · 도 전력자립도, 제도 · 일정과 기사를 한 화면에 모은 대시보드">
+<meta name="description" content="건축 인허가에서 용도가 데이터센터인 건의 허가 · 착공 · 준공, 정보통신업 전기 사용량 증가(MW), 시 · 도 전력자립도, 제도 · 일정과 기사를 한 화면에 모은 대시보드">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <!--HEAD-END-->
 <style>
-/* Layout: 단일 컬럼 대시보드 — 요약 4칸 → 인허가 추이(전체 폭) → 인허가 목록(용량 칸 포함) → 정보통신업 전력사용량 → 전력 여건(자립도 × 수요 · 전기요금 계산 · 가격) → 제도 · 일정 · 기사
+/* Layout: 단일 컬럼 대시보드 — 요약 4칸 → 인허가 추이(전체 폭) → 인허가 목록(용량 칸 포함) → 정보통신업 전력사용량 → 전력 여건(자립도 × 수요) → 제도 · 일정 · 기사
    토큰은 apt-watch · daily-ratings · cons-ratings와 동일. 단계 색(허가 연파랑 · 착공 파랑 · 준공 청록)과 권역 색만 추가 */
 :root{
   --bg:#f5f6f8; --surface:#ffffff; --line:#dfe2e8; --fg:#1b2230; --muted:#5d6678;
@@ -220,20 +220,6 @@ td.cp small{display:block;font-size:.7rem;color:var(--muted);margin-top:1px}
 td.cp small a{color:var(--muted)}
 td.cp small a:hover{color:var(--accent)}
 
-.calc-in{display:flex;flex-wrap:wrap;gap:8px 16px}
-.calc-in input{font:inherit;font-family:var(--f-mono);font-size:.85rem;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:5px 8px;width:5em;text-align:right;font-variant-numeric:tabular-nums}
-.calc-in #c-u{width:6em}
-.calc-out{display:flex;flex-direction:column;gap:3px;padding-top:12px;border-top:1px solid var(--line)}
-.big{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.big .num{font-family:var(--f-mono);font-size:2.1rem;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
-.big .u{font-size:.86rem;color:var(--muted)}
-.eq{font-family:var(--f-mono);font-size:.74rem;color:var(--muted);word-break:keep-all;font-variant-numeric:tabular-nums}
-.calc-rows{display:flex;flex-direction:column}
-.cr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;padding:7px 0;border-top:1px solid var(--line);font-size:.82rem;align-items:baseline}
-.cr span{color:var(--muted);word-break:keep-all}
-.cr b{font-family:var(--f-mono);font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
-.cr b small{color:var(--muted);font-weight:400;margin-left:6px;font-size:.74rem}
-.cr b.up{color:var(--up)} .cr b.down{color:var(--down)}
 
 .tl-top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between}
 .tline{list-style:none;margin:0;padding:0}
@@ -289,7 +275,7 @@ footer .ct{white-space:nowrap}
   <header>
     <div>
       <h1>데이터센터 개발 · 전력 현황 대시보드 <span class="dev">(개발중)</span></h1>
-      <p class="sub">국토교통부 건축 인허가 대장에서 용도가 '데이터센터'인 건을 모아 허가 → 착공 → 준공 흐름과 위치를 보여 주고, 공개 보도로 확인된 수전 · IT 용량, 정보통신업 전기 사용량 증가(MW), 전기요금 · SMP, 시 · 도 전력자립도, 제도 · 일정과 기사를 함께 모았습니다 · <span style="white-space:nowrap">매일 자동 갱신</span></p>
+      <p class="sub">국토교통부 건축 인허가 대장에서 용도가 '데이터센터'인 건을 모아 허가 → 착공 → 준공 흐름과 위치를 보여 주고, 공개 보도로 확인된 수전 · IT 용량, 정보통신업 전기 사용량 증가(MW), 시 · 도 전력자립도, 제도 · 일정과 기사를 함께 모았습니다 · <span style="white-space:nowrap">매일 자동 갱신</span></p>
     </div>
     <div class="hright">
       <div class="sisters">
@@ -399,39 +385,13 @@ footer .ct{white-space:nowrap}
   </section>
 
   <section aria-labelledby="h-pow">
-    <div class="sec-head"><h2 id="h-pow">전력 여건</h2><span class="note">수전 가능성 · 전기요금 부담</span></div>
-    <div class="two">
+    <div class="sec-head"><h2 id="h-pow">전력 여건</h2><span class="note">수전 가능성</span></div>
+    <div>
       <div class="card">
         <div class="card-head"><h3>전기가 남는 곳과 수요가 몰린 곳</h3><span class="note" id="sc-note"></span></div>
         <div class="chart" id="sc-chart"></div>
         <p class="foot" id="sc-foot"></p>
       </div>
-      <div class="card" id="calc">
-        <div class="card-head"><h3>IT 용량을 1년 돌리면 드는 전기요금</h3><span class="note" id="calc-note"></span></div>
-        <div class="calc-in">
-          <label class="f" for="c-mw">IT 용량 <input type="number" id="c-mw" value="1" min="0.1" max="2000" step="0.5" inputmode="decimal"><span>MW</span></label>
-          <label class="f" for="c-pue">PUE <input type="number" id="c-pue" value="1.4" min="1" max="3" step="0.05" inputmode="decimal"></label>
-          <label class="f" for="c-ut">가동률 <input type="number" id="c-ut" value="70" min="5" max="100" step="5" inputmode="numeric"><span>%</span></label>
-          <label class="f" for="c-u">단가 <input type="number" id="c-u" min="1" max="1000" step="0.1" inputmode="decimal"><span>원/kWh</span></label>
-        </div>
-        <div class="calc-out">
-          <div class="big"><span class="num" id="c-big">–</span><span class="u">억원 / 년</span></div>
-          <div class="eq" id="c-eq"></div>
-        </div>
-        <div class="calc-rows" id="c-rows"></div>
-        <p class="foot">데이터센터는 산업용이 아닌 일반용 요금을 적용받습니다. 단가 기본값은 한전 일반용 최근 12개월 평균 판매단가(요금 합 ÷ 사용량 합)이고, 기본요금 · 부가세 · 전력기반기금이 섞인 평균이라 실제 고지서와는 차이가 있습니다. 가동률은 IT 장비가 계약 용량 대비 평균적으로 쓰는 비율입니다.</p>
-      </div>
-    </div>
-    <div class="card" style="margin-top:14px">
-      <div class="card-head"><h3>판매단가와 도매가격(SMP)</h3><span class="note">원/kWh · 월 · 최근 5년</span></div>
-      <div class="chart-top"><span class="legend" style="margin-left:0">
-        <span><i class="ln" style="background:var(--cap)"></i>일반용 판매단가(데이터센터 적용)</span>
-        <span><i class="ln" style="background:var(--gray)"></i>산업용 판매단가</span>
-        <span><i class="ln" style="background:var(--warm)"></i>SMP(육지 도매가)</span>
-        <span><i class="sw" style="background:var(--cap);opacity:.14"></i>일반용 − SMP 격차</span>
-      </span></div>
-      <div class="chart" id="price-chart"></div>
-      <p class="foot" id="price-foot"></p>
     </div>
   </section>
 
@@ -463,7 +423,6 @@ footer .ct{white-space:nowrap}
       <div><b>사용량(MW 환산)</b>한전 산업분류(한국표준산업분류 J) '정보통신업' 사용량(kWh)을 시간으로 나눈 값으로, 1년 내내 평균 몇 MW씩 쓰는지를 뜻합니다. 데이터센터 외에 통신 · 방송 · 소프트웨어 사업장도 포함됩니다. 2017년 7월 이전은 같은 대분류의 옛 이름(출판 · 영상 · 방송통신 · 정보서비스업)입니다.</div>
       <div><b>수요 증가</b>위 사용량(MW 환산)이 1년 동안 늘어난 양입니다. 새로 돌기 시작한 서버 · 냉방 설비만큼 늘어나므로, 데이터센터 임차 · 가동이 실제로 채워진 속도로 읽을 수 있습니다.</div>
       <div><b>사업장 위치</b>인허가 대장의 법정동 · 리 대표점(도로명주소 행정구역도 기반)에 표시합니다. 정확한 대지 위치는 지도 링크로 확인하세요.</div>
-      <div><b>SMP</b>계통한계가격. 전력시장에서 시간대별로 정해지는 도매 전력가격의 월평균입니다.</div>
       <div><b>전력자립도</b>지역 발전량(전력거래소 EPSIS) ÷ 지역 전력판매량(한전). 100% 미만이면 다른 지역에서 송전받아 쓰는 곳입니다.</div>
       <div><b>PUE · 가동률</b>PUE는 데이터센터 전체 전력 ÷ IT 장비 전력으로, 냉방 · 전력 손실을 얼마나 더 쓰는지 보여 줍니다(낮을수록 효율적). 가동률은 계약한 IT 용량 대비 실제 평균 사용 비율입니다.</div>
       <div><b>제도 · 일정</b>정부 · 국회 발표와 보도를 매주 다시 검색해 진행 상황(완료 · 진행 중 · 계류 · 예정)과 새 항목을 반영합니다. 정확한 내용은 각 항목의 출처 원문에서 확인하세요.</div>
@@ -471,7 +430,7 @@ footer .ct{white-space:nowrap}
   </details>
 
   <footer>
-    <p>출처: 국토교통부 건축HUB 건축인허가정보(공공데이터포털), 행정안전부 법정동코드, 한국전력 전력데이터 개방포털(산업분류별 · 계약종별 전력사용량), 한국전력거래소(SMP · EPSIS 지역별 발전량), 정부 · 국회 발표와 언론 보도 · 공개 시장 보고서(제도 · 일정, 용량 — 매주 확인), Google 뉴스. 지도: 통계청 SGIS 행정구역 경계(공공누리 제1유형, <a href="https://github.com/vuski/admdongkor" target="_blank" rel="noopener">vuski/admdongkor</a> 가공), 도로명주소 행정구역도(GIS Developer 배포), Natural Earth. 이 화면은 공개된 자료를 자동으로 모아 정리한 개인 참고용 자료이며, 정리 과정에서 지연 · 누락 · 오기가 생길 수 있고 원문과 다를 수 있습니다.</p>
+    <p>출처: 국토교통부 건축HUB 건축인허가정보(공공데이터포털), 행정안전부 법정동코드, 한국전력 전력데이터 개방포털(산업분류별 · 계약종별 전력사용량), 한국전력거래소(EPSIS 지역별 발전량), 정부 · 국회 발표와 언론 보도 · 공개 시장 보고서(제도 · 일정, 용량 — 매주 확인), Google 뉴스. 지도: 통계청 SGIS 행정구역 경계(공공누리 제1유형, <a href="https://github.com/vuski/admdongkor" target="_blank" rel="noopener">vuski/admdongkor</a> 가공), 도로명주소 행정구역도(GIS Developer 배포), Natural Earth. 이 화면은 공개된 자료를 자동으로 모아 정리한 개인 참고용 자료이며, 정리 과정에서 지연 · 누락 · 오기가 생길 수 있고 원문과 다를 수 있습니다.</p>
     <p>이 화면의 어떤 내용도 투자 권유나 여신 · 의사결정의 근거가 아니며, 이를 이용해 생긴 결과에 대해 작성자는 책임지지 않습니다. 정확한 내용은 세움터 건축물대장과 각 기관 원문에서 확인하시기 바랍니다.</p>
     <p>제작자 / 문의: 한국투자증권 PF그룹 부동산금융1부 최이름 차장 <a class="sister" href="https://namepf.com/" target="_blank" rel="noopener" style="display:inline-block;margin:0 4px;text-decoration:none;white-space:nowrap"><span class="sl">바로가기:</span> → 주요 딜 수행 실적</a> <span class="ct">(name@koreainvestment.com, 02-3276-6012)</span></p>
   </footer>
@@ -707,7 +666,6 @@ function renderMap(){
 
 /* ── 전력 여건 ── */
 const avg=a=>{ const v=a.filter(x=>x!=null); return v.length?v.reduce((x,y)=>x+y,0)/v.length:null; };
-function smpAvg(from,to){ const S=D.power.smp||{}; return avg(Object.keys(S).filter(k=>k>=from&&k<=to).map(k=>S[k])); }
 function placeLabels(pts,W,H,m){ // 점 옆에 이름이 서로 겹치지 않게 놓는다(안 되면 가장 덜 겹치는 자리)
   const boxes=pts.map(p=>({x0:p.px-5,x1:p.px+5,y0:p.py-5,y1:p.py+5})), out=[];
   const ov=(a,b)=>Math.max(0,Math.min(a.x1,b.x1)-Math.max(a.x0,b.x0))*Math.max(0,Math.min(a.y1,b.y1)-Math.max(a.y0,b.y0));
@@ -760,51 +718,6 @@ function renderScatter(){
   $("#sc-note").textContent=`${D.power.self_year}년 자립도 · 정보통신업 사용량(MW 환산) ${ym(K.latest)}까지 12개월 평균`;
   $("#sc-foot").textContent=`수도권이 정보통신업 전력 수요의 ${fmt(capU/tot12*100,0)}%를 차지하지만 서울(${fmt(S["서울"],0)}%) · 경기(${fmt(S["경기"],0)}%)는 쓰는 전기 대부분 또는 상당 부분을 다른 지역에서 끌어옵니다. 그래서 수도권 신규 대형 수전은 한전 공급 가능 판정과 전력계통영향평가(데이터센터 통과 기준 수도권 75점 · 비수도권 70점)가 사업의 첫 관문이고, 자립도 100%를 넘는 비수도권은 AI 데이터센터 특별법의 계통영향평가 특례 · 지역별 요금제 논의가 겨냥하는 곳입니다. 인천은 발전소가 많아 자립도는 높지만 수도권 계통 제약을 함께 받습니다. 점 하나가 시 · 도 하나이고, 위로 갈수록 정보통신업(데이터센터 포함) 전기를 많이 쓰는 곳, 오른쪽으로 갈수록 전기가 남는 곳입니다.`;
 }
-function renderCalc(first){
-  const g=(D.kepco.unit12||{})["일반용"]; if(!g||!g.cur) return;
-  if(first) $("#c-u").value=g.cur.v;
-  const mw=Math.max(0,+$("#c-mw").value||0), pue=Math.max(1,+$("#c-pue").value||1), ut=Math.min(100,Math.max(0,+$("#c-ut").value||0))/100, u=Math.max(0,+$("#c-u").value||0);
-  const kwh=mw*1000*pue*8760*ut, eok=x=>kwh*x/1e8, now=eok(u), big=now>=100?0:now>=10?1:2;
-  $("#c-big").textContent=fmt(now,big);
-  $("#c-eq").textContent=`${fmt(u,1)}원 × ${fmt(mw*1000)}kW × PUE ${pue} × 8,760시간 × 가동률 ${fmt(ut*100)}% · 연 ${fmt(kwh/1e6,1)}GWh`;
-  const smp=smpAvg(g.cur.from,g.cur.to), gap=smp!=null?g.cur.v-smp:null;
-  const vs=(x)=>{ const d=now-eok(x), c=d>=0?"up":"down"; return `<b class="${c}">${fmt(eok(x),big)}억<small>지금이 ${d>=0?"+":"−"}${fmt(Math.abs(d),big)}억</small></b>`; };
-  const R=[];
-  if(g.y5&&g.y5.v) R.push(`<div class="cr"><span>5년 전 단가(${fmt(g.y5.v,1)}원 · ${ym(g.y5.from)}~${ym(g.y5.to)} 평균)였다면</span>${vs(g.y5.v)}</div>`);
-  if(g.y3&&g.y3.v) R.push(`<div class="cr"><span>3년 전 단가(${fmt(g.y3.v,1)}원)였다면</span>${vs(g.y3.v)}</div>`);
-  R.push(`<div class="cr"><span>단가가 kWh당 10원 오르내리면</span><b>± ${fmt(eok(10),big+1)}억</b></div>`);
-  if(gap!=null) R.push(`<div class="cr"><span>도매가(SMP ${fmt(smp,1)}원)와의 격차 ${fmt(gap,1)}원 — 직접 PPA · 구역전기로 줄일 수 있는 몫의 상한(망 이용료 등 차감 전)</span><b>${fmt(eok(gap),big)}억</b></div>`);
-  if(D.kepco.ict_unit) R.push(`<div class="cr"><span>정보통신업 실제 평균 단가(${fmt(D.kepco.ict_unit.v,1)}원)로 보면</span>${vs(D.kepco.ict_unit.v)}</div>`);
-  $("#c-rows").innerHTML=R.join("");
-  $("#calc-note").textContent=`일반용 ${ym(g.cur.from)}~${ym(g.cur.to)} 평균 ${fmt(g.cur.v,1)}원/kWh`;
-}
-function renderPrice(){
-  const P=D.kepco.price, SMP=D.power.smp||{}, ks=Object.keys(P).sort().slice(-60);
-  const extra=Object.keys(SMP).filter(k=>k>ks[ks.length-1]).sort(), X=ks.concat(extra);
-  const A=[X.map(k=>P[k]?.["일반용"]??null),X.map(k=>P[k]?.["산업용"]??null),X.map(k=>SMP[k]??null)];
-  const vals=A.flat().filter(v=>v!=null), lo=Math.floor(Math.min(...vals)/20)*20, hi=Math.ceil(Math.max(...vals)/20)*20;
-  const box=$("#price-chart"), W=Math.max(300,Math.round(box.clientWidth||600)), H=W<520?240:260, m={l:36,r:46,t:14,b:26}, iw=W-m.l-m.r, ih=H-m.t-m.b;
-  const Xp=i=>m.l+i*iw/(X.length-1), Y=v=>m.t+ih-(v-lo)/(hi-lo)*ih;
-  let s=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="판매단가와 SMP 추이">`;
-  for(let v=lo;v<=hi;v+=20) s+=`<line class="grid" x1="${m.l}" x2="${W-m.r}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${m.l-6}" y="${Y(v)+4}" text-anchor="end">${v}</text>`;
-  X.forEach((k,i)=>{ if(k.endsWith("-01")) s+=`<text class="ax" x="${Xp(i)}" y="${H-8}" text-anchor="middle">${k.slice(0,4)}</text>`; });
-  const both=X.map((_,i)=>A[0][i]!=null&&A[2][i]!=null), idx=both.map((b,i)=>b?i:-1).filter(i=>i>=0);
-  if(idx.length>1){ const up=idx.map(i=>`${Xp(i).toFixed(1)},${Y(A[0][i]).toFixed(1)}`), dn=idx.slice().reverse().map(i=>`${Xp(i).toFixed(1)},${Y(A[2][i]).toFixed(1)}`); s+=`<polygon points="${up.concat(dn).join(" ")}" fill="var(--cap)" fill-opacity=".12"/>`; }
-  const C=["var(--cap)","var(--gray)","var(--warm)"];
-  A.forEach((a,j)=>{ let d="",pen=false; a.forEach((v,i)=>{ if(v==null){pen=false;return;} d+=`${pen?"L":"M"}${Xp(i).toFixed(1)},${Y(v).toFixed(1)}`; pen=true; });
-    s+=`<path d="${d}" fill="none" stroke="${C[j]}" stroke-width="${j===0?2.4:1.8}" stroke-linejoin="round"/>`;
-    let n=a.length-1; while(n>0&&a[n]==null) n--; s+=`<circle cx="${Xp(n)}" cy="${Y(a[n])}" r="3.5" fill="${C[j]}" stroke="var(--surface)" stroke-width="2"/><text class="lbl" x="${Xp(n)+6}" y="${Y(a[n])+(j===1?-6:j===0?12:4)}">${fmt(a[n],1)}</text>`; });
-  s+=`<line id="pr-g" x1="0" x2="0" y1="${m.t}" y2="${H-m.b}" stroke="var(--muted)" stroke-opacity=".5" visibility="hidden"/><rect class="hit" x="${m.l}" y="0" width="${iw}" height="${H}"/></svg><div class="tip" hidden></div>`;
-  box.innerHTML=s;
-  const tip=box.querySelector(".tip"), g=box.querySelector("#pr-g"), hit=box.querySelector(".hit"), n=X.length-1, L=["일반용","산업용","SMP"];
-  const mv=e=>{ const r=box.getBoundingClientRect(), x=(e.clientX-r.left)*W/r.width, i=Math.max(0,Math.min(n,Math.round((x-m.l)/iw*n)));
-    g.setAttribute("x1",Xp(i)); g.setAttribute("x2",Xp(i)); g.setAttribute("visibility","visible");
-    tip.innerHTML=`<div class="t">${ym(X[i])}<small>원/kWh</small></div>`+A.map((a,j)=>`<div class="r"><i class="sw" style="background:${C[j]}"></i><span>${L[j]}</span><b>${a[i]==null?"–":fmt(a[i],1)}</b></div>`).join("")+(both[i]?`<div class="r"><i></i><span>일반용 − SMP</span><b>${fmt(A[0][i]-A[2][i],1)}</b></div>`:"");
-    tip.hidden=false; const tw=tip.offsetWidth; let left=Xp(i)*r.width/W+10; if(left+tw>r.width) left=Xp(i)*r.width/W-10-tw; tip.style.left=left+"px"; tip.style.top="0px"; };
-  hit.addEventListener("pointermove",mv); hit.addEventListener("pointerdown",mv); hit.addEventListener("pointerleave",()=>{ tip.hidden=true; g.setAttribute("visibility","hidden"); });
-  const U=D.kepco.unit12["일반용"], smp=smpAvg(U.cur.from,U.cur.to), s0=Object.keys(SMP).sort()[0];
-  $("#price-foot").textContent=`최근 12개월 평균 일반용 ${fmt(U.cur.v,1)}원 · SMP ${fmt(smp,1)}원으로 격차는 kWh당 ${fmt(U.cur.v-smp,1)}원입니다. 일반용 단가는 5년 새 ${fmt((U.cur.v/U.y5.v-1)*100,0)}% 올라 같은 IT 용량의 전기요금도 그만큼 늘었습니다. 판매단가는 한전이 실제로 받은 평균 요금(요금 ÷ 사용량), SMP는 한전이 발전사에서 사 오는 도매가격입니다. SMP는 전력거래소 공개 화면이 최근 30개월만 제공해 ${ym(s0)}부터 표시하고 이후 매월 쌓아 갑니다.`;
-}
 
 /* ── 제도 · 일정 · 기사 ── */
 const TLC={"완료":"done","진행 중":"live","계류":"hold","예정":"plan"}, TAGS=["인허가","전력","요금·PPA","재생에너지","입지"];
@@ -824,18 +737,16 @@ function renderNews(){
   $("#news-note").textContent="PF · 착공 · 준공 · 인수 · 인허가 · 전력 키워드 · 매일 갱신";
 }
 
-function drawCharts(){ renderPM(); renderMap(); const ab=renderAbsorb(); renderSupply(ab); renderScatter(); renderPrice(); }
+function drawCharts(){ renderPM(); renderMap(); const ab=renderAbsorb(); renderSupply(ab); renderScatter(); }
 function init(d){
   D=d;
   rgOptions($("#pm-rg"),D.permits.rows); rgOptions($("#ls-rg"),D.permits.rows);
-  const last=Object.keys(D.power.smp||{}).sort().pop();
-  $("#updated").textContent=`인허가 ${D.permits.updated?D.permits.updated.slice(0,4)+"."+D.permits.updated.slice(4,6)+"."+D.permits.updated.slice(6):"–"} 수집 · 한전 ${ym(D.kepco.latest)} · SMP ${last?ym(last):"–"}`;
+  $("#updated").textContent=`인허가 ${D.permits.updated?D.permits.updated.slice(0,4)+"."+D.permits.updated.slice(4,6)+"."+D.permits.updated.slice(6):"–"} 수집 · 한전 ${ym(D.kepco.latest)}`;
   $("#pm-note").textContent=`국토교통부 건축HUB · ${D.permits.since?.slice(0,4)}년 이후 대장 · 매일 자동 갱신`;
   const tg=$("#tl-tag"), have=new Set((D.timeline?.items||[]).map(x=>x.tag)); tg.innerHTML=`<option value="all">전체</option>`+TAGS.filter(x=>have.has(x)).map(x=>`<option>${x}</option>`).join("");
   $("#law-note").textContent=`정부 · 국회 발표와 보도로 확인 · 매주 월요일 재확인`; $("#tl-chk").textContent=`마지막 확인 ${D.timeline?.checked||"–"}`;
-  renderKPI(); renderTable(); renderTimeline(); renderNews(); renderCalc(true); renderDecomp(); drawCharts();
+  renderKPI(); renderTable(); renderTimeline(); renderNews(); renderDecomp(); drawCharts();
   tg.addEventListener("change",renderTimeline);
-  ["#c-mw","#c-pue","#c-ut","#c-u"].forEach(id=>$(id).addEventListener("input",()=>renderCalc(false)));
   document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{ pmMode=b.dataset.m; document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderPM(); }));
   $("#pm-rg").addEventListener("change",()=>{ renderPM(); renderMap(); });
   document.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>{ mapView=b.dataset.v; document.querySelectorAll("[data-v]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderMap(); }));
