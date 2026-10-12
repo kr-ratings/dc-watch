@@ -172,6 +172,22 @@ td.nw .more{font-size:.7rem;color:var(--muted)}
 .pill{display:inline-block;font-size:.66rem;font-weight:600;border:1px solid currentColor;border-radius:999px;padding:0 6px;margin-left:6px;vertical-align:1px}
 .pill.live{color:var(--accent)} .pill.done{color:var(--ok)} .pill.dead{color:var(--muted)}
 .scroll{max-height:560px;overflow:auto}
+td.hr{text-align:right;white-space:normal;min-width:7.5em;max-width:11em}
+td.hr .v{font-family:var(--f-mono);font-weight:600;font-variant-numeric:tabular-nums}
+td.hr .v.no{color:var(--bad)} td.hr .v.ok{color:var(--ok)}
+td.hr small{display:block;font-size:.68rem;color:var(--muted);line-height:1.35;margin-top:1px;word-break:keep-all}
+.hrc{display:flex;flex-direction:column;gap:10px}
+.hrc .say{font-size:.86rem;line-height:1.6;word-break:keep-all;padding:10px 12px;border-radius:8px;background:var(--accent-soft);margin:0}
+.hrc .say b{font-family:var(--f-mono);font-weight:600}
+.hb2{display:flex;flex-direction:column;gap:4px}
+.hb2 > div{display:grid;grid-template-columns:5.2em minmax(0,1fr) 4.6em 3.6em;gap:8px;align-items:center;font-size:.8rem}
+.hb2 .bar{height:10px;background:var(--line);border-radius:3px;overflow:hidden}
+.hb2 .bar i{display:block;height:100%;border-radius:3px}
+.hb2 .v{font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.hb2 .c{font-size:.7rem;color:var(--muted);text-align:right;white-space:nowrap}
+.tops{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.76rem;color:var(--muted)}
+.tops b{font-family:var(--f-mono);font-weight:600;color:var(--ok)}
+.dia{width:10px;height:10px;transform:rotate(45deg);display:inline-block;background:var(--warm);border-radius:1px}
 @media (min-width:980px){
   .eqh > div{display:flex;flex-direction:column;min-width:0}
   .eqh .card{height:600px}
@@ -313,6 +329,7 @@ footer .ct{white-space:nowrap}
         <span><i class="dot" style="background:var(--st-s)"></i>공사 중</span>
         <span><i class="dot" style="background:var(--st-d)"></i>준공</span>
         <span>원 크기 = 연면적</span>
+        <span><i class="dia"></i>분산에너지특화지역</span>
       </div>
       <p class="foot" id="map-foot"></p>
     </div>
@@ -338,6 +355,7 @@ footer .ct{white-space:nowrap}
           <th scope="col" data-k="nm"><button type="button">건물명 · 구분</button></th>
           <th scope="col" data-k="sd"><button type="button">위치</button></th>
           <th scope="col" class="num" data-k="cap"><button type="button">용량(MW)</button></th>
+          <th scope="col" class="num" data-k="hr"><button type="button" title="한전 전력공급 여유지도: 이 시 · 군 · 구를 맡은 345kV 변전소의 공급 여유용량">관할 변전소 여유(MW)</button></th>
           <th scope="col" class="num" data-k="area"><button type="button">연면적(㎡)</button></th>
           <th scope="col" class="num" data-k="share"><button type="button">데이터센터 층 비중</button></th>
           <th scope="col" data-k="pms" aria-sort="descending"><button type="button">허가</button></th>
@@ -370,11 +388,18 @@ footer .ct{white-space:nowrap}
 
   <section aria-labelledby="h-pow">
     <div class="sec-head"><h2 id="h-pow">전력 여건</h2><span class="note">수전 가능성</span></div>
-    <div>
+    <div class="two">
       <div class="card">
         <div class="card-head"><h3>전기가 남는 곳과 수요가 몰린 곳</h3><span class="note" id="sc-note"></span></div>
         <div class="chart" id="sc-chart"></div>
         <p class="foot" id="sc-foot"></p>
+      </div>
+      <div class="card hrc">
+        <div class="card-head"><h3>345kV 변전소 공급 여유</h3><span class="note" id="hr-note"></span></div>
+        <p class="say" id="hr-say"></p>
+        <div class="hb2" id="hr-bars"></div>
+        <div class="tops" id="hr-top"></div>
+        <p class="foot">한전 사이버지점 '전력공급 여유지도'의 시 · 도별 345kV 변전소 공급 여유용량 합계입니다(여러 시 · 도를 맡는 변전소는 각 시 · 도에 모두 셈). 변압기 용량 기준의 참고값이라, 실제 공급 가능 여부와 시기는 전기사용 신청 뒤 한전 검토로 정해집니다. 인허가 목록의 '관할 변전소 여유' 칸은 그 사업장 시 · 군 · 구를 맡은 변전소 값입니다. 매일 갱신.</p>
       </div>
     </div>
   </section>
@@ -409,12 +434,14 @@ footer .ct{white-space:nowrap}
       <div><b>사업장 위치</b>인허가 대장의 법정동 · 리 대표점(도로명주소 행정구역도 기반)에 표시합니다. 정확한 대지 위치는 지도 링크로 확인하세요.</div>
       <div><b>전력자립도</b>지역 발전량(전력거래소 EPSIS) ÷ 지역 전력판매량(한전). 100% 미만이면 다른 지역에서 송전받아 쓰는 곳입니다.</div>
       <div><b>PUE · 가동률</b>PUE는 데이터센터 전체 전력 ÷ IT 장비 전력으로, 냉방 · 전력 손실을 얼마나 더 쓰는지 보여 줍니다(낮을수록 효율적). 가동률은 계약한 IT 용량 대비 실제 평균 사용 비율입니다.</div>
+      <div><b>관할 변전소 여유</b>한전 '전력공급 여유지도'에서 그 시 · 군 · 구에 전기를 보내는 345kV 변전소의 공급 여유용량(MW)입니다. 0이면 지금은 대형 신규 수전 여유가 없다는 뜻이고, 변압기 용량 기준 참고값이라 실제 공급 가능 여부는 전기사용 신청 뒤 정해집니다.</div>
+      <div><b>분산에너지특화지역</b>분산에너지법에 따라 지역 발전 전기를 한전을 거치지 않고 직접 사고팔 수 있도록 지정한 곳입니다(2025년 7곳). 데이터센터 입장에서는 직접 PPA · 구역전기 공급과 계통 부담 완화가 가능한 지역입니다.</div>
       <div><b>제도 · 일정</b>정부 · 국회 발표와 보도를 매주 다시 검색해 진행 상황(완료 · 진행 중 · 계류 · 예정)과 새 항목을 반영합니다. 정확한 내용은 각 항목의 출처 원문에서 확인하세요.</div>
     </div>
   </details>
 
   <footer>
-    <p>출처: 국토교통부 건축HUB 건축인허가정보(공공데이터포털), 행정안전부 법정동코드, 한국전력 전력데이터 개방포털(산업분류별 · 계약종별 전력사용량), 한국전력거래소(EPSIS 지역별 발전량), 정부 · 국회 발표와 언론 보도 · 공개 시장 보고서(제도 · 일정, 용량 — 매주 확인), Google 뉴스. 지도: 통계청 SGIS 행정구역 경계(공공누리 제1유형, <a href="https://github.com/vuski/admdongkor" target="_blank" rel="noopener">vuski/admdongkor</a> 가공), 도로명주소 행정구역도(GIS Developer 배포), Natural Earth. 이 화면은 공개된 자료를 자동으로 모아 정리한 개인 참고용 자료이며, 정리 과정에서 지연 · 누락 · 오기가 생길 수 있고 원문과 다를 수 있습니다.</p>
+    <p>출처: 국토교통부 건축HUB 건축인허가정보(공공데이터포털), 행정안전부 법정동코드, 한국전력 전력데이터 개방포털(산업분류별 · 계약종별 전력사용량), 한국전력거래소(EPSIS 지역별 발전량), 한국전력 사이버지점(전력공급 여유지도), 정부 · 국회 발표와 언론 보도 · 공개 시장 보고서(제도 · 일정, 용량 — 매주 확인), Google 뉴스. 지도: 통계청 SGIS 행정구역 경계(공공누리 제1유형, <a href="https://github.com/vuski/admdongkor" target="_blank" rel="noopener">vuski/admdongkor</a> 가공), 도로명주소 행정구역도(GIS Developer 배포), Natural Earth. 이 화면은 공개된 자료를 자동으로 모아 정리한 개인 참고용 자료이며, 정리 과정에서 지연 · 누락 · 오기가 생길 수 있고 원문과 다를 수 있습니다.</p>
     <p>이 화면의 어떤 내용도 투자 권유나 여신 · 의사결정의 근거가 아니며, 이를 이용해 생긴 결과에 대해 작성자는 책임지지 않습니다. 정확한 내용은 세움터 건축물대장과 각 기관 원문에서 확인하시기 바랍니다.</p>
     <p>제작자 / 문의: 한국투자증권 PF그룹 부동산금융1부 최이름 차장 <a class="sister" href="https://namepf.com/" target="_blank" rel="noopener" style="display:inline-block;margin:0 4px;text-decoration:none;white-space:nowrap"><span class="sl">바로가기:</span> → 주요 딜 수행 실적</a> <span class="ct">(name@koreainvestment.com, 02-3276-6012)</span></p>
   </footer>
@@ -515,6 +542,11 @@ function renderPM(){
 }
 /* ── 목록 ── */
 const capVal=c=>!c||c.none?null:(c.mw??c.it);
+function hrCell(h){
+  if(!h) return `<td class="hr"><span class="dim">–</span></td>`;
+  const names=Object.entries(h.subs).map(([n,v])=>`${n} ${fmt(v)}`).join(" · ");
+  return `<td class="hr" title="${esc("관할 345kV 변전소: "+names)}"><span class="v ${h.sum>0?"ok":"no"}">${fmt(h.sum)}</span><small>${esc(names)}</small></td>`;
+}
 const mwf=v=>fmt(v,v%1?1:0);
 function capCell(c){
   if(!c) return `<td class="cp"><span class="dim">–</span></td>`;
@@ -532,16 +564,16 @@ const tf={st:"all",rg:"all",q:""}; let sortK="pms", sortD=-1;
 function renderTable(){
   const q=tf.q.trim();
   let rows=D.permits.rows.filter(r=>(tf.st==="all"||r.stage===tf.st)&&rgMatch(r.sd,tf.rg)&&(!q||[r.nm,r.addr,r.sg,r.dong].join(" ").includes(q)));
-  const key=r=>sortK==="share"?(r.area?r.dcArea/r.area:0):sortK==="newsd"?((r.news||[])[0]||{}).d:sortK==="cap"?capVal(r.cap):r[sortK];
+  const key=r=>sortK==="share"?(r.area?r.dcArea/r.area:0):sortK==="newsd"?((r.news||[])[0]||{}).d:sortK==="cap"?capVal(r.cap):sortK==="hr"?(r.hr?r.hr.sum:null):r[sortK];
   rows.sort((a,b)=>{ const x=key(a),y=key(b); if(x==null||x==="") return 1; if(y==null||y==="") return -1; return (typeof x==="number"?x-y:String(x).localeCompare(String(y),"ko"))*sortD; });
   const stc={"착공 전":"s-p","공사 중":"s-s","준공":"s-d"};
   $("#tb").innerHTML=rows.length?rows.map(r=>{ const share=r.area?Math.min(100,r.dcArea/r.area*100):null;
     return `<tr><td class="nm">${esc(r.nm||"(건물명 없음)")}${r.kind&&r.kind!=="신축"?`<span class="kd">${esc(r.kind)}</span>`:""}<small>대지 ${fmt(r.plat)}㎡${r.zone?" · "+esc(r.zone):""}</small></td>
     <td class="rg">${esc(r.sd)} ${esc(r.sg)}<small>${esc(r.addr.replace(/^\S+\s+\S+\s+/,""))} · <a href="https://map.kakao.com/?q=${encodeURIComponent(r.addr)}" target="_blank" rel="noopener">지도</a></small></td>
-    ${capCell(r.cap)}<td class="num">${fmt(r.area)}</td><td class="num">${share==null?"–":fmt(share,0)+"%"}</td>
+    ${capCell(r.cap)}${hrCell(r.hr)}<td class="num">${fmt(r.area)}</td><td class="num">${share==null?"–":fmt(share,0)+"%"}</td>
     <td class="dt">${r.pms||"–"}</td><td class="dt">${r.stc||(r.sched?`<span class="dim">예정 ${r.sched}</span>`:"–")}</td><td class="dt">${r.apr||"–"}</td>
     <td><span class="st ${stc[r.stage]}">${r.stage}</span></td>
-    <td class="nw">${(r.news||[]).length?r.news.slice(0,2).map(a=>`<a href="${esc(a.u)}" target="_blank" rel="noopener" title="${esc(a.src)} · ${a.d}"><small>${a.d.slice(2).replace(/-/g,".")}</small>${esc(a.t)}</a>`).join("")+(r.news.length>2?`<span class="more">외 ${r.news.length-2}건</span>`:""):`<span class="dim">–</span>`}</td></tr>`; }).join(""):`<tr><td colspan="10" class="empty">조건에 맞는 인허가가 없습니다. 단계나 지역을 바꿔 보세요.</td></tr>`;
+    <td class="nw">${(r.news||[]).length?r.news.slice(0,2).map(a=>`<a href="${esc(a.u)}" target="_blank" rel="noopener" title="${esc(a.src)} · ${a.d}"><small>${a.d.slice(2).replace(/-/g,".")}</small>${esc(a.t)}</a>`).join("")+(r.news.length>2?`<span class="more">외 ${r.news.length-2}건</span>`:""):`<span class="dim">–</span>`}</td></tr>`; }).join(""):`<tr><td colspan="11" class="empty">조건에 맞는 인허가가 없습니다. 단계나 지역을 바꿔 보세요.</td></tr>`;
   $("#count").textContent=`${rows.length}건 / 전체 ${D.permits.rows.length}건`;
   document.querySelectorAll("th[data-k]").forEach(th=>th.setAttribute("aria-sort",th.dataset.k===sortK?(sortD>0?"ascending":"descending"):"none"));
 }
@@ -613,7 +645,7 @@ function renderMap(){
   if(mapView==="all"){
     GEO.sido.forEach(g=>{ s+=`<text class="ml" x="${g.x}" y="${g.y}" text-anchor="middle" style="font-size:${10.5*u}px;stroke-width:${3*u}px">${g.n==="전남광주"?"전남광주":g.n}</text>`; });
     // 울릉도 · 독도 상자(동해 쪽 빈 바다)
-    const bx=LL(129.3,38.66), bw=0.78*pj.kx, bh=600, b=GEO.ul.b;
+    const bx=LL(129.08,38.68), bw=1.0*pj.kx, bh=600, b=GEO.ul.b;
     s+=`<rect class="inset" x="${bx[0]}" y="${bx[1]}" width="${bw}" height="${bh}" rx="${6*u}" vector-effect="non-scaling-stroke"/>`;
     const rings=GEO.ul.d.split("M").filter(Boolean);
     rings.forEach(r=>{ const [x,y]=r.split("l")[0].split(" ").map(Number), dok=x>b[0]+500; const tx=dok?bx[0]+bw*.78-x:bx[0]+bw*.28-(b[0]+40), ty=dok?bx[1]+bh*.66-y:bx[1]+bh*.38-(b[1]+30);
@@ -627,6 +659,9 @@ function renderMap(){
   const grp={}; S.forEach(x=>{ const k=Math.round(x.x/(8*u))+"_"+Math.round(x.y/(8*u)); (grp[k]=grp[k]||[]).push(x); });
   Object.values(grp).forEach(g=>{ if(g.length<2) return; const rr=Math.max(...g.map(x=>x.rp))*1.15*u; g.forEach((x,i)=>{ const a=-Math.PI/2+i*2*Math.PI/g.length; x.x+=Math.cos(a)*rr; x.y+=Math.sin(a)*rr; }); });
   const C={"착공 전":"var(--st-p)","공사 중":"var(--st-s)","준공":"var(--st-d)"};
+  const Z=((D.zones||{}).items||[]).map((z,i)=>{ const [zx,zy]=LL(...z.ll); return {...z,i,zx,zy}; });
+  Z.forEach(z=>{ const r=(mapView==="all"?5.5:7)*u; s+=`<path class="zn" data-z="${z.i}" d="M${z.zx},${z.zy-r}L${z.zx+r},${z.zy}L${z.zx},${z.zy+r}L${z.zx-r},${z.zy}Z" fill="var(--warm)" fill-opacity=".9" stroke="var(--surface)" stroke-width="1.2" vector-effect="non-scaling-stroke" style="cursor:pointer"/>`;
+    if(mapView==="all") s+=`<text class="ml" x="${z.zx+8*u}" y="${z.zy+3.5*u}" style="font-size:${9.5*u}px;stroke-width:${3*u}px;fill:var(--warm);font-weight:600">${esc(z.nm.replace(" 분산특구",""))}</text>`; });
   S.slice().sort((a,b)=>b.area-a.area).forEach(x=>{ s+=`<circle class="pt" data-s="${esc(x.top.site)}" cx="${x.x.toFixed(1)}" cy="${x.y.toFixed(1)}" r="${(x.rp*u).toFixed(1)}" fill="${C[x.stage]}" fill-opacity=".88" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`; });
   s+=`</svg><div class="tip" hidden></div>`;
   box.innerHTML=s;
@@ -636,8 +671,12 @@ function renderMap(){
       tip.innerHTML=`<div class="t">${esc(x.nm||"(건물명 없음)")}<small>${esc(r.sg)} ${esc(r.dong||"")}</small></div><div class="r"><i class="dot" style="background:${C[x.stage]}"></i><span>${x.stage}</span><b>${x.stage==="준공"?r.apr:x.stage==="공사 중"?"착공 "+r.stc:"허가 "+r.pms}</b></div>${capT?`<div class="r"><i></i><span>용량</span><b>${esc(capT)}</b></div>`:""}<div class="r"><i></i><span>연면적</span><b>${fmt(x.area)}㎡</b></div>${x.rs.length>1?`<div class="r"><i></i><span>같은 대지 인허가</span><b>${x.rs.length}건</b></div>`:""}`;
       tip.hidden=false; const bb=box.getBoundingClientRect(), cr=c.getBoundingClientRect(), tw=tip.offsetWidth, th=tip.offsetHeight; let left=cr.right-bb.left+8; if(left+tw>bb.width) left=Math.max(0,cr.left-bb.left-8-tw); tip.style.left=left+"px"; tip.style.top=Math.max(0,Math.min(bb.height-th,cr.top-bb.top-10))+"px"; };
     c.addEventListener("pointerenter",show); c.addEventListener("pointerdown",show); c.addEventListener("pointerleave",()=>{ tip.hidden=true; }); });
+  box.querySelectorAll(".zn").forEach(c=>{ const show=()=>{ const z=Z[+c.dataset.z];
+      tip.innerHTML=`<div class="t">${esc(z.nm)}<small>${esc(z.date.slice(0,7).replace("-","."))} 지정</small></div><div class="r"><i></i><span>구역</span><b>${esc(z.area)}</b></div><div class="r"><i></i><span>유형</span><b>${esc(z.type)}</b></div><div style="margin-top:5px;color:var(--muted);word-break:keep-all">${esc(z.desc)}${z.dc?" · 데이터센터 유치 연계":""}</div>`;
+      tip.hidden=false; const bb=box.getBoundingClientRect(), cr=c.getBoundingClientRect(), tw=tip.offsetWidth, th=tip.offsetHeight; let left=cr.right-bb.left+8; if(left+tw>bb.width) left=Math.max(0,cr.left-bb.left-8-tw); tip.style.left=left+"px"; tip.style.top=Math.max(0,Math.min(bb.height-th,cr.top-bb.top-10))+"px"; };
+    c.addEventListener("pointerenter",show); c.addEventListener("pointerdown",show); c.addEventListener("pointerleave",()=>{ tip.hidden=true; }); });
   const tot=bySite(D.permits.rows.filter(r=>rgMatch(r.sd,rg))).length, cap=S.filter(x=>CAP.has(x.top.sd)).length;
-  $("#map-foot").textContent=`${tot}곳(같은 대지의 인허가는 하나로)${mapView==="cap"&&S.length>cap?` · 수도권 밖 ${S.length-cap}곳은 '전국'에서`:""} · 위치는 법정동 대표점 기준이라 실제 대지와 수백 m 다를 수 있음 · 경계: 통계청 SGIS · vuski/admdongkor, Natural Earth`;
+  $("#map-foot").textContent=`${tot}곳(같은 대지의 인허가는 하나로)${mapView==="cap"&&S.length>cap?` · 수도권 밖 ${S.length-cap}곳은 '전국'에서`:""} · ◆ 분산에너지특화지역 ${Z.length}곳(${mapView==="cap"?"'전국'에서 모두 보임 · ":""}AI 데이터센터 특구는 2027.3 법 시행 뒤 지정) · 위치는 법정동 대표점 기준 · 경계: 통계청 SGIS · vuski/admdongkor, Natural Earth`;
 }
 
 /* ── 전력 여건 ── */
@@ -653,6 +692,20 @@ function placeLabels(pts,W,H,m){ // 점 옆에 이름이 서로 겹치지 않게
     if(bc>0&&!CAP.has(p.sd)) return; // 겹치면 이름은 생략(점을 누르면 보임)
     boxes.push({x0:best[3],x1:best[4],y0:best[5],y1:best[6]}); out.push({p,dx:best[0],dy:best[1],an:best[2]}); });
   return out;
+}
+function renderHeadroom(){
+  const H=D.permits.headroom; if(!H){ $("#hr-say").textContent="한전 공급 여유 자료를 불러오지 못했습니다."; return; }
+  const SUB=H.subs, uniq=names=>[...new Set(names)], sumOf=ns=>ns.reduce((a,n)=>a+(SUB[n]||0),0);
+  const capN=uniq(["서울","인천","경기"].flatMap(k=>H.sido[k]||[])), capPos=capN.filter(n=>(SUB[n]||0)>0);
+  const allN=Object.keys(SUB), regN=allN.filter(n=>!capN.includes(n)), regSum=sumOf(regN);
+  $("#hr-say").innerHTML=`수도권(서울 · 인천 · 경기)을 맡는 345kV 변전소 <b>${capN.length}곳</b> 중 여유가 남은 곳은 <b>${capPos.length}곳</b>${capPos.length?`(${capPos.map(n=>`${esc(n)} ${fmt(SUB[n])}MW`).join(", ")})`:""}뿐입니다. 비수도권 변전소 여유는 합계 <b>${fmt(regSum)}MW</b>로, 신규 대형 수전은 사실상 비수도권에서만 열려 있습니다.`;
+  const rows=Object.entries(H.sido).map(([sd,ns])=>{ ns=uniq(ns); return {sd,v:sumOf(ns),n:ns.length,p:ns.filter(n=>(SUB[n]||0)>0).length}; }).sort((a,b)=>b.v-a.v||a.sd.localeCompare(b.sd,"ko"));
+  const mx=Math.max(1,...rows.map(r=>r.v));
+  $("#hr-bars").innerHTML=rows.map(r=>`<div><span>${esc(r.sd)}</span><span class="bar"><i style="width:${(r.v/mx*100).toFixed(1)}%;background:${CAP.has(r.sd)?"var(--cap)":"var(--reg)"}"></i></span><span class="v">${fmt(r.v)}MW</span><span class="c">${r.p}/${r.n}곳</span></div>`).join("");
+  const top=allN.filter(n=>(SUB[n]||0)>=400).sort((a,b)=>SUB[b]-SUB[a]);
+  const where=n=>Object.entries(H.sido).filter(([,ns])=>ns.includes(n)).map(([sd])=>sd).join("·");
+  $("#hr-top").innerHTML=top.length?`<span>400MW 이상 남은 변전소:</span>`+top.map(n=>`<span>${esc(n)}(${esc(where(n))}) <b>${fmt(SUB[n])}</b></span>`).join(""):"";
+  $("#hr-note").textContent=`한전 공개 · ${H.updated} 기준 · 오른쪽 n/N = 여유 있는 변전소/전체`;
 }
 function renderScatter(){
   const S=D.power.self, K=D.kepco, tot12=K.nat.slice(-12).reduce((a,b)=>a+b,0);
@@ -721,7 +774,7 @@ function init(d){
   $("#pm-note").textContent=`국토교통부 건축HUB · ${D.permits.since?.slice(0,4)}년 이후 대장 · 매일 자동 갱신`;
   const tg=$("#tl-tag"), have=new Set((D.timeline?.items||[]).map(x=>x.tag)); tg.innerHTML=`<option value="all">전체</option>`+TAGS.filter(x=>have.has(x)).map(x=>`<option>${x}</option>`).join("");
   $("#law-note").textContent=`정부 · 국회 발표와 보도로 확인 · 매주 월요일 재확인`; $("#tl-chk").textContent=`마지막 확인 ${D.timeline?.checked||"–"}`;
-  renderKPI(); renderTable(); renderTimeline(); renderNews(); renderDecomp(); drawCharts();
+  renderKPI(); renderTable(); renderTimeline(); renderNews(); renderDecomp(); renderHeadroom(); drawCharts();
   tg.addEventListener("change",renderTimeline);
   document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{ pmMode=b.dataset.m; document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderPM(); }));
   $("#pm-rg").addEventListener("change",()=>{ renderMap(); renderPM(); });
@@ -729,7 +782,7 @@ function init(d){
   document.querySelectorAll("[data-st]").forEach(b=>b.addEventListener("click",()=>{ tf.st=b.dataset.st; document.querySelectorAll("[data-st]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderTable(); }));
   $("#ls-rg").addEventListener("change",e=>{ tf.rg=e.target.value; renderTable(); });
   $("#q").addEventListener("input",e=>{ tf.q=e.target.value; renderTable(); });
-  document.querySelectorAll("th[data-k] button").forEach(b=>b.addEventListener("click",()=>{ const k=b.parentElement.dataset.k; if(sortK===k) sortD*=-1; else { sortK=k; sortD=["cap","area","share","pms","stc","apr","newsd"].includes(k)?-1:1; } renderTable(); }));
+  document.querySelectorAll("th[data-k] button").forEach(b=>b.addEventListener("click",()=>{ const k=b.parentElement.dataset.k; if(sortK===k) sortD*=-1; else { sortK=k; sortD=["cap","hr","area","share","pms","stc","apr","newsd"].includes(k)?-1:1; } renderTable(); }));
   let rz; new ResizeObserver(()=>{ clearTimeout(rz); rz=setTimeout(drawCharts,120); }).observe(document.querySelector(".wrap"));
 }
 if(window.GEO_DATA) GEO=window.GEO_DATA;

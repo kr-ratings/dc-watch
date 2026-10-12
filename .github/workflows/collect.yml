@@ -25,6 +25,7 @@ jobs:
           python collector/power.py || true
           python collector/policy.py || true
           python collector/kepco.py || true
+          python collector/kepco_headroom.py || true
           FORCE="${{ github.event_name == 'push' && '1' || '' }}" python collector/permit_news.py || true
           python collector/build.py || true
       - name: commit
@@ -32,4 +33,4 @@ jobs:
           git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
           git add data/*.json site/data/dash.json
           git diff --cached --quiet || git commit -m "전력·정책 자료 수집 $(date -u +%F)"
-          for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && break; sleep 5; done
+          for i in 1 2 3; do git pull --rebase -X theirs -q origin main && git push origin HEAD:main && break; sleep 5; done

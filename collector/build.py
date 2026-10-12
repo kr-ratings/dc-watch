@@ -78,8 +78,42 @@ class Geo:
         return None, None
 
 
+class Headroom:
+    """한전 '전력공급 여유지도': 시 · 군 · 구별 관할 345kV 변전소와 공급 여유용량(MW)."""
+    def __init__(self):
+        self.d = load_json("data/kepco_headroom.json", {})
+        self.idx = {}
+        for sd, gs in (self.d.get("sgg") or {}).items():
+            for g, subs in gs.items():
+                self.idx[(short(sd), re.sub(r"\s+", "", g))] = subs
+
+    def find(self, sido, sgg):
+        sd, g = short(sido), re.sub(r"\s+", "", sgg or "")
+        subs = self.idx.get((sd, g))
+        if subs is None and g:  # '고양시'처럼 구 없이 들어오면 그 시의 모든 구를 합친다
+            subs = {}
+            for (s2, g2), v in self.idx.items():
+                if s2 == sd and g2.startswith(g.split("시")[0] + "시"):
+                    subs.update(v)
+            subs = subs or None
+        if not subs:
+            return None
+        return {"subs": subs, "sum": sum(v or 0 for v in subs.values())}
+
+    def summary(self):
+        if not self.d:
+            return None
+        subs = self.d.get("subs", {})
+        sido = {}
+        for sd, names in (self.d.get("sido") or {}).items():
+            k = short(sd)
+            sido.setdefault(k, set()).update(names)
+        return {"updated": self.d.get("updated"), "subs": subs, "sido": {k: sorted(v) for k, v in sido.items()}}
+
+
 def permits():
     d = load_json("data/permits.json", {"items": []})
+    hr = Headroom()
     geo = Geo()
     cur = load_json("data/curated/capacity.json", {})
     st = load_json("data/state/permit_scan.json", {})
@@ -104,7 +138,8 @@ def permits():
                      "zone": (h.get("jiyukCdNm") or "").strip(), "crtn": ymd(h.get("crtnDay")),
                      "news": news, "cap": capacity(h, news, cur), "ll": ll, "llp": prec,
                      "site": f"{h.get('sigunguCd')}-{h.get('bjdongCd')}-{h.get('bun')}-{h.get('ji')}",
-                     "kc": [short(h.get("sido")), (h.get("sggNm") or "").split()[0] if h.get("sggNm") else ""]})
+                     "kc": [short(h.get("sido")), (h.get("sggNm") or "").split()[0] if h.get("sggNm") else ""],
+                     "hr": hr.find(h.get("sido"), h.get("sggNm"))})
     rows.sort(key=lambda r: r["pms"] or "", reverse=True)
     tot = collections.Counter(short(u[0]) for u in units)
     done = collections.Counter()
@@ -112,7 +147,7 @@ def permits():
     for k in st.get("done", []):
         done[code2sd.get(k, "?")] += 1
     cov = {sd: [done.get(sd, 0), n] for sd, n in tot.items()}
-    return {"rows": rows, "since": d.get("since"), "updated": d.get("updated"), "coverage": cov,
+    return {"headroom": hr.summary(), "rows": rows, "since": d.get("since"), "updated": d.get("updated"), "coverage": cov,
             "pass": st.get("pass", 1), "complete": st.get("complete", False), "last_complete": st.get("last_complete")}
 
 
@@ -262,6 +297,20 @@ def power(kep):
     return {"smp": p.get("smp", {}), "gen": gen2, "self": self_suf, "self_year": years[-1] if years else None, "updated": p.get("updated")}
 
 
+def zones():
+    z = load_json("data/curated/zones.json", {"items": []})
+    pts = load_json("data/geo_bjd_pts.json", {})
+    out = []
+    for it in z.get("items", []):
+        at = it.get("at") or {}
+        cand = [v for k, v in pts.items() if len(k) == 8 and k.startswith(at.get("pre", "~")) and (at.get("nm") in ("*", v[2]))]
+        if not cand:
+            continue
+        ll = [round(sum(c[0] for c in cand) / len(cand), 5), round(sum(c[1] for c in cand) / len(cand), 5)]
+        out.append({k: it.get(k) for k in ("nm", "sd", "area", "type", "date", "desc", "dc", "src")} | {"ll": ll})
+    return {"checked": z.get("checked"), "note": z.get("note"), "items": out}
+
+
 def main():
     perm = permits()
     kep = kepco()
@@ -270,7 +319,7 @@ def main():
                            load_json("data/curated/dc_operating.json", {"items": []})["items"])
     out = {"built": dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M"),
            "permits": perm, "kepco": kep, "power": power(kep), "policy": load_json("data/policy.json", {}),
-           "timeline": load_json("data/curated/policy_timeline.json", {"items": []})}
+           "timeline": load_json("data/curated/policy_timeline.json", {"items": []}), "zones": zones()}
     out["policy"]["news"] = out["policy"].get("news", [])[:60]
     out["policy"].pop("bills", None)
     save_json("site/data/dash.json", out)

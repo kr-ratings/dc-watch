@@ -1,0 +1,19 @@
+name: hrtest
+on:
+  push:
+    branches: [hr-run]
+permissions:
+  contents: write
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install requests
+      - run: python collector/kepco_headroom.py
+      - run: |
+          git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
+          B="hr-out-${{ github.run_number }}"; git checkout -b "$B"; git add -f data/kepco_headroom.json; git commit -m "hr test" || true; git push origin "$B"
