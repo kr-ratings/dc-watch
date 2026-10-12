@@ -1,0 +1,37 @@
+name: scan-permits
+on:
+  workflow_dispatch:
+    inputs:
+      sido: {description: "시도명(쉼표 구분, 비우면 전체)", required: false, default: ""}
+      exclude: {description: "제외 시군구코드 접두", required: false, default: ""}
+      since: {description: "대장 변경일 기준 시작일", required: false, default: "20200101"}
+  push:
+    branches: [scan-run]
+permissions:
+  contents: write
+concurrency: {group: scan, cancel-in-progress: false}
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install requests
+      - name: scan
+        env:
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+        run: |
+          SIDO="${{ github.event.inputs.sido }}"; EXC="${{ github.event.inputs.exclude }}"; SINCE="${{ github.event.inputs.since }}"
+          if [ -f scan.args ] && [ "${{ github.event_name }}" = "push" ]; then . ./scan.args; fi
+          python collector/permits.py --sido "$SIDO" --exclude-sgg "$EXC" --since "${SINCE:-20200101}" --limit 9000 --workers 4
+      - name: commit
+        if: always()
+        run: |
+          git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
+          git add data/permits.json data/state || true
+          git diff --cached --quiet || git commit -m "인허가 수집 $(date -u +%F)"
+          git pull --rebase -q origin main || true
+          git push origin HEAD:main
