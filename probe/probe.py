@@ -271,6 +271,17 @@ def t_raw2():
     return res
 
 
+def t_err():
+    res = {}
+    for sg, bd in [("11110", "10300"), ("11110", "10400"), ("11140", "13800")]:
+        for fmt in ("json", None):
+            q = {"serviceKey": K, "numOfRows": 100, "pageNo": 1, "sigunguCd": sg, "bjdongCd": bd, "startDate": "20200101", "endDate": "20261012"}
+            if fmt: q["_type"] = fmt
+            r = S.get(HUB + "getApBasisOulnInfo", params=q, timeout=(20, 90))
+            res[f"{sg}-{bd}-{fmt}"] = {"st": r.status_code, "ct": r.headers.get("content-type"), "len": len(r.text), "head": scrub(r.text[:300])}
+    return res
+
+
 if __name__ == "__main__":
     if os.environ.get("PROBE_MODE") == "reach":
         rec("reach", t_reach)
@@ -279,7 +290,7 @@ if __name__ == "__main__":
             f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
         raise SystemExit(0)
     if K:
-        rec("regcode", t_regcode)
+        rec("err", t_err)
     os.makedirs("probe/out", exist_ok=True)
     with open("probe/out/result.json", "w", encoding="utf-8") as f:
         f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
