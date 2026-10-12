@@ -121,6 +121,62 @@ def hours(m):
     return calendar.monthrange(y, mo)[1] * 24
 
 
+def decomp(k, ms, rows, ops, months_back=36):
+    """수도권 최근 1년 증가분을 시 · 군 · 구로 나눠, 데이터센터가 새로 가동된 곳에서 얼마나 나왔는지 계산한다.
+    - 대형 시설 신호: 증가 2MW 이상인데 고객 수 증가가 10% 미만(소수 대형 시설이 새로 돈 경우)
+    - 데이터센터 확인: 인허가 목록의 준공(최근 36개월) 또는 data/curated/dc_operating.json
+    - 행정구역 개편으로 지역 미상('XXX')이 된 곳은 따로 묶는다"""
+    if len(ms) < 24:
+        return None
+    L = len(ms) - 1
+    cur, prev = ms[L - 11:L + 1], ms[L - 23:L - 11]
+    hc, hp = sum(hours(m) for m in cur), sum(hours(m) for m in prev)
+    lim = ms[max(0, L - months_back)]
+    agg = {}
+    for m in cur + prev:
+        for sd, city, kwh, cust in k["ind"][m]["sgg"]:
+            sd = short(sd)
+            if sd not in CAP:
+                continue
+            key = (sd, city.split()[0] if city else "")
+            a = agg.setdefault(key, {"c": 0, "p": 0, "cn": 0, "pn": 0, "lk": 0, "pk": 0})
+            a["c" if m in cur else "p"] += kwh
+            if m == ms[L]:
+                a["cn"] += cust; a["lk"] += kwh
+            if m == ms[L - 12]:
+                a["pn"] += cust; a["pk"] += kwh
+    dcs = {}
+    for r in sorted(rows, key=lambda r: r.get("apr") or ""):
+        if r.get("apr") and r["apr"][:7] >= lim and r.get("kc"):
+            c = r.get("cap") or {}
+            e = dcs.setdefault(tuple(r["kc"]), {}).setdefault(r.get("site"), {"nm": "", "apr0": r["apr"][:7]})
+            e.update(nm=e["nm"] or r.get("nm") or "", apr=r["apr"][:7], it=c.get("it"), dong=r.get("dong") or "")
+    for v in dcs.values():
+        for e in v.values():
+            e["nm"] = e["nm"] or e.pop("dong", "")
+            e.pop("dong", None)
+    for o in ops:
+        if o.get("apr", "") >= lim:
+            dcs.setdefault((o["sd"], o["sg"]), {})[o["nm"]] = {"nm": o["nm"], "apr": o["apr"], "it": o.get("it"), "u": (o.get("src") or {}).get("u")}
+    tot = sum(a["c"] / hc - a["p"] / hp for a in agg.values()) / 1e3
+    A, B, C, cn = [], [], 0.0, []
+    for key, a in agg.items():
+        d = (a["c"] / hc - a["p"] / hp) / 1e3
+        if key[1] in ("XXX", "") or a["cn"] == 0 or a["pn"] == 0 or a["lk"] < a["pk"] * 0.2:  # 행정구역 개편 등으로 끊긴 곳
+            C += d
+            if key[1] not in ("XXX", "") and abs(d) >= 0.5:
+                cn.append(f"{key[0]} {key[1]}")
+            continue
+        cp = (a["cn"] / a["pn"] - 1) * 100
+        if d >= 2 and cp < 10:
+            x = {"sd": key[0], "sg": key[1], "d": round(d, 1), "cp": round(cp, 1), "now": round(a["c"] / hc / 1e3, 1),
+                 "dcs": sorted(dcs.get(key, {}).values(), key=lambda v: v["apr"])}
+            (A if x["dcs"] else B).append(x)
+    A.sort(key=lambda x: -x["d"]); B.sort(key=lambda x: -x["d"])
+    rest = tot - sum(x["d"] for x in A) - sum(x["d"] for x in B) - C
+    return {"tot": round(tot, 1), "from": cur[0], "to": cur[-1], "a": A, "b": B, "c": round(C, 1), "cn": cn, "rest": round(rest, 1)}
+
+
 def kepco():
     k = load_json("data/kepco.json", {"ind": {}, "cntr": {}})
     ms = sorted(m for m, v in k["ind"].items() if v.get("sido"))
@@ -209,6 +265,9 @@ def power(kep):
 def main():
     perm = permits()
     kep = kepco()
+    raw = load_json("data/kepco.json", {"ind": {}})
+    kep["decomp"] = decomp(raw, sorted(m for m, v in raw["ind"].items() if v.get("sido")), perm["rows"],
+                           load_json("data/curated/dc_operating.json", {"items": []})["items"])
     out = {"built": dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M"),
            "permits": perm, "kepco": kep, "power": power(kep), "policy": load_json("data/policy.json", {}),
            "timeline": load_json("data/curated/policy_timeline.json", {"items": []})}

@@ -172,6 +172,26 @@ td.nw .more{font-size:.7rem;color:var(--muted)}
 .pill{display:inline-block;font-size:.66rem;font-weight:600;border:1px solid currentColor;border-radius:999px;padding:0 6px;margin-left:6px;vertical-align:1px}
 .pill.live{color:var(--accent)} .pill.done{color:var(--ok)} .pill.dead{color:var(--muted)}
 .scroll{max-height:560px;overflow:auto}
+.dcp{display:flex;flex-direction:column;gap:9px}
+.dcp .dh{display:flex;justify-content:space-between;align-items:baseline;gap:4px 10px;flex-wrap:wrap}
+.dcp .dh b{font-size:.95rem;font-weight:600}
+.dcp .dh span{font-size:.72rem;color:var(--muted)}
+.dcp .bar{display:flex;height:14px;border-radius:4px;overflow:hidden;background:var(--line)}
+.dcp .bar i{display:block;height:100%}
+.dcp .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.74rem;color:var(--muted)}
+.dcp .lg span{display:inline-flex;align-items:center;gap:5px}
+.dcp .lg b{font-family:var(--f-mono);font-weight:600;color:var(--fg);font-variant-numeric:tabular-nums}
+.dcp ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:3px 18px}
+@media (min-width:640px){.dcp ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1180px){.dcp ul{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.dcp li{display:grid;grid-template-columns:4.6em 4.2em minmax(0,1fr);gap:6px;font-size:.76rem;align-items:baseline;padding:2px 0}
+.dcp li b{font-weight:600;white-space:nowrap}
+.dcp li em{font-style:normal;font-family:var(--f-mono);text-align:right;font-variant-numeric:tabular-nums;color:var(--up)}
+.dcp li span{color:var(--muted);word-break:keep-all;line-height:1.45}
+.dcp li a{color:var(--muted)}
+.dcp .say{font-size:.82rem;line-height:1.6;word-break:keep-all;margin:0}
+.dcp .say b{font-family:var(--f-mono);font-weight:600}
+.dcp .foot b{font-weight:600;color:var(--fg)}
 .explain{margin:0;font-size:.8rem;line-height:1.6;color:var(--muted);word-break:keep-all;background:var(--accent-soft);border-radius:8px;padding:9px 12px}
 .explain b{color:var(--fg);font-weight:600;margin-right:4px}
 h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;vertical-align:2px;white-space:nowrap}
@@ -382,7 +402,6 @@ footer .ct{white-space:nowrap}
           <span><i class="sw" style="background:var(--reg)"></i>비수도권</span>
         </span></div>
         <div class="chart" id="ict-chart"></div>
-        <p class="foot">한전 '정보통신업'에는 데이터센터와 함께 통신 · 방송 · 소프트웨어 사업장이 섞여 있어 데이터센터만의 값은 아니지만, 최근 증가분의 대부분은 데이터센터 가동에서 나옵니다.</p>
       </div>
       <div class="card">
         <div class="card-head"><h3>늘어나는 수요 vs 짓고 있는 물량</h3><span class="note" id="sup-note"></span></div>
@@ -390,6 +409,7 @@ footer .ct{white-space:nowrap}
         <p class="foot" id="sup-foot"></p>
       </div>
     </div>
+    <div class="card" style="margin-top:14px"><div class="dcp" id="dcp"></div></div>
   </section>
 
   <section aria-labelledby="h-pow">
@@ -626,6 +646,23 @@ function renderAbsorb(){
   $("#ict-note").textContent=`한국전력 정보통신업 월 사용량 ÷ 시간 · ${ym(D.kepco.latest)}까지 · 매월 자동 갱신`;
   return {c12:last.c,c3};
 }
+function renderDecomp(){
+  const X=D.kepco.decomp, el=$("#dcp"); if(!X){ el.innerHTML=""; return; }
+  const sm=a=>a.reduce((s,x)=>s+x.d,0), A=sm(X.a), B=sm(X.b), C=X.c, Rr=X.rest, T=X.tot, pc=v=>fmt(v/T*100,0);
+  const seg=[[A,"var(--cap)","데이터센터가 새로 가동된 곳"],[B,"var(--st-p)","대형 시설 가동(데이터센터 미확인)"],[C,"var(--gray)","행정구역 개편으로 구분 불가"],[Rr,"var(--line)","나머지 지역 합계"]];
+  const span=Math.max(T,seg.reduce((s,[v])=>s+Math.max(0,v),0));
+  const nm=t=>esc(String(t||"").replace(/\s*(신축공사|신축|공사)\s*$/,""));
+  const dcTxt=x=>x.dcs.map(y=>`${y.u?`<a href="${esc(y.u)}" target="_blank" rel="noopener">${nm(y.nm)}</a>`:nm(y.nm)}(${y.apr0&&y.apr0!==y.apr?`${ymS(y.apr0+"-01")}~${ymS(y.apr+"-01")} 단계 준공`:`${ymS(y.apr+"-01")} 준공`}${y.it?` · IT ${mwf(y.it)}MW`:""})`).join(", ");
+  const maxCp=Math.max(...X.a.map(x=>Math.abs(x.cp)),0);
+  let h=`<div class="dh"><b>최근 1년 늘어난 ${sgn(T,0)}MW(수도권), 어디서 나왔나</b><span>${ym(X.from)}~${ym(X.to)} 평균 − 그 전 12개월 평균</span></div>`;
+  h+=`<div class="bar">${seg.filter(([v])=>v>0).map(([v,c])=>`<i style="width:${(v/span*100).toFixed(1)}%;background:${c}"></i>`).join("")}</div>`;
+  h+=`<div class="lg">${seg.filter(([v])=>Math.abs(v)>=0.5).map(([v,c,l])=>`<span><i class="sw" style="background:${c}"></i>${l} <b>${sgn(v,1)}MW</b>${v>0?` (${pc(v)}%)`:""}</span>`).join("")}</div>`;
+  h+=`<ul>${X.a.map(x=>`<li><b>${esc(x.sg.replace(/(시|군)$/,""))}</b><em>${sgn(x.d,1)}</em><span>${dcTxt(x)}</span></li>`).join("")}${X.b.map(x=>`<li><b>${esc(x.sg.replace(/(시|군)$/,""))}</b><em>${sgn(x.d,1)}</em><span>데이터센터 미확인</span></li>`).join("")}</ul>`;
+  const verdict=A/T>=.7?` 확인된 것만 ${pc(A)}%이고, 나머지도 대부분 개편 지역이나 대형 시설이라 순증분은 거의 데이터센터 몫으로 봐도 무리가 없습니다.`:` 확인된 데이터센터 몫은 ${pc(A)}%입니다.`;
+  h+=`<p class="say">늘어난 ${sgn(T,0)}MW 중 <b>${fmt(A,1)}MW(${pc(A)}%)</b>가 그 기간 데이터센터가 새로 가동된 ${X.a.length}곳에서 나왔습니다. 이 지역들은 정보통신업 고객 수가 거의 그대로(±${fmt(maxCp,0)}% 이내)인데 사용량만 크게 늘어, 몇 개 대형 시설이 새로 돌기 시작한 경우입니다. 그 밖의 지역은 합쳐서 ${sgn(Rr,1)}MW로 사실상 늘지 않았습니다.${verdict}</p>`;
+  h+=`<p class="foot">한전 '정보통신업'에는 통신 · 방송 · 소프트웨어 사업장도 섞여 있습니다. 증가 2MW 이상 · 고객 수 증가 10% 미만인 시 · 군 · 구를 '대형 시설 가동'으로 보고, 최근 3년 안에 데이터센터가 준공된 곳(인허가 목록 · 공개 보도)을 '데이터센터가 새로 가동된 곳'으로 분류했습니다. ${X.cn.length?esc(X.cn.join(" · "))+" 등은 ":""}2026년 행정구역 개편 뒤 한전 자료가 '지역 미상'으로 잡혀 따로 묶었습니다.</p>`;
+  el.innerHTML=h;
+}
 function renderSupply(ab){
   const t=today(), S=bySite(D.permits.rows.filter(r=>CAP.has(r.sd)));
   const cat=[["공사 중",x=>x.stage==="공사 중"],["착공 전",x=>x.stage==="착공 전"],["최근 1년 준공",x=>x.stage==="준공"&&x.top.apr>minus(t,365)]].map(([n,f])=>{ const xs=S.filter(f);
@@ -808,7 +845,7 @@ function init(d){
   $("#pm-note").textContent=`국토교통부 건축HUB · ${D.permits.since?.slice(0,4)}년 이후 대장 · 매일 자동 갱신`;
   const tg=$("#tl-tag"), have=new Set((D.timeline?.items||[]).map(x=>x.tag)); tg.innerHTML=`<option value="all">전체</option>`+TAGS.filter(x=>have.has(x)).map(x=>`<option>${x}</option>`).join("");
   $("#law-note").textContent=`정부 · 국회 발표와 보도로 확인 · 매주 월요일 재확인`; $("#tl-chk").textContent=`마지막 확인 ${D.timeline?.checked||"–"}`;
-  renderKPI(); renderTable(); renderTimeline(); renderNews(); renderCalc(true); drawCharts();
+  renderKPI(); renderTable(); renderTimeline(); renderNews(); renderCalc(true); renderDecomp(); drawCharts();
   tg.addEventListener("change",renderTimeline);
   ["#c-mw","#c-pue","#c-ut","#c-u"].forEach(id=>$(id).addEventListener("input",()=>renderCalc(false)));
   document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{ pmMode=b.dataset.m; document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderPM(); }));
