@@ -1,0 +1,31 @@
+name: collect
+on:
+  workflow_dispatch:
+  push:
+    branches: [collect-run]
+permissions:
+  contents: write
+concurrency: {group: collect, cancel-in-progress: false}
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install requests
+      - name: collect
+        env:
+          KEPCO_API_KEY: ${{ secrets.KEPCO_API_KEY }}
+        run: |
+          python collector/power.py || true
+          python collector/policy.py || true
+          python collector/kepco.py || true
+      - name: commit
+        run: |
+          git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
+          git add data/*.json
+          git diff --cached --quiet || git commit -m "전력·정책 자료 수집 $(date -u +%F)"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && break; sleep 5; done
