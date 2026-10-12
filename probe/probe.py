@@ -10,7 +10,7 @@ DONGS = [("금천구 가산동", "11545", "10100"), ("용인 수지구 죽전동
          ("안산 상록구 사동", "41271", "10300"), ("마포구 상암동", "11440", "12700"), ("세종 집현동", "36110", "11800"),
          ("화성 동탄구 석우동", "41597", "10300"), ("구로구 구로동", "11530", "10200"), ("성남 분당구 삼평동", "41135", "10900")]
 KW = re.compile(r"데이터|데이타|IDC|DATA|전산|센터|서버|클라우드|AI", re.I)
-q = Quota(900)
+q = Quota(8000)
 out = {"dongs": []}
 for nm, sg, bj in DONGS:
     d = {"dong": nm, "n": 0, "items": []}
@@ -19,12 +19,12 @@ for nm, sg, bj in DONGS:
         while True:
             tot, its = P.call(q, "getApBasisOulnInfo", sigunguCd=sg, bjdongCd=bj, pageNo=page, startDate="20180101", endDate="20261231")
             items += its
-            if page * 100 >= tot or not its or page >= 15:
+            if page * 100 >= tot or not its or page >= 80:
                 break
             page += 1
         d["n"] = len(items)
-        cand = [it for it in items if float(it.get("totArea") or 0) >= 8000 or KW.search(str(it.get("bldNm") or ""))
-                or str(it.get("mainPurpsCd", "")).strip() == "24000"]
+        cand = [it for it in items if (float(it.get("totArea") or 0) >= 8000 and str(it.get("archPmsDay") or "") >= "20190101")
+                or KW.search(str(it.get("bldNm") or "")) or str(it.get("mainPurpsCd", "")).strip() == "24000"]
         seen = {}
         for it in cand:
             key = (it.get("bun"), it.get("ji"))
@@ -37,7 +37,7 @@ for nm, sg, bj in DONGS:
                         break
                     pg += 1
                 seen[key] = flr
-            fl = [f for f in seen[key] if str(f.get("mgmPmsrgstPk")) == str(it.get("mgmPmsrgstPk"))] or seen[key]
+            fl = [f for f in seen[key] if str(f.get("mgmPmsrgstPk")) == str(it.get("mgmPmsrgstPk"))]  # 같은 허가 건의 층만(다른 건과 섞지 않음)
             purps = sorted({f"{(f.get('mainPurpsCdNm') or '').strip()}|{(f.get('etcPurps') or '').strip()}"[:60] for f in fl})
             dcf = any(str(f.get("mainPurpsCd", "")).strip() == "24005" or "데이터" in str(f.get("mainPurpsCdNm", "")) + str(f.get("etcPurps", ""))
                       or "IDC" in str(f.get("etcPurps", "")).upper() or "전산" in str(f.get("etcPurps", "")) for f in fl)
