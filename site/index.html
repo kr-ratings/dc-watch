@@ -165,7 +165,7 @@ td.nw .more{font-size:.7rem;color:var(--muted)}
 .two{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
 @media (min-width:980px){.two{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.list li{display:grid;grid-template-columns:4.6em minmax(0,1fr);gap:2px 12px;padding:9px 0;border-top:1px solid var(--line)}
+.list li{display:grid;grid-template-columns:5.6em minmax(0,1fr);gap:2px 12px;padding:9px 0;border-top:1px solid var(--line)}
 .list li:first-child{border-top:0;padding-top:0}
 .list .d{font-family:var(--f-mono);font-size:.76rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:1px}
 .list a{color:var(--fg);text-decoration:none;font-size:.86rem;font-weight:500;word-break:keep-all;line-height:1.5}
@@ -231,7 +231,7 @@ td.cp small a:hover{color:var(--accent)}
 
 .tl-top{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;justify-content:space-between}
 .tline{list-style:none;margin:0;padding:0}
-.tline li{display:grid;grid-template-columns:6.6em minmax(0,1fr);gap:2px 12px;padding:10px 0;border-top:1px solid var(--line)}
+.tline li{display:grid;grid-template-columns:5.6em minmax(0,1fr);gap:2px 12px;padding:10px 0;border-top:1px solid var(--line)}
 .tline li:first-child{border-top:0;padding-top:2px}
 .tline .d{font-family:var(--f-mono);font-size:.76rem;color:var(--muted);padding-top:2px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .tline .t{font-weight:600;font-size:.88rem;word-break:keep-all;line-height:1.5}
@@ -463,6 +463,7 @@ const sgn=(v,d=0)=>v==null||isNaN(v)?"–":(v>=0?"+":"−")+fmt(Math.abs(v),d);
 function mw12(arr,end){ if(end<11) return null; let e=0,h=0; for(let i=end-11;i<=end;i++){ e+=arr[i]||0; h+=D.kepco.hours[i]; } return e/h/1e3; }
 function capArr(){ const K=D.kepco; return K.months.map((_,i)=>[...CAP].reduce((s,sd)=>s+((K.sido[sd]||[])[i]||0),0)); }
 const ymS=d=>d?`'${d.slice(2,4)}.${d.slice(5,7)}`:"";
+const yd=s=>String(s||"").replace(/^\d{2}(\d{2})/,"'$1").replace(/-/g,".");  /* 2026-10-12 · 2026.10.12 → '26.10.12 */
 function bySite(rows){ const g={}; rows.forEach(r=>{ (g[r.site]=g[r.site]||[]).push(r); });
   return Object.values(g).map(rs=>{ const top=rs.slice().sort((a,b)=>(b.pms||"").localeCompare(a.pms||""))[0]; const cap=(rs.find(r=>r.cap&&!r.none&&!r.cap.none)||{}).cap||null;
     return {rs,top,stage:top.stage,cap,nm:(rs.find(r=>r.nm)||{}).nm||"",area:Math.max(...rs.map(r=>r.area||0))}; }); }
@@ -757,15 +758,15 @@ const tlKey=d=>{ const m=String(d).match(/^(\d{4})(?:\.(\d{1,2}))?(?:\.(\d{1,2})
 function renderTimeline(){
   const T=D.timeline||{items:[]}, tag=$("#tl-tag").value||"all", t=today();
   const items=(T.items||[]).filter(x=>tag==="all"||x.tag===tag).map(x=>({...x,k:tlKey(x.d)})).sort((a,b)=>b.k.localeCompare(a.k));
-  let h="", placed=false; const nowLi=`<li class="now">오늘 ${t.replace(/-/g,".")}</li>`;
+  let h="", placed=false; const nowLi=`<li class="now">오늘 ${yd(t)}</li>`;
   items.forEach(x=>{ if(x.k<=t&&!placed){ h+=nowLi; placed=true; }
-    h+=`<li><span class="d">${esc(x.d)}</span><span><span class="t"><span class="tag">${esc(x.tag)}</span>${esc(x.t)}<span class="pill ${TLC[x.status]||"live"}">${esc(x.status)}</span></span><span class="s">${esc(x.s)}</span>${x.u?`<a class="src" href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.src||"출처")} ↗</a>`:""}</span></li>`; });
+    h+=`<li><span class="d">${esc(yd(x.d))}</span><span><span class="t"><span class="tag">${esc(x.tag)}</span>${esc(x.t)}<span class="pill ${TLC[x.status]||"live"}">${esc(x.status)}</span></span><span class="s">${esc(x.s)}</span>${x.u?`<a class="src" href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.src||"출처")} ↗</a>`:""}</span></li>`; });
   if(!placed&&items.length) h+=nowLi;
   $("#tline").innerHTML=h||`<li class="empty">이 분야 항목이 없습니다.</li>`;
 }
 function renderNews(){
   const N=(D.policy.news||[]).slice(0,40);
-  $("#news").innerHTML=N.map(n=>`<li><span class="d">${n.d.slice(5,10).replace("-",".")}</span><span><a href="${esc(n.u)}" target="_blank" rel="noopener">${esc(n.t)}</a><small>${esc(n.src)}</small></span></li>`).join("")||`<li class="empty">기사가 없습니다.</li>`;
+  $("#news").innerHTML=N.map(n=>`<li><span class="d">${yd(n.d.slice(0,10))}</span><span><a href="${esc(n.u)}" target="_blank" rel="noopener">${esc(n.t)}</a><small>${esc(n.src)}</small></span></li>`).join("")||`<li class="empty">기사가 없습니다.</li>`;
   $("#news-note").textContent="PF · 착공 · 준공 · 인수 · 인허가 · 전력 키워드 · 매일 갱신";
 }
 
