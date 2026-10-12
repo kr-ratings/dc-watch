@@ -246,6 +246,14 @@ def t_kepco2():
     return res
 
 
+def t_regcode():
+    res = {}
+    for nm, url in [("StanReginCd", "https://apis.data.go.kr/1741000/StanReginCd/getStanReginCdList")]:
+        r = S.get(url, params={"ServiceKey": K, "type": "json", "pageNo": 1, "numOfRows": 5, "flag": "Y", "locatadd_nm": "경기도 화성시"}, timeout=(20, 60))
+        res[nm] = {"status": r.status_code, "head": scrub(r.text[:700])}
+    return res
+
+
 if __name__ == "__main__":
     if os.environ.get("PROBE_MODE") == "reach":
         rec("reach", t_reach)
@@ -254,10 +262,7 @@ if __name__ == "__main__":
             f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
         raise SystemExit(0)
     if K:
-        rec("hub_filter", t_filter)
-    if KE:
-        rec("kepco2", t_kepco2)
-    rec("pages", t_pages)
+        rec("regcode", t_regcode)
     os.makedirs("probe/out", exist_ok=True)
     with open("probe/out/result.json", "w", encoding="utf-8") as f:
         f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
