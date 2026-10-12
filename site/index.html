@@ -599,7 +599,7 @@ function absorbGroups(){
 function renderAbsorb(){
   const {G,ca,ra,L}=absorbGroups(), last=G[G.length-1], prev=G[G.length-2];
   const c3=(mw12(ca,L)-mw12(ca,L-36))/3;
-  $("#ict-ex").innerHTML=`<b>MW 환산</b> = 1년 사용량(kWh) ÷ 8,760시간. "수도권 ${fmt(mw12(ca,L))}MW"는 수도권 정보통신업이 1년 내내 평균 ${fmt(mw12(ca,L))}MW씩 전기를 쓰고 있다는 뜻이고, 이 값이 1년 새 ${fmt(last.c)}MW 늘었다면 그만큼 새 서버 · 냉방 설비가 돌기 시작한 것입니다. 데이터센터 IT 1MW를 가동률 70% · PUE 1.4로 채우면 평균 약 1MW를 쓰므로, 늘어난 MW ≈ 그해 새로 채워진 데이터센터 IT 용량으로 읽으면 됩니다.`;
+  $("#ict-ex").innerHTML=`<b>MW 환산</b> = 1년 사용량(kWh) ÷ 8,760시간. "수도권 ${fmt(mw12(ca,L))}MW"는 수도권 정보통신업이 1년 내내 평균 ${fmt(mw12(ca,L))}MW씩 전기를 쓰고 있다는 뜻이고, 이 값이 1년 새 ${fmt(last.c)}MW 늘었다면 그만큼 새 서버 · 냉방 설비가 돌기 시작한 것입니다. 데이터센터 IT 1MW를 가동률 70% · PUE 1.4로 채우면 평균 약 1MW를 쓰므로, 늘어난 MW ≈ 그해 실제 가동되어 새로 채워진 데이터센터 IT 용량으로 읽으면 됩니다.`;
   $("#ict-k").innerHTML=[["수도권 사용량",mw12(ca,L),null],["수도권 1년 새 증가",last.c,prev.c],["비수도권 사용량",mw12(ra,L),null],["비수도권 1년 새 증가",last.r,prev.r]]
     .map(([n,v,p])=>`<div><span>${n}</span><b>${p===null?fmt(v):sgn(v)}<small>MW</small></b>${p===null?`<em>최근 12개월 평균</em>`:`<em class="${v>=p?"up":"down"}">전년 ${sgn(p)}MW</em>`}</div>`).join("");
   const box=$("#ict-chart"), W=Math.max(300,Math.round(box.clientWidth||600)), H=W<520?230:250, m={l:34,r:6,t:18,b:30}, iw=W-m.l-m.r, ih=H-m.t-m.b;
