@@ -1,0 +1,103 @@
+{
+ "keys": {
+  "data_go_kr": true,
+  "kepco": true
+ },
+ "reach": {
+  "ok": true,
+  "res": {
+   "ipinfo": [
+    {
+     "st": 200,
+     "s": 0.1,
+     "head": "{\n  \"ip\": \"20.83.174.55\",\n  \"city\": \"Dulles Town Center\",\n  \"region\": \"Virginia\",\n  \"country\": \"US\",\n  \"loc\": \"39.0376,-77.4158\",\n  \"org\": \"AS8075 Microsoft Cor"
+    }
+   ],
+   "dgk_https_api": [
+    {
+     "st": 200,
+     "s": 1.2,
+     "head": "{\"response\":{\"header\":{\"resultCode\":\"00\",\"resultMsg\":\"NORMAL SERVICE\"},\"body\":{\"items\":{\"item\":[{\"rnum\":1,\"platPlc\":\"경기도 하남시 풍산동 \",\"sigunguCd\":\"41450\",\"bjdongCd"
+    }
+   ],
+   "dgk_http_api": [
+    {
+     "st": 200,
+     "s": 0.8,
+     "head": "{\"response\":{\"header\":{\"resultCode\":\"00\",\"resultMsg\":\"NORMAL SERVICE\"},\"body\":{\"items\":{\"item\":[{\"rnum\":1,\"platPlc\":\"경기도 하남시 풍산동 \",\"sigunguCd\":\"41450\",\"bjdongCd"
+    }
+   ],
+   "dgk_www": [
+    {
+     "st": 200,
+     "s": 2.1,
+     "head": "\n\n\n\n\n\n\n \n\n\n\n<!DOCTYPE html>\n<html lang=\"ko\">\n\t<head>\n\t\t<meta charset=\"UTF-8\">\n\n\t\t\n\t\t<!-- 로봇 차단 -->\n\t\t\t<meta name=\"robots\" content=\"noindex, nofollow\">\n\t\t\t<meta "
+    }
+   ],
+   "assembly_https": [
+    {
+     "st": 200,
+     "s": 4.4,
+     "head": "{\"nzmimeepazxkubdpn\":[{\"head\":[{\"list_total_count\":7},{\"RESULT\":{\"CODE\":\"INFO-000\",\"MESSAGE\":\"정상 처리되었습니다.\"}}]},{\"row\":[{\"BILL_ID\":\"PRC_L2S6T0S3R2P4L1M6K1J6I5Q5R"
+    }
+   ],
+   "assembly_http": [
+    {
+     "st": 200,
+     "s": 2.0,
+     "head": "{\"nzmimeepazxkubdpn\":[{\"head\":[{\"list_total_count\":7},{\"RESULT\":{\"CODE\":\"INFO-000\",\"MESSAGE\":\"정상 처리되었습니다.\"}}]},{\"row\":[{\"BILL_ID\":\"PRC_L2S6T0S3R2P4L1M6K1J6I5Q5R"
+    }
+   ],
+   "likms": [
+    {
+     "st": 200,
+     "s": 6.4,
+     "head": "\r\n<!DOCTYPE html>\r\n<html lang=\"ko\">\r\n<head>\r\n    \r\n    <meta charset=\"UTF-8\">\r\n    <title>의안정보시스템</title>\r\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=Ed"
+    }
+   ],
+   "kpx_smp": [
+    {
+     "st": 200,
+     "s": 2.1,
+     "head": "\r\r\r\r\r\r\n\n\n\n<!DOCTYPE html>\r\n\r\r\r\r\r\r\n\r\n\r\n<html lang=\"ko\">\r\n<head>\r\n<meta charset=\"UTF-8\" />\r\n<meta name=\"_csrf_parameter\" content=\"_csrf\" /><meta name=\"_csrf_heade"
+    }
+   ],
+   "epsis": [
+    {
+     "st": 200,
+     "s": 1.2,
+     "head": "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<!doctype html>\r\n<html lang=\"ko\">\r\n<head>\r\n    \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"/>\r\n"
+    }
+   ],
+   "gnews": [
+    {
+     "st": 200,
+     "s": 0.4,
+     "head": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><rss version=\"2.0\" xmlns:media=\"http://search.yahoo.com/mrss/\"><channel><generator>NFE/5.0</generator><ti"
+    }
+   ],
+   "law": [
+    {
+     "st": 200,
+     "s": 1.7,
+     "head": "\r\n<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">\r\n<HTML>\r\n<HEAD>\r\n\t<TITLE></TITLE>\r\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset"
+    }
+   ],
+   "hub_go_kr": [
+    {
+     "st": 200,
+     "s": 2.6,
+     "head": "\r\n\r\n\r\n\r\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r\n<html xmlns=\"http://www.w3.or"
+    }
+   ],
+   "kepco": [
+    {
+     "st": 200,
+     "s": 2.9,
+     "head": "\r\n\r\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n<!-- 공통 jsp 파일-->\r\n\n\n\n<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset="
+    }
+   ]
+  },
+  "sec": 27.98
+ }
+}
