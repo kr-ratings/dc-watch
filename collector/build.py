@@ -26,6 +26,7 @@ def permits():
     d = load_json("data/permits.json", {"items": []})
     st = load_json("data/state/permit_scan.json", {})
     units = load_json("data/bjd_units.json", None) or load_json("data/bjd_units_seed.json", [])
+    pn = load_json("data/permit_news.json", {})
     rows = []
     for h in d["items"]:
         if not h.get("dc"):
@@ -40,7 +41,8 @@ def permits():
                      "nm": nm, "kind": (h.get("archGbCdNm") or "").strip(), "area": round(float(h.get("totArea") or 0)),
                      "dcArea": round(float(h.get("dcFlrArea") or 0)), "plat": round(float(h.get("platArea") or 0)),
                      "vl": h.get("vlRat"), "pms": pms, "stc": stc, "sched": ymd(h.get("stcnsSchedDay")), "apr": apr, "stage": stage,
-                     "zone": (h.get("jiyukCdNm") or "").strip(), "crtn": ymd(h.get("crtnDay"))})
+                     "zone": (h.get("jiyukCdNm") or "").strip(), "crtn": ymd(h.get("crtnDay")),
+                     "news": [{k: a[k] for k in ("t", "src", "d", "u")} for a in (pn.get(h["mgmPmsrgstPk"], {}).get("items") or [])]})
     rows.sort(key=lambda r: r["pms"] or "", reverse=True)
     tot = collections.Counter(short(u[0]) for u in units)
     done = collections.Counter()
