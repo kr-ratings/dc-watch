@@ -1,0 +1,31 @@
+name: probe
+on:
+  workflow_dispatch:
+  push:
+    branches: [probe-run]
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install requests
+      - name: run probe
+        env:
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+          KEPCO_API_KEY: ${{ secrets.KEPCO_API_KEY }}
+        run: python probe/probe.py
+      - name: save result to branch
+        run: |
+          git config user.name "dc-watch-bot"
+          git config user.email "dc-watch-bot@users.noreply.github.com"
+          B="probe-out-${{ github.run_number }}"
+          git checkout -b "$B"
+          git add -f probe/out/result.json
+          git commit -m "probe result ${{ github.run_number }}"
+          git push origin "$B"
