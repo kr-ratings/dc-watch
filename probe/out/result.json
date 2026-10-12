@@ -1,0 +1,24 @@
+{
+ "keys": {
+  "data_go_kr": true,
+  "kepco": true
+ },
+ "raw2": {
+  "ok": true,
+  "res": {
+   "ind_J_all": {
+    "st": 200,
+    "len": 31579
+   },
+   "cntr_all": {
+    "st": 200,
+    "len": 252497
+   },
+   "ind_J_11": {
+    "st": 200,
+    "len": 3560
+   }
+  },
+  "sec": 7.11
+ }
+}
