@@ -200,17 +200,6 @@ h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;verti
 .mk b small{font-size:.78rem;color:var(--muted);font-weight:400;margin-left:3px}
 .mk em{font-style:normal;font-size:.76rem;color:var(--muted);font-variant-numeric:tabular-nums}
 .mk em.up{color:var(--up)} .mk em.down{color:var(--down)}
-.sup{display:flex;flex-direction:column;gap:2px}
-.sr{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:7px 0;border-top:1px solid var(--line);font-size:.82rem}
-.sr:first-child{border-top:0}
-.sr .n{word-break:keep-all}
-.sr .n small{display:block;font-size:.7rem;color:var(--muted)}
-.sr .bar{height:12px;background:var(--line);border-radius:3px;overflow:hidden;display:flex}
-.sr .bar i{display:block;height:100%}
-.sr .v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;display:flex;flex-direction:column;align-items:flex-end;line-height:1.3}
-.sr .v small{color:var(--muted);font-size:.7rem;font-family:var(--f-sans)}
-.sup .say{font-size:.84rem;line-height:1.6;word-break:keep-all;padding:10px 12px;border-radius:8px;background:var(--accent-soft);margin-top:6px}
-.sup .say b{font-family:var(--f-mono);font-weight:600}
 .up{color:var(--up)} .down{color:var(--down)}
 .pill.plan{color:var(--warm)} .pill.hold{color:var(--muted)}
 td.cp{text-align:right;white-space:nowrap}
@@ -363,8 +352,8 @@ footer .ct{white-space:nowrap}
   </section>
 
   <section aria-labelledby="h-ict">
-    <div class="sec-head"><h2 id="h-ict">정보통신업 전기 사용량 — 늘어나는 수요와 짓고 있는 물량</h2><span class="note" id="ict-note"></span></div>
-    <div class="two">
+    <div class="sec-head"><h2 id="h-ict">정보통신업 전기 사용량</h2><span class="note" id="ict-note"></span></div>
+    <div>
       <div class="card">
         <div class="card-head"><h3>데이터센터 신규 가동(추정, MW)</h3><span class="note">정보통신업 전기 사용량 증가분 기준</span></div>
         <p class="explain" id="ict-ex"></p>
@@ -375,11 +364,6 @@ footer .ct{white-space:nowrap}
         </span></div>
         <div class="chart" id="ict-chart"></div>
         <p class="foot" id="ict-foot"></p>
-      </div>
-      <div class="card">
-        <div class="card-head"><h3>늘어나는 수요 vs 짓고 있는 물량</h3><span class="note" id="sup-note"></span></div>
-        <div class="sup" id="sup"></div>
-        <p class="foot" id="sup-foot"></p>
       </div>
     </div>
   </section>
@@ -421,7 +405,7 @@ footer .ct{white-space:nowrap}
       <div><b>관련 기사</b>건물명에 드러난 사업자 · 브랜드와 시 · 군 · 동 이름으로 구글 뉴스를 매주 다시 검색해, 제목에 데이터센터와 이름 · 지역이 함께 나오는 기사만 붙입니다. 같은 동에 데이터센터가 여럿이면 신축 · 전환 성격이 맞는 기사만 남겨, 확신이 없으면 비워 둡니다.</div>
       <div><b>대수선 · 용도변경</b>기존 건물을 데이터센터로 바꾸는 건도 함께 나오며, 구분 칸에 표시합니다.</div>
       <div><b>사용량(MW 환산)</b>한전 산업분류(한국표준산업분류 J) '정보통신업' 사용량(kWh)을 시간으로 나눈 값으로, 1년 내내 평균 몇 MW씩 쓰는지를 뜻합니다. 데이터센터 외에 통신 · 방송 · 소프트웨어 사업장도 포함됩니다. 2017년 7월 이전은 같은 대분류의 옛 이름(출판 · 영상 · 방송통신 · 정보서비스업)입니다.</div>
-      <div><b>수요 증가</b>위 사용량(MW 환산)이 1년 동안 늘어난 양입니다. 새로 돌기 시작한 서버 · 냉방 설비만큼 늘어나므로, 데이터센터 임차 · 가동이 실제로 채워진 속도로 읽을 수 있습니다.</div>
+      <div><b>데이터센터 신규 가동(추정)</b>정보통신업 사용량(MW 환산)이 1년 동안 늘어난 양입니다. 새로 돌기 시작한 서버 · 냉방 설비만큼 늘어나므로, 데이터센터 임차 · 가동이 실제로 채워진 속도로 읽을 수 있습니다.</div>
       <div><b>사업장 위치</b>인허가 대장의 법정동 · 리 대표점(도로명주소 행정구역도 기반)에 표시합니다. 정확한 대지 위치는 지도 링크로 확인하세요.</div>
       <div><b>전력자립도</b>지역 발전량(전력거래소 EPSIS) ÷ 지역 전력판매량(한전). 100% 미만이면 다른 지역에서 송전받아 쓰는 곳입니다.</div>
       <div><b>PUE · 가동률</b>PUE는 데이터센터 전체 전력 ÷ IT 장비 전력으로, 냉방 · 전력 손실을 얼마나 더 쓰는지 보여 줍니다(낮을수록 효율적). 가동률은 계약한 IT 용량 대비 실제 평균 사용 비율입니다.</div>
@@ -597,23 +581,6 @@ function renderDecomp(){
   const A=X.a.reduce((s,x)=>s+x.d,0), p=A/X.tot*100, names=X.a.map(x=>x.sg.replace(/(시|군)$/,"")).join(" · ");
   el.textContent=`${base} 다만 최근 1년 수도권 증가분 ${sgn(X.tot,0)}MW 중 ${fmt(A,0)}MW(${fmt(p,0)}%)는 그 기간 대형 데이터센터가 새로 가동된 ${X.a.length}개 시 · 군 · 구(${names})에서 나왔고(이 지역들은 고객 수가 거의 그대로인데 사용량만 급증), 그 밖의 지역은 합쳐서 ${sgn(X.rest,1)}MW로 사실상 늘지 않았습니다.${p>=70?" 순증분은 사실상 데이터센터 몫으로 봐도 됩니다.":""}`;
 }
-function renderSupply(ab){
-  const t=today(), S=bySite(D.permits.rows.filter(r=>CAP.has(r.sd)));
-  const cat=[["공사 중",x=>x.stage==="공사 중"],["착공 전",x=>x.stage==="착공 전"],["최근 1년 준공",x=>x.stage==="준공"&&x.top.apr>minus(t,365)]].map(([n,f])=>{ const xs=S.filter(f);
-    const it=xs.reduce((a,x)=>a+(x.cap&&x.cap.it||0),0), pw=xs.reduce((a,x)=>a+(x.cap&&!x.cap.it&&x.cap.mw||0),0), un=xs.filter(x=>!x.cap||(!x.cap.it&&!x.cap.mw)).length;
-    return {n,cnt:xs.length,it,pw,un}; });
-  const mx=Math.max(ab.c12,ab.c3,...cat.map(c=>c.it+c.pw))*1.05||1, w=v=>(v/mx*100).toFixed(1)+"%";
-  const row=(n,sub,bars,val)=>`<div class="sr"><span class="n">${n}${sub?`<small>${sub}</small>`:""}</span><span class="bar">${bars}</span><span class="v">${val}</span></div>`;
-  let h=row("수요 증가 · 최근 1년","수도권 사용량 증가",`<i style="width:${w(ab.c12)};background:var(--cap)"></i>`,`<span>${sgn(ab.c12)}MW</span>`)+
-        row("수요 증가 · 최근 3년","1년 평균",`<i style="width:${w(ab.c3)};background:var(--cap);opacity:.55"></i>`,`<span>${sgn(ab.c3)}MW</span><small>매년</small>`);
-  cat.forEach(c=>{ h+=row(`${c.n} ${c.cnt}곳`,c.un?`용량 미확인 ${c.un}곳`:"",`<i style="width:${w(c.it)};background:var(--st-s)"></i><i style="width:${w(c.pw)};background:var(--st-p)"></i>`,
-    `<span>IT ${c.it?fmt(c.it,c.it%1?1:0)+"MW":"–"}</span>${c.pw?`<small>+ 수전 · 미표기 ${fmt(c.pw)}MW</small>`:""}`); });
-  const live=cat[0], yrs=ab.c3>0?live.it/ab.c3:null;
-  h+=`<div class="say">수도권 정보통신업 전기 사용량은 최근 1년 <b>${sgn(ab.c12)}MW</b>, 최근 3년은 매년 평균 <b>${fmt(ab.c3)}MW</b>씩 늘었습니다. 지금 짓고 있는 센터 중 IT 용량이 확인된 것만 <b>${fmt(live.it)}MW</b>로${yrs?`, 최근 3년 증가 속도라면 약 <b>${fmt(yrs,1)}년</b> 동안 늘어날 수요에 해당합니다`:""}.${D.permits.complete?"":" 인허가 전국 수집이 끝나지 않아 실제 공급 물량은 이보다 많습니다."}</div>`;
-  $("#sup").innerHTML=h;
-  $("#sup-note").textContent="수도권 · MW";
-  $("#sup-foot").innerHTML=`<span class="legend" style="margin-bottom:4px"><span><i class="sw" style="background:var(--st-s)"></i>IT 용량 확인분</span><span><i class="sw" style="background:var(--st-p)"></i>수전 · 기준 미표기만 확인</span></span><br>IT를 다 채우고 가동률 70% · PUE 1.4로 돌리면 사용량(MW 환산) ≈ IT 용량이라, 늘어난 사용량과 짓고 있는 IT 용량을 같은 눈금으로 비교할 수 있습니다. 수전 용량은 같은 센터의 IT보다 1.5배 안팎 크게 잡히는 경우가 많아(목록 확인분 기준) 따로 표시했습니다.`;
-}
 /* ── 지도 ── */
 let mapView="cap", GEO=null;
 function renderMap(){
@@ -737,7 +704,7 @@ function renderNews(){
   $("#news-note").textContent="PF · 착공 · 준공 · 인수 · 인허가 · 전력 키워드 · 매일 갱신";
 }
 
-function drawCharts(){ renderPM(); renderMap(); const ab=renderAbsorb(); renderSupply(ab); renderScatter(); }
+function drawCharts(){ renderPM(); renderMap(); renderAbsorb(); renderScatter(); }
 function init(d){
   D=d;
   rgOptions($("#pm-rg"),D.permits.rows); rgOptions($("#ls-rg"),D.permits.rows);
