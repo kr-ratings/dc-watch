@@ -457,14 +457,19 @@ function renderKPI(){
   const sum=rs=>rs.reduce((s,r)=>s+(r.area||0),0);
   const p1=inR("pms",a,t), p0=inR("pms",b,a), s1=inR("stc",a,t), s0=inR("stc",b,a), d1=inR("apr",a,t);
   const live=R.filter(r=>r.stage==="공사 중");
-  const K=D.kepco, ca=capArr(), na=K.nat, L=na.length-1, nMW=mw12(na,L), nP=mw12(na,L-12), cMW=mw12(ca,L), cP=mw12(ca,L-12);
-  const sp=[]; for(let i=Math.max(11,L-59);i<=L;i++) sp.push(mw12(na,i));
+  const {G}=absorbGroups(), K=D.kepco, ca=capArr(), na=K.nat, ra=na.map((v,i)=>v-ca[i]), L=na.length-1, cNow=G[G.length-1].c, cYr=mw12(ca,L-12)-mw12(ca,L-24), rNow=G[G.length-1].r;
+  const past=G.slice(0,-1), big=past.filter(g=>g.c>cNow).sort((a,b)=>b.c-a.c), rank=!big.length?`${past[0].lb}년 집계 이래 최대`:big.length===1?`${big[0].lb}년(${sgn(big[0].c)}MW) 다음으로 큼`:`최근 ${past.length}년 중 ${big.length+1}번째`;
+  const dc=D.kepco.decomp, dcp=dc&&dc.a.length?dc.a.reduce((a,x)=>a+x.d,0)/dc.tot*100:null;
+  const bars=(()=>{ const W=240,H=40,n=G.length,mx=Math.max(...G.map(g=>g.c)),mn=Math.min(0,...G.map(g=>g.c)),bw=W/n; const y=v=>H-2-(v-mn)/(mx-mn||1)*(H-4);
+    return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">`+G.map((g,i)=>`<rect x="${(i*bw+bw*.18).toFixed(1)}" y="${Math.min(y(g.c),y(0)).toFixed(1)}" width="${(bw*.64).toFixed(1)}" height="${Math.max(1,Math.abs(y(g.c)-y(0))).toFixed(1)}" rx="1.5" fill="var(--accent)" fill-opacity="${i===n-1?1:.32}"/>`).join("")+`</svg>`; })();
+
   const card=(name,tag,num,unit,chg,split,src)=>`<div class="kpi"><div class="name"><b>${name}</b><span>${tag}</span></div><div class="val"><span class="num">${num}<small>${unit}</small></span>${chg}</div>${split}<div class="src">${src}</div></div>`;
   $("#kpis").innerHTML=
     card("데이터센터 건축허가","최근 12개월",fmt(p1.length),"건",`<span class="chg ${pctCls(sum(p1),sum(p0))}">연면적 ${pctTxt(sum(p1),sum(p0))}</span>`,`<div class="split"><span>연면적 <b>${fmt(sum(p1)/1e4,1)}만㎡</b></span><span>직전 12개월 <b>${fmt(p0.length)}건 · ${fmt(sum(p0)/1e4,1)}만㎡</b></span></div>`,"건축HUB 건축인허가 · 허가일 기준")+
     card("착공","최근 12개월",fmt(s1.length),"건",`<span class="chg ${pctCls(sum(s1),sum(s0))}">연면적 ${pctTxt(sum(s1),sum(s0))}</span>`,`<div class="split"><span>연면적 <b>${fmt(sum(s1)/1e4,1)}만㎡</b></span><span>최근 12개월 준공 <b>${fmt(d1.length)}건 · ${fmt(sum(d1)/1e4,1)}만㎡</b></span></div>`,"건축HUB 건축인허가 · 실제착공일 기준")+
     card("공사 중","현재",fmt(live.length),"건","",`<div class="split"><span>연면적 <b>${fmt(sum(live)/1e4,1)}만㎡</b></span><span>수도권 <b>${fmt(live.filter(r=>CAP.has(r.sd)).length)}건</b></span><span>비수도권 <b>${fmt(live.filter(r=>!CAP.has(r.sd)).length)}건</b></span></div>`,"착공일이 있고 사용승인일이 없는 건")+
-    card("정보통신업 전기 사용량",`MW 환산 · ${ym(K.latest)}까지 12개월 평균`,fmt(nMW),"MW",`<span class="chg ${nMW>=nP?"up":"down"}">1년 새 ${sgn(nMW-nP)}MW</span>`,`<div class="split"><span>수도권 <b>${fmt(cMW)}MW · ${sgn(cMW-cP)}</b></span><span>비수도권 <b>${fmt(nMW-cMW)}MW · ${sgn(nMW-cMW-(nP-cP))}</b></span></div>`+spark(sp,"var(--accent)"),"한국전력 · 사용량(kWh) ÷ 시간 · 최근 5년 추이");
+    card("데이터센터 신규 가동(추정)",`최근 1년 · 수도권`,sgn(cNow),"MW",`<span class="chg up" style="font-family:var(--f-sans)">${rank}</span>`,`<div class="split"><span>1년 전 같은 기간 <b>${sgn(cYr)}MW</b></span><span>비수도권 <b>${sgn(rNow)}MW</b></span></div>`+bars,`정보통신업 전기 사용량 증가분(한국전력)${dcp!=null?` · ${fmt(dcp,0)}%가 데이터센터 가동 지역`:""} · 막대는 해마다 증가분`);
+
   const cov=D.permits.coverage, done=Object.values(cov).reduce((s,v)=>s+v[0],0), tot=Object.values(cov).reduce((s,v)=>s+v[1],0);
   $("#sum-note").textContent=D.permits.complete?`인허가 전국 수집 완료 · ${D.permits.updated}`:`인허가는 전국 수집 진행 중(${fmt(done/tot*100,0)}%) — 아래 숫자는 수집된 지역 기준`;
 }
