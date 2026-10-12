@@ -18,11 +18,19 @@ KEEP = ["mgmPmsrgstPk", "platPlc", "sigunguCd", "bjdongCd", "bun", "ji", "bldNm"
 
 
 def call(q, op, **p):
-    q.take()
     params = {"serviceKey": DGK, "_type": "json", "numOfRows": 100, "pageNo": 1}
     params.update(p)
-    r = get(HUB + op, params)
-    j = r.json()
+    j = None
+    for i in range(3):
+        q.take()
+        r = get(HUB + op, params)
+        try:
+            j = r.json()
+            break
+        except ValueError:
+            time.sleep(3 * (i + 1))  # 순간 과부하로 빈 응답이 오는 경우가 있어 잠시 쉬고 다시
+    if j is None:
+        raise RuntimeError(f"빈 응답 {r.status_code} {scrub(r.text[:80])}")
     body = (j.get("response") or {}).get("body") or {}
     head = (j.get("response") or {}).get("header") or {}
     if head and head.get("resultCode") not in ("00", None):
@@ -47,7 +55,9 @@ def scan_unit(q, unit, since, until):
         total, items = call(q, "getApBasisOulnInfo", sigunguCd=sgg, bjdongCd=bjd, pageNo=page, startDate=since, endDate=until)
         for it in items:
             if str(it.get("mainPurpsCd", "")).strip() == "24000" or "방송통신" in str(it.get("mainPurpsCdNm", "")):
-                hits.append({k: clean(it.get(k)) for k in KEEP})
+                h = {k: clean(it.get(k)) for k in KEEP}
+                h["mgmPmsrgstPk"] = str(it.get("mgmPmsrgstPk"))
+                hits.append(h)
         if page * 100 >= total or not items:
             break
         page += 1
