@@ -194,6 +194,58 @@ def t_open():
     return res
 
 
+def t_filter():
+    res = {}
+    base = dict(sigunguCd="41450", bjdongCd="11000")
+    allit = []
+    for pg in range(1, 4):
+        a = dgk(HUB, "getApBasisOulnInfo", numOfRows=100, pageNo=pg, startDate="20250101", endDate="20261012", **base)
+        allit += a.get("items", [])
+        if len(a.get("items", [])) < 100:
+            break
+    def rng(k):
+        v = sorted(str(x.get(k)).strip() for x in allit if str(x.get(k)).strip())
+        return [v[0], v[-1], len(v)] if v else None
+    res["startDate_2025_range"] = {"n": len(allit), "crtnDay": rng("crtnDay"), "archPmsDay": rng("archPmsDay"), "realStcnsDay": rng("realStcnsDay"), "useAprDay": rng("useAprDay")}
+    t = lambda **p: (lambda a: {"total": a.get("total"), "head": a.get("head"), "n": a.get("n")})(dgk(HUB, "getApBasisOulnInfo", numOfRows=5, **p))
+    res["no_filter"] = t(**base)
+    res["mainPurpsCd_24000"] = t(mainPurpsCd="24000", **base)
+    res["sigungu_only"] = t(sigunguCd="41450")
+    res["sigungu_only_bjdong_blank"] = t(sigunguCd="41450", bjdongCd="")
+    res["flr_sample_since"] = t(sigunguCd="41273", bjdongCd="10400", startDate="20240101", endDate="20261012")
+    # 층별개요도 기간 필터가 먹는지
+    f = dgk(HUB, "getApFlrOulnInfo", numOfRows=5, sigunguCd="41273", bjdongCd="10400", startDate="20240101", endDate="20261012")
+    f2 = dgk(HUB, "getApFlrOulnInfo", numOfRows=5, sigunguCd="41273", bjdongCd="10400")
+    res["flr_total_since_vs_all"] = [f.get("total"), f2.get("total")]
+    return res
+
+
+def t_pages():
+    os.makedirs("probe/out", exist_ok=True)
+    r = S.get("https://new.kpx.or.kr/smpMonthly.es?mid=a10606080300&device=pc", timeout=(20, 60))
+    open("probe/out/kpx_smp.html", "w", encoding="utf-8").write(r.text)
+    r = S.get("https://epsis.kpx.or.kr/epsisnew/selectEkgeGepGbaChart.do?menuId=060104", timeout=(20, 60))
+    open("probe/out/epsis_gen.html", "w", encoding="utf-8").write(r.text)
+    r = S.get("https://epsis.kpx.or.kr/epsisnew/selectEksaAscAscChart.do?menuId=060402", timeout=(20, 60))
+    open("probe/out/epsis_sale.html", "w", encoding="utf-8").write(r.text)
+    return {"ok": True}
+
+
+def t_kepco2():
+    res = {}
+    codes = {"11": "서울", "26": "부산", "27": "대구", "28": "인천", "29": "광주", "30": "대전", "31": "울산", "36": "세종", "41": "경기", "42": "강원", "43": "충북", "44": "충남", "45": "전북", "46": "전남", "47": "경북", "48": "경남", "50": "제주", "51": "강원(51)", "52": "전북(52)", "12": "전남광주(12)"}
+    for cd, nm in codes.items():
+        st, j = kep("powerUsage/industryType.do", year="2026", month="07", metroCd=cd, bizCd="J")
+        data = j.get("data") or []
+        res[cd] = {"nm": nm, "st": st, "n": len(data), "sum_kwh": sum(int(x.get("powerUsage") or 0) for x in data), "err": j.get("errMsg") or j.get("raw", "")[:80]}
+    # 과거 범위
+    for ym in ["2016-01", "2019-01", "2022-07", "2025-07"]:
+        y, m = ym.split("-")
+        st, j = kep("powerUsage/industryType.do", year=y, month=m, metroCd="41", bizCd="J")
+        res["hist_" + ym] = {"st": st, "n": len(j.get("data") or []), "sum_kwh": sum(int(x.get("powerUsage") or 0) for x in (j.get("data") or [])), "err": j.get("errMsg")}
+    return res
+
+
 if __name__ == "__main__":
     if os.environ.get("PROBE_MODE") == "reach":
         rec("reach", t_reach)
@@ -202,12 +254,10 @@ if __name__ == "__main__":
             f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
         raise SystemExit(0)
     if K:
-        rec("hub_sites", t_sites)
-        rec("hub_scan_cost", t_scan_cost)
-        rec("hub_dong_filter", t_dong_filter)
+        rec("hub_filter", t_filter)
     if KE:
-        rec("kepco", t_kepco)
-    rec("open_sources", t_open)
+        rec("kepco2", t_kepco2)
+    rec("pages", t_pages)
     os.makedirs("probe/out", exist_ok=True)
     with open("probe/out/result.json", "w", encoding="utf-8") as f:
         f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
