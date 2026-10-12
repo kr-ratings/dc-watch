@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   push:
     branches: [probe-run]
+  schedule:
+    - cron: "5 15 12 10 *"   # 1회성: 10/13 00:05 KST(일일 호출 한도가 풀린 직후) 데이터센터 주용도 점검
 permissions:
   contents: write
 jobs:
