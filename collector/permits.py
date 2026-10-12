@@ -94,6 +94,7 @@ def main():
     ap.add_argument("--limit", type=int, default=9000)
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--restart", action="store_true")
+    ap.add_argument("--only", default="")         # 쉼표로 구분한 '시군구-법정동' 단위만 받기
     a = ap.parse_args()
     if not DGK:
         print("DATA_GO_KR_KEY 없음"); return
@@ -119,6 +120,9 @@ def main():
     # 지난번에 일시 오류로 못 받은 단위를 먼저 다시 받는다
     errs = set(st.get("errors", {}))
     todo.sort(key=lambda u: 0 if f"{u[1]}-{u[2]}" in errs else 1)
+    if a.only:
+        only = set(x.strip() for x in a.only.split(","))
+        todo = [u for u in todo if f"{u[1]}-{u[2]}" in only]
     print(f"units {len(units)}, todo {len(todo)}", flush=True)
     found = {h["mgmPmsrgstPk"]: h for h in load_json(OUT, {"items": []}).get("items", [])}
     q = Quota(a.limit)
