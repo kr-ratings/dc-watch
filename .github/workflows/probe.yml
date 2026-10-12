@@ -19,7 +19,6 @@ jobs:
         env:
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
           KEPCO_API_KEY: ${{ secrets.KEPCO_API_KEY }}
-          PROBE_MODE: reach
         run: python probe/probe.py
       - name: save result to branch
         run: |

@@ -35,7 +35,15 @@ BR = "https://apis.data.go.kr/1613000/BldRgstHubService/"
 def dgk(base, op, **p):
     q = {"serviceKey": K, "_type": "json", "numOfRows": 100, "pageNo": 1}
     q.update(p)
-    r = S.get(base + op, params=q, timeout=90)
+    r = None
+    for i in range(4):
+        try:
+            r = S.get(base + op, params=q, timeout=(20, 90))
+            break
+        except requests.exceptions.RequestException:
+            if i == 3:
+                raise
+            time.sleep(5 * (i + 1))
     txt = r.text
     try:
         j = r.json()
@@ -120,9 +128,9 @@ KB = "https://bigdata.kepco.co.kr/openapi/v1/"
 def kep(path, **p):
     q = {"apiKey": KE, "returnType": "json"}
     q.update(p)
-    r = S.get(KB + path, params=q, timeout=90)
+    r = S.get(KB + path, params=q, timeout=(20, 90))
     try:
-        return r.status_code, r.json()
+        return r.status_code, json.loads(r.text, strict=False)
     except Exception:
         return r.status_code, {"raw": scrub(r.text[:400])}
 
@@ -152,57 +160,37 @@ def t_kepco():
 # ── 키 없는 원자료 ──
 def t_open():
     res = {}
-    r = S.get("https://new.kpx.or.kr/smpMonthly.es?mid=a10606080300&device=pc", timeout=60)
-    res["kpx_smp"] = {"status": r.status_code, "len": len(r.text), "has_2026": "2026" in r.text, "sample": re.sub(r"\s+", " ", r.text[r.text.find("2026"):r.text.find("2026") + 300]) if "2026" in r.text else None}
-    r = S.get("https://epsis.kpx.or.kr/epsisnew/selectEkgeGepGbaChart.do?menuId=060104", timeout=60)
-    i = r.text.find("강원")
-    res["epsis_region_gen"] = {"status": r.status_code, "len": len(r.text), "snip": re.sub(r"\s+", " ", r.text[i - 200:i + 400]) if i > 0 else None,
-                               "json_like": bool(re.search(r"\[\s*\{[^\]]{0,200}(GEN|gen|val|VAL)", r.text))}
-    r = S.get("https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn", params={"Type": "json", "pIndex": 1, "pSize": 20, "AGE": 22, "BILL_NAME": "데이터센터"}, timeout=60)
-    try:
+
+    def safe(name, fn):
+        try:
+            res[name] = fn()
+        except Exception as e:
+            res[name] = {"err": scrub(repr(e))[:300]}
+
+    def kpx():
+        r = S.get("https://new.kpx.or.kr/smpMonthly.es?mid=a10606080300&device=pc", timeout=(20, 60))
+        i = r.text.find("2026")
+        return {"status": r.status_code, "len": len(r.text), "sample": re.sub(r"\s+", " ", r.text[i:i + 300]) if i > 0 else None}
+
+    def epsis():
+        r = S.get("https://epsis.kpx.or.kr/epsisnew/selectEkgeGepGbaChart.do?menuId=060104", timeout=(20, 60))
+        i = r.text.find("gridData")
+        j = r.text.find("강원")
+        return {"status": r.status_code, "len": len(r.text), "grid": re.sub(r"\s+", " ", r.text[i:i + 600]) if i > 0 else None,
+                "snip": re.sub(r"\s+", " ", r.text[j - 300:j + 300]) if j > 0 else None,
+                "ajax": re.findall(r"url\s*:\s*[\"']([^\"']+)", r.text)[:10]}
+
+    def assembly():
+        r = S.get("https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn", params={"Type": "json", "pIndex": 1, "pSize": 20, "AGE": 22, "BILL_NAME": "데이터센터"}, timeout=(20, 60))
         j = r.json()["nzmimeepazxkubdpn"]
-        res["assembly"] = {"status": r.status_code, "count": j[0]["head"][0]["list_total_count"], "names": [x["BILL_NAME"] + " / " + str(x["PROC_RESULT"]) for x in j[1]["row"]]}
-    except Exception as e:
-        res["assembly"] = {"status": r.status_code, "raw": r.text[:300], "err": repr(e)}
-    r = S.get("https://news.google.com/rss/search", params={"q": "데이터센터 PF OR 착공 OR 인수 OR 매각", "hl": "ko", "gl": "KR", "ceid": "KR:ko"}, timeout=60)
-    titles = re.findall(r"<title>(.*?)</title>", r.text)[1:6]
-    res["gnews"] = {"status": r.status_code, "items": r.text.count("<item>"), "titles": titles}
-    return res
+        return {"status": r.status_code, "count": j[0]["head"][0]["list_total_count"], "names": [x["BILL_NAME"] + " / " + str(x["PROC_RESULT"]) for x in j[1]["row"]]}
 
+    def gnews():
+        r = S.get("https://news.google.com/rss/search", params={"q": "데이터센터 PF OR 착공 OR 인수 OR 매각", "hl": "ko", "gl": "KR", "ceid": "KR:ko"}, timeout=(20, 60))
+        return {"status": r.status_code, "items": r.text.count("<item>"), "titles": re.findall(r"<title>(.*?)</title>", r.text)[1:6]}
 
-def t_reach():
-    """해외(GitHub) 서버에서 각 원출처에 접속되는지 3회씩 확인."""
-    from urllib.parse import urlencode
-    hubq = urlencode({"serviceKey": K, "_type": "json", "numOfRows": 1, "pageNo": 1, "sigunguCd": "41450", "bjdongCd": "11000"})
-    urls = {
-        "ipinfo": "https://ipinfo.io/json",
-        "dgk_https_api": "https://apis.data.go.kr/1613000/ArchPmsHubService/getApBasisOulnInfo?" + hubq,
-        "dgk_http_api": "http://apis.data.go.kr/1613000/ArchPmsHubService/getApBasisOulnInfo?" + hubq,
-        "dgk_www": "https://www.data.go.kr/",
-        "assembly_https": "https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=1&pSize=1&AGE=22&BILL_NAME=%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0",
-        "assembly_http": "http://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?Type=json&pIndex=1&pSize=1&AGE=22&BILL_NAME=%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0",
-        "likms": "https://likms.assembly.go.kr/bill/main.do",
-        "kpx_smp": "https://new.kpx.or.kr/smpMonthly.es?mid=a10606080300&device=pc",
-        "epsis": "https://epsis.kpx.or.kr/epsisnew/selectEkgeGepGbaChart.do?menuId=060104",
-        "gnews": "https://news.google.com/rss/search?q=%EB%8D%B0%EC%9D%B4%ED%84%B0%EC%84%BC%ED%84%B0&hl=ko&gl=KR&ceid=KR:ko",
-        "law": "https://www.law.go.kr/",
-        "hub_go_kr": "https://www.hub.go.kr/portal/main.do",
-        "kepco": "https://bigdata.kepco.co.kr/",
-    }
-    res = {}
-    for nm, u in urls.items():
-        tries = []
-        for _ in range(3):
-            t = time.time()
-            try:
-                r = S.get(u, timeout=(20, 60))
-                tries.append({"st": r.status_code, "s": round(time.time() - t, 1), "head": scrub(r.text[:160])})
-                if r.status_code < 500:
-                    break
-            except Exception as e:
-                tries.append({"err": type(e).__name__, "s": round(time.time() - t, 1)})
-            time.sleep(2)
-        res[nm] = tries
+    for nm, fn in [("kpx_smp", kpx), ("epsis_region_gen", epsis), ("assembly", assembly), ("gnews", gnews)]:
+        safe(nm, fn)
     return res
 
 
