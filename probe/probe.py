@@ -254,6 +254,23 @@ def t_regcode():
     return res
 
 
+def t_raw2():
+    os.makedirs("probe/out", exist_ok=True)
+    res = {}
+    for nm, path, extra in [("ind_J_all", "powerUsage/industryType.do", {"bizCd": "J"}), ("cntr_all", "powerUsage/contractType.do", {}),
+                            ("ind_J_11", "powerUsage/industryType.do", {"bizCd": "J", "metroCd": "11"})]:
+        q = {"apiKey": KE, "returnType": "json", "year": "2026", "month": "07"}
+        q.update(extra)
+        r = S.get(KB + path, params=q, timeout=(20, 90))
+        open(f"probe/out/{nm}.txt", "w", encoding="utf-8").write(scrub(r.text))
+        res[nm] = {"st": r.status_code, "len": len(r.text)}
+    r = S.get("https://epsis.kpx.or.kr/epsisnew/selectEksaAscAsaChart.do?menuId=060405", timeout=(20, 60))
+    open("probe/out/epsis_sido_use.html", "w", encoding="utf-8").write(r.text)
+    r = S.get("https://epsis.kpx.or.kr/epsisnew/selectEksaScfChart.do?menuId=060600", timeout=(20, 60))
+    open("probe/out/epsis_price.html", "w", encoding="utf-8").write(r.text)
+    return res
+
+
 if __name__ == "__main__":
     if os.environ.get("PROBE_MODE") == "reach":
         rec("reach", t_reach)
@@ -261,8 +278,8 @@ if __name__ == "__main__":
         with open("probe/out/result.json", "w", encoding="utf-8") as f:
             f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
         raise SystemExit(0)
-    if K:
-        rec("regcode", t_regcode)
+    if KE:
+        rec("raw2", t_raw2)
     os.makedirs("probe/out", exist_ok=True)
     with open("probe/out/result.json", "w", encoding="utf-8") as f:
         f.write(scrub(json.dumps(OUT, ensure_ascii=False, indent=1)))
