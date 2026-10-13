@@ -21,14 +21,14 @@
 <!--HEAD-END-->
 <style>
 /* Layout: 단일 컬럼 대시보드 — 요약 4칸 → 인허가 추이(전체 폭) → 인허가 목록(용량 칸 포함) → 정보통신업 전력사용량 → 전력 여건(자립도 × 수요) → 제도 · 일정 · 기사
-   토큰은 apt-watch · daily-ratings · cons-ratings와 동일. 단계 색(허가 연파랑 · 착공 파랑 · 준공 청록)과 권역 색만 추가 */
+   토큰은 apt-watch · daily-ratings · cons-ratings와 동일. 단계 색(허가 연파랑 · 착공 파랑 · 준공 남색: 진행될수록 짙게)과 권역 색만 추가 */
 :root{
   --bg:#f5f6f8; --surface:#ffffff; --line:#dfe2e8; --fg:#1b2230; --muted:#5d6678;
   --accent:#2747a8; --accent-soft:#e8edf9;
   --up:#c8302f; --down:#2453c4; --flat:#6b7383;
   --ok:#1f7a4d; --warn:#a26a00; --bad:#b3401f;
-  --st-p:#9aabdc; --st-s:#3354c4; --st-d:#0e8f7b;
-  --hr0:#e5484d; --hr1:#eea600; --cable:#1b88ad;
+  --st-p:#9aabdc; --st-s:#3354c4; --st-d:#16245e;
+  --hr0:#e5484d; --hr1:#3aa564; --cable:#1b88ad; --zone:#0d9488;
   --cap:#3354c4; --reg:#0e8f7b; --warm:#d4682a; --gray:#7b8494;
   --sf1:#f3cdb6; --sf2:#fbe9de; --sf3:#d9efe9; --sf4:#b4e0d4;
   --tip-shadow:rgba(27,34,48,.14);
@@ -42,8 +42,8 @@
   --accent:#8ea8ff; --accent-soft:#1f2a45;
   --up:#ff7a72; --down:#7aa2ff; --flat:#8b93a3;
   --ok:#5fd19a; --warn:#f0bb4a; --bad:#ff8a63;
-  --st-p:#a3b1e0; --st-s:#5f7be0; --st-d:#2fa88f;
-  --hr0:#ff6b78; --hr1:#ffc94a; --cable:#56c2e4;
+  --st-p:#56649a; --st-s:#6584ea; --st-d:#b7c6ff;
+  --hr0:#ff6b78; --hr1:#5fcf8c; --cable:#56c2e4; --zone:#2dd4bf;
   --cap:#5f7be0; --reg:#2fa88f; --warm:#dc7334; --gray:#8b93a3;
   --sf1:#5b3423; --sf2:#3b2b23; --sf3:#1e3b34; --sf4:#256052;
   --land:#232b38; --land2:#1c222d; --bd:#4a5468; --bd2:#343d4e;
@@ -53,8 +53,8 @@
   --accent:#8ea8ff; --accent-soft:#1f2a45;
   --up:#ff7a72; --down:#7aa2ff; --flat:#8b93a3;
   --ok:#5fd19a; --warn:#f0bb4a; --bad:#ff8a63;
-  --st-p:#a3b1e0; --st-s:#5f7be0; --st-d:#2fa88f;
-  --hr0:#ff6b78; --hr1:#ffc94a; --cable:#56c2e4;
+  --st-p:#56649a; --st-s:#6584ea; --st-d:#b7c6ff;
+  --hr0:#ff6b78; --hr1:#5fcf8c; --cable:#56c2e4; --zone:#2dd4bf;
   --cap:#5f7be0; --reg:#2fa88f; --warm:#dc7334; --gray:#8b93a3;
   --sf1:#5b3423; --sf2:#3b2b23; --sf3:#1e3b34; --sf4:#256052;
   --land:#232b38; --land2:#1c222d; --bd:#4a5468; --bd2:#343d4e;
@@ -206,7 +206,7 @@ td.hr small{display:block;font-size:.68rem;color:var(--muted);line-height:1.35;m
 .hb2 .c{font-size:.7rem;color:var(--muted);text-align:right;white-space:nowrap}
 .tops{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.76rem;color:var(--muted)}
 .tops b{font-family:var(--f-mono);font-weight:600;color:var(--ok)}
-.dia{width:10px;height:10px;transform:rotate(45deg);display:inline-block;background:var(--warm);border-radius:1px}
+.dia{width:10px;height:10px;transform:rotate(45deg);display:inline-block;background:var(--zone);border-radius:1px}
 @media (min-width:980px){
   .eqh > div{display:flex;flex-direction:column;min-width:0}
   .eqh .card{height:600px}
@@ -384,7 +384,7 @@ footer .ct{white-space:nowrap}
       <div class="ly-h" id="ly-h">지도에 표시할 항목<span>눌러서 켜고 끄기</span></div>
       <div class="layers" role="group" aria-labelledby="ly-h">
         <button type="button" class="ly" data-ly="dc" aria-pressed="true"><span class="lsw"><i class="dot" style="background:var(--st-p)"></i><i class="dot" style="background:var(--st-s)"></i><i class="dot" style="background:var(--st-d)"></i></span>데이터센터<small>착공 전 · 공사 중 · 준공</small></button>
-        <button type="button" class="ly" data-ly="sub" aria-pressed="true"><span class="lsw"><i class="gl" style="--c:var(--hr0)"></i><i class="gl" style="--c:var(--hr1)"></i></span>345kV 변전소 여유<small>붉은 번짐 = 없음 · 노란 번짐 = 있음(넓을수록 큼)</small></button>
+        <button type="button" class="ly" data-ly="sub" aria-pressed="true"><span class="lsw"><i class="gl" style="--c:var(--hr0)"></i><i class="gl" style="--c:var(--hr1)"></i></span>345kV 변전소 여유<small>붉은 번짐 = 없음 · 초록 번짐 = 있음(넓을수록 큼)</small></button>
         <button type="button" class="ly" data-ly="cab" aria-pressed="true"><span class="lsw"><i class="cl"></i><i class="lp"></i></span>해저케이블 · 육양국<small>점선 = 예정</small></button>
         <button type="button" class="ly" data-ly="zone" aria-pressed="true"><span class="lsw"><i class="dia"></i></span>분산에너지특화지역</button>
       </div>
@@ -754,7 +754,7 @@ function renderMap(){
   GEO.sido.forEach(g=>{ s+=`<path class="land" d="${g.d}" vector-effect="non-scaling-stroke"/>`; });
   const SB0=((D.layers||{}).subs)||[], gR=b=>(b.mw>0?15+15*Math.sqrt(Math.min(b.mw,1300)/1300):13)*u*(mapView==="all"?1:1.7);
   if(LAY.sub){
-    s+=`<defs>${[0,1].map(k=>`<radialGradient id="hg${k}"><stop offset="0" style="stop-color:var(--hr${k});stop-opacity:${k?.44:.42}"/><stop offset=".5" style="stop-color:var(--hr${k});stop-opacity:${k?.22:.17}"/><stop offset="1" style="stop-color:var(--hr${k});stop-opacity:0"/></radialGradient>`).join("")}</defs><g class="hz">`;
+    s+=`<defs>${[0,1].map(k=>`<radialGradient id="hg${k}"><stop offset="0" style="stop-color:var(--hr${k});stop-opacity:${k?.3:.42}"/><stop offset=".5" style="stop-color:var(--hr${k});stop-opacity:${k?.13:.17}"/><stop offset="1" style="stop-color:var(--hr${k});stop-opacity:0"/></radialGradient>`).join("")}</defs><g class="hz">`;
     SB0.slice().sort((a,b)=>(a.mw>0)-(b.mw>0)).forEach(b=>{ const [bx,by]=LL(...b.ll); s+=`<circle cx="${bx.toFixed(0)}" cy="${by.toFixed(0)}" r="${gR(b).toFixed(0)}" fill="url(#hg${b.mw>0?1:0})"/>`; });
     s+=`</g>`;
   }
@@ -805,7 +805,7 @@ function renderMap(){
   }
   if(LAY.sub) SB.forEach((b,i)=>{ const [bx,by]=LL(...b.ll); s+=`<circle class="sb" data-b="${i}" cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="${(gR(b)*.45).toFixed(1)}" fill="transparent"/>`; });
   let zS=""; // 분산특구 마름모는 데이터센터 원 위에 그린다
-  if(LAY.zone) Z.forEach(z=>{ const r=(mapView==="all"?5.5:7)*u; zS+=`<path class="zn" data-z="${z.i}" d="M${z.zx},${z.zy-r}L${z.zx+r},${z.zy}L${z.zx},${z.zy+r}L${z.zx-r},${z.zy}Z" fill="var(--warm)" fill-opacity=".9" stroke="var(--surface)" stroke-width="1.2" vector-effect="non-scaling-stroke" style="cursor:pointer"/>`;
+  if(LAY.zone) Z.forEach(z=>{ const r=(mapView==="all"?5.5:7)*u; zS+=`<path class="zn" data-z="${z.i}" d="M${z.zx},${z.zy-r}L${z.zx+r},${z.zy}L${z.zx},${z.zy+r}L${z.zx-r},${z.zy}Z" fill="var(--zone)" fill-opacity=".9" stroke="var(--surface)" stroke-width="1.2" vector-effect="non-scaling-stroke" style="cursor:pointer"/>`;
     });
   if(LAY.dc) S.slice().sort((a,b)=>b.area-a.area).forEach(x=>{ s+=`<circle class="pt" data-s="${esc(x.top.site)}" cx="${x.x.toFixed(1)}" cy="${x.y.toFixed(1)}" r="${(x.rp*u).toFixed(1)}" fill="${C[x.stage]}" fill-opacity=".88" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`; });
   const KMAX=mapView==="all"?16:6;
