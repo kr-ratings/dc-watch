@@ -701,6 +701,26 @@ function renderDecomp(){
 }
 /* ── 지도 ── */
 let mapView="all", GEO=null, ZM=null; const LAY={dc:true,sub:true,cab:true,zone:true}; // ZM: 확대 상태 {cx,cy,k}(지도 좌표 중심, 배율)
+let LAND=null;
+function landFit(u,avoid){ // 지도 육지(시 · 도 경계 도형) 안에 있는지 보고, 밖이면 가까운 육지 안쪽 자리를 찾는다
+  const none=(x,y)=>[x,y];
+  try{
+    if(!LAND){ const ns="http://www.w3.org/2000/svg", sv=document.createElementNS(ns,"svg");
+      sv.setAttribute("aria-hidden","true"); sv.style.cssText="position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;visibility:hidden;pointer-events:none";
+      const ps=GEO.sido.map(g=>{ const p=document.createElementNS(ns,"path"); p.setAttribute("d",g.d); sv.appendChild(p); return p; });
+      document.body.appendChild(sv); const bb=ps.map(p=>p.getBBox()), pt=sv.createSVGPoint();
+      LAND=(x,y)=>{ pt.x=x; pt.y=y; for(let i=0;i<ps.length;i++){ const b=bb[i]; if(x>=b.x&&x<=b.x+b.width&&y>=b.y&&y<=b.y+b.height&&ps[i].isPointInFill(pt)) return true; } return false; };
+      if(!LAND(...[(127.0-GEO.proj.lon0)*GEO.proj.kx,(GEO.proj.lat0-37.5)*1000])) { LAND=()=>true; } // 판정이 안 되는 브라우저면 그대로 둔다
+    }
+  }catch(_){ LAND=()=>true; }
+  // avoid: 가리면 안 되는 표시(육양국 등) [x, y, 반지름]
+  const clear=(x,y,r)=>(avoid||[]).every(([ax,ay,ar])=>Math.hypot(x-ax,y-ay)>ar+r);
+  const ok=(x,y,m,r)=>LAND(x,y)&&clear(x,y,r)&&(m<=0||[0,1,2,3,4,5,6,7].every(i=>LAND(x+Math.cos(i*Math.PI/4)*m,y+Math.sin(i*Math.PI/4)*m)));
+  return (x,y,r)=>{ const m=r*.4; if(ok(x,y,m,r)) return [x,y];
+    const maxD=Math.max(60*u,80);
+    for(const mm of [m,0]) for(let d=1.5*u; d<=maxD; d*=1.25) for(let a=0;a<24;a++){ const nx=x+Math.cos(a*Math.PI/12)*d, ny=y+Math.sin(a*Math.PI/12)*d; if(ok(nx,ny,mm,r)) return [nx,ny]; }
+    return [x,y]; };
+}
 function mapZoom(nz){ // 확대 · 축소를 부드럽게(지도를 새로 그린 뒤 보이는 범위만 옮겨 간다)
   const sv=$("#map svg"), from=sv&&sv.getAttribute("viewBox").split(" ").map(Number);
   ZM=nz; renderMap();
@@ -755,8 +775,11 @@ function renderMap(){
   // 같은 점에 겹치는 사업장은 둥글게 떨어뜨린다
   const grp={}; S.forEach(x=>{ const k=Math.round(x.x/(8*u))+"_"+Math.round(x.y/(8*u)); (grp[k]=grp[k]||[]).push(x); });
   Object.values(grp).forEach(g=>{ if(g.length<2) return; const rr=Math.max(...g.map(x=>x.rp))*u*(zk>1?Math.max(1.15,1.12/Math.sin(Math.PI/g.length)):1.15); g.forEach((x,i)=>{ const a=-Math.PI/2+i*2*Math.PI/g.length; x.x+=Math.cos(a)*rr; x.y+=Math.sin(a)*rr; }); });
+  // 대표점이 해안선 밖(바다)에 찍히거나 펼치다 바다로 나간 점은 가장 가까운 육지 안쪽으로 옮긴다
+  const fit=landFit(u,LAY.cab?((D.layers||{}).landings||[]).map(l=>[...LL(...l.ll),((mapView==="all"?3.4:4.4)+3)*u]):[]);
+  S.forEach(x=>{ [x.x,x.y]=fit(x.x,x.y,x.rp*u); });
   const C={"착공 전":"var(--st-p)","공사 중":"var(--st-s)","준공":"var(--st-d)"};
-  const Z=((D.zones||{}).items||[]).map((z,i)=>{ const [zx,zy]=LL(...z.ll); return {...z,i,zx,zy}; });
+  const Z=((D.zones||{}).items||[]).map((z,i)=>{ const [zx,zy]=fit(...LL(...z.ll),(mapView==="all"?5.5:7)*u); return {...z,i,zx,zy}; });
   const LY=D.layers||{}, CB=LY.cables||[], LPs=LY.landings||[], SB=LY.subs||[], hk=b=>b.mw>0?1:0;
   let lpS=""; // 육양국은 맨 위에 그린다
   const pth=ps=>"M"+ps.map(p=>LL(p[0],p[1]).map(v=>v.toFixed(1)).join(",")).join("L");
