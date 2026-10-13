@@ -227,7 +227,7 @@ h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;verti
   .map-side .ly-h span::before{content:""}
   .map-side .layers{display:flex;flex-direction:column;gap:6px;margin-top:0}
   .map-side .ly{border-radius:10px;width:100%;align-items:center}
-  .map-side .ly .lt small{display:block;margin-top:1px;line-height:1.4;word-break:keep-all}}
+}
 .map{position:relative;width:100%;min-width:0}
 .map svg{display:block;width:100%;height:auto;cursor:zoom-in;user-select:none;-webkit-user-select:none;touch-action:pan-y}
 .map.zoomed svg{cursor:grab;touch-action:none}
@@ -270,7 +270,13 @@ h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;verti
 .ly .lsw{display:inline-flex;align-items:center;gap:3px;flex:none}
 .ly .lsw i{flex:none}
 .ly .lsw .dot{width:8px;height:8px}
-.ly .lsw .gl{width:13px;height:13px;border-radius:50%;display:inline-block;background:radial-gradient(circle,var(--c) 0,color-mix(in srgb,var(--c) 45%,transparent) 45%,transparent 72%)}
+.ly .lsw .gw,.ly .k .gw{width:13px;height:13px;border-radius:50%;display:inline-block;flex:none;background:radial-gradient(circle,var(--c) 0,color-mix(in srgb,var(--c) 45%,transparent) 45%,transparent 72%)}
+/* 설명이 두 가지면 한 덩어리씩 줄을 나눠 단어 중간에서 끊기지 않게 */
+.ly .lt{text-align:left}
+.ly .lt small{display:block;margin-top:1px;line-height:1.4;word-break:keep-all}
+.ly{border-radius:10px}
+.ly .k{display:flex;align-items:center;gap:3px}
+.ly .k .gw{width:12px;height:12px}
 .ly .lsw .cl{width:14px;height:0;border-top:1.6px solid var(--cable);display:inline-block}
 .ly .lsw .lp{width:7px;height:7px;border-radius:50%;border:1.6px solid var(--cable);background:var(--surface);display:inline-block;box-sizing:border-box}
 .ly .lsw .dia{width:8px;height:8px}
@@ -397,7 +403,7 @@ footer .ct{white-space:nowrap}
       <div class="ly-h" id="ly-h">지도에 표시할 항목<span>눌러서 켜고 끄기</span></div>
       <div class="layers" role="group" aria-labelledby="ly-h">
         <button type="button" class="ly" data-ly="dc" aria-pressed="true"><span class="lsw"><i class="dot" style="background:var(--st-p)"></i><i class="dot" style="background:var(--st-s)"></i><i class="dot" style="background:var(--st-d)"></i></span><span class="lt">데이터센터<small>착공 전 · 공사 중 · 준공</small></span></button>
-        <button type="button" class="ly" data-ly="sub" aria-pressed="true"><span class="lsw"><i class="gl" style="--c:var(--hr0)"></i><i class="gl" style="--c:var(--hr1)"></i></span><span class="lt">345kV 변전소 여유<small>붉은 번짐 = 없음 · 초록 번짐 = 있음 · 넓을수록 큼</small></span></button>
+        <button type="button" class="ly" data-ly="sub" aria-pressed="true"><span class="lt">345kV 변전소 여유<small><span class="k"><i class="gw" style="--c:var(--hr0)"></i>여유 없음</span><span class="k"><i class="gw" style="--c:var(--hr1)"></i>여유 있음 · 넓을수록 큼</span></small></span></button>
         <button type="button" class="ly" data-ly="cab" aria-pressed="true"><span class="lsw"><i class="cl"></i><i class="lp"></i></span><span class="lt">해저케이블 · 육양국<small>점선 = 예정</small></span></button>
         <button type="button" class="ly" data-ly="zone" aria-pressed="true"><span class="lsw"><i class="dia"></i></span><span class="lt">분산에너지특화지역</span></button>
       </div>
