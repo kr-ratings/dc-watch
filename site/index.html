@@ -579,7 +579,7 @@ function renderKPI(){
     card("데이터센터 신규 가동 <span class=\"nb\">(추가 실사용량 추정)</span>",`최근 1년 · 수도권`,sgn(cNow),"MW","",`<div class="kb"><div class="split"><span>1년 전 같은 기간 <b>${sgn(cYr)}MW</b></span><span>비수도권 <b>${sgn(rNow)}MW</b></span></div>`+bars+`</div>`,`정보통신업 전기 사용량 증가분(한국전력)${dcp!=null?` · ${fmt(dcp,0)}%가 데이터센터 가동 지역`:""} · 막대는 해마다 증가분`);
 
   const cov=D.permits.coverage, done=Object.values(cov).reduce((s,v)=>s+v[0],0), tot=Object.values(cov).reduce((s,v)=>s+v[1],0);
-  $("#sum-note").textContent=D.permits.complete?`인허가 전국 수집 완료 · ${D.permits.updated}`:`인허가는 전국 수집 진행 중(${fmt(done/tot*100,0)}%) — 아래 숫자는 수집된 지역 기준`;
+  $("#sum-note").textContent=D.permits.complete?`인허가 전국 수집 완료 (${String(D.permits.updated||"").replace(/^\d{2}(\d{2})(\d{2})(\d{2})$/,"'$1.$2.$3")} 기준 집계 완료)`:`인허가는 전국 수집 진행 중(${fmt(done/tot*100,0)}%) — 아래 숫자는 수집된 지역 기준`;
 }
 
 /* ── 인허가 추이 ── */
