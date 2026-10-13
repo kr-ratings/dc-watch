@@ -219,7 +219,19 @@ h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;verti
 .pm-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
 @media (min-width:1180px){.pm-grid{grid-template-columns:minmax(0,1.5fr) minmax(360px,1fr)}}
 .map{position:relative;width:100%;min-width:0}
-.map svg{display:block;width:100%;height:auto}
+.map svg{display:block;width:100%;height:auto;cursor:zoom-in;user-select:none;-webkit-user-select:none}
+.map.zoomed svg{cursor:grab;touch-action:none}
+.map.panning svg{cursor:grabbing}
+.map .zn,.map .lp{cursor:pointer}
+.map .zc{position:absolute;left:6px;bottom:6px;display:flex;align-items:center;gap:4px;font-size:.7rem;color:var(--muted);pointer-events:none}
+.map .zc .zh{padding:2px 6px;border-radius:6px;background:color-mix(in srgb,var(--surface) 80%,transparent)}
+.map .zc .zb{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.map .zc button{all:unset;pointer-events:auto;box-sizing:border-box;cursor:pointer;min-width:26px;height:26px;padding:0 8px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:7px;background:var(--surface);color:var(--fg);font-size:.74rem;font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.map .zc .zb button{border:0;border-radius:0;box-shadow:none}
+.map .zc .zb button + button{border-left:1px solid var(--line)}
+.map .zc button:hover{background:var(--accent-soft)}
+.map .zc button:disabled{opacity:.4;cursor:default}
+.map .zc button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .map .land{fill:var(--land);stroke:var(--bd);stroke-width:.8px;stroke-linejoin:round}
 .map .nk{fill:var(--land2);stroke:var(--bd2);stroke-width:.8px}
 .map .sgg{fill:none;stroke:var(--bd2);stroke-width:.6px}
@@ -688,12 +700,21 @@ function renderDecomp(){
   el.textContent=`${base} 다만 최근 1년 수도권 증가분 ${sgn(X.tot,0)}MW 중 ${fmt(A,0)}MW(${fmt(p,0)}%)는 그 기간 대형 데이터센터가 새로 가동된 ${X.a.length}개 시 · 군 · 구(${names})에서 나왔고(이 지역들은 고객 수가 거의 그대로인데 사용량만 급증), 그 밖의 지역은 합쳐서 ${sgn(X.rest,1)}MW로 사실상 늘지 않았습니다.${p>=70?" 순증분은 사실상 데이터센터 몫으로 추정됩니다.":""}`;
 }
 /* ── 지도 ── */
-let mapView="all", GEO=null; const LAY={dc:true,sub:true,cab:true,zone:true};
+let mapView="all", GEO=null, ZM=null; const LAY={dc:true,sub:true,cab:true,zone:true}; // ZM: 확대 상태 {cx,cy,k}(지도 좌표 중심, 배율)
+function mapZoom(nz){ // 확대 · 축소를 부드럽게(지도를 새로 그린 뒤 보이는 범위만 옮겨 간다)
+  const sv=$("#map svg"), from=sv&&sv.getAttribute("viewBox").split(" ").map(Number);
+  ZM=nz; renderMap();
+  const s2=$("#map svg"); if(!from||!s2||matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const to=s2.getAttribute("viewBox").split(" ").map(Number), t0=performance.now(), T=280;
+  const step=t=>{ const p=Math.min(1,(t-t0)/T), e=1-Math.pow(1-p,3); if(!s2.isConnected) return; s2.setAttribute("viewBox",from.map((v,i)=>(v+(to[i]-v)*e).toFixed(1)).join(" ")); if(p<1) requestAnimationFrame(step); };
+  requestAnimationFrame(step);
+}
 function renderMap(){
   const box=$("#map"); if(!GEO){ box.innerHTML=`<div class="placeholder">지도 불러오는 중…</div>`; return; }
   const pj=GEO.proj, LL=(lon,lat)=>[(lon-pj.lon0)*pj.kx,(pj.lat0-lat)*1000];
   const rg=$("#pm-rg").value||"all", S=bySite(D.permits.rows.filter(r=>r.ll&&rgMatch(r.sd,rg)));
-  S.forEach(x=>{ [x.x,x.y]=LL(...x.top.ll); x.rp=(4+Math.sqrt(x.area/1e4)*2.1)*(mapView==="all"?.62:1); });
+  const zk=ZM?ZM.k:1;
+  S.forEach(x=>{ [x.x,x.y]=LL(...x.top.ll); x.rp=(4+Math.sqrt(x.area/1e4)*2.1)*(mapView==="all"?Math.min(1,.62*Math.pow(zk,.3)):1); });
   const W=Math.max(280,Math.round(box.clientWidth||400)), H=window.innerWidth>=1180?Math.round(Math.min(480,Math.max(400,W*.8))):Math.round(Math.min(560,Math.max(340,W*(mapView==="all"?1.18:0.98))));
   let vb;
   if(mapView==="all"){ const [x0,y0]=LL(124.55,38.78),[x1,y1]=LL(130.15,33.05); vb=[x0,y0,x1-x0,y1-y0]; }
@@ -702,6 +723,10 @@ function renderMap(){
     const minS=420; if(b-a<minS){const k=(minS-(b-a))/2;a-=k;b+=k;} if(d-c<minS){const k=(minS-(d-c))/2;c-=k;d+=k;} vb=[a,c,b-a,d-c]; }
   // 화면 비율에 맞춰 넓히기
   const ar=W/H; if(vb[2]/vb[3]<ar){ const nw=vb[3]*ar; vb[0]-=(nw-vb[2])/2; vb[2]=nw; } else { const nh=vb[2]/ar; vb[1]-=(nh-vb[3])/2; vb[3]=nh; }
+  // 확대: 처음 화면(base) 안에서만 움직이게 중심을 붙잡는다
+  const base=vb.slice();
+  if(ZM){ const w=base[2]/ZM.k, h=base[3]/ZM.k, x=Math.max(base[0],Math.min(base[0]+base[2]-w,ZM.cx-w/2)), y=Math.max(base[1],Math.min(base[1]+base[3]-h,ZM.cy-h/2));
+    ZM.cx=x+w/2; ZM.cy=y+h/2; vb=[x,y,w,h]; }
   const u=vb[2]/W; // 화면 1px = u 단위
   let s=`<svg viewBox="${vb.map(v=>v.toFixed(1)).join(" ")}" width="${W}" height="${H}" role="img" aria-label="데이터센터 사업장 위치 지도">`;
   if(GEO.nk) s+=`<path class="nk" d="${GEO.nk}" vector-effect="non-scaling-stroke"/>`;
@@ -712,7 +737,7 @@ function renderMap(){
     SB0.slice().sort((a,b)=>(a.mw>0)-(b.mw>0)).forEach(b=>{ const [bx,by]=LL(...b.ll); s+=`<circle cx="${bx.toFixed(0)}" cy="${by.toFixed(0)}" r="${gR(b).toFixed(0)}" fill="url(#hg${b.mw>0?1:0})"/>`; });
     s+=`</g>`;
   }
-  if(mapView==="cap") GEO.sgg.forEach(g=>{ s+=`<path class="sgg" d="${g.d}" vector-effect="non-scaling-stroke"/>`; });
+  if(mapView==="cap"||zk>=2.5) GEO.sgg.forEach(g=>{ s+=`<path class="sgg" d="${g.d}" vector-effect="non-scaling-stroke"/>`; });
   if(mapView==="all"){
     GEO.sido.forEach(g=>{ s+=`<text class="ml" x="${g.x}" y="${g.y}" text-anchor="middle" style="font-size:${10.5*u}px;stroke-width:${3*u}px">${g.n==="전남광주"?"전남광주":g.n}</text>`; });
     // 울릉도 · 독도 상자(동해 쪽 빈 바다)
@@ -723,12 +748,13 @@ function renderMap(){
       s+=`<path class="land" d="M${r}" transform="translate(${tx.toFixed(0)} ${ty.toFixed(0)})" vector-effect="non-scaling-stroke"/>`; });
     s+=`<circle cx="${bx[0]+bw*.78}" cy="${bx[1]+bh*.66}" r="${2.2*u}" fill="var(--bd)"/>`;
     s+=`<text class="ml" x="${bx[0]+bw*.28}" y="${bx[1]+bh*.78}" text-anchor="middle" style="font-size:${9.5*u}px;stroke-width:${3*u}px">울릉도</text><text class="ml" x="${bx[0]+bw*.78}" y="${bx[1]+bh*.9}" text-anchor="middle" style="font-size:${9.5*u}px;stroke-width:${3*u}px">독도</text>`;
+    if(zk>=2.5){ const minA=vb[2]*vb[3]/250; GEO.lab.filter(l=>l.k!==2&&l.a>minA).forEach(l=>{ s+=`<text class="ml" x="${l.x}" y="${l.y}" text-anchor="middle" style="font-size:${10*u}px;stroke-width:${3*u}px">${l.n}</text>`; }); }
   } else {
     const minA=vb[2]*vb[3]/250; GEO.lab.filter(l=>l.k===2||l.a>minA).forEach(l=>{ s+=`<text class="ml${l.k===2?" k2":""}" x="${l.x}" y="${l.y}" text-anchor="middle" style="font-size:${(l.k===2?12:10)*u}px;stroke-width:${3*u}px">${l.n}</text>`; });
   }
   // 같은 점에 겹치는 사업장은 둥글게 떨어뜨린다
   const grp={}; S.forEach(x=>{ const k=Math.round(x.x/(8*u))+"_"+Math.round(x.y/(8*u)); (grp[k]=grp[k]||[]).push(x); });
-  Object.values(grp).forEach(g=>{ if(g.length<2) return; const rr=Math.max(...g.map(x=>x.rp))*1.15*u; g.forEach((x,i)=>{ const a=-Math.PI/2+i*2*Math.PI/g.length; x.x+=Math.cos(a)*rr; x.y+=Math.sin(a)*rr; }); });
+  Object.values(grp).forEach(g=>{ if(g.length<2) return; const rr=Math.max(...g.map(x=>x.rp))*u*(zk>1?Math.max(1.15,1.12/Math.sin(Math.PI/g.length)):1.15); g.forEach((x,i)=>{ const a=-Math.PI/2+i*2*Math.PI/g.length; x.x+=Math.cos(a)*rr; x.y+=Math.sin(a)*rr; }); });
   const C={"착공 전":"var(--st-p)","공사 중":"var(--st-s)","준공":"var(--st-d)"};
   const Z=((D.zones||{}).items||[]).map((z,i)=>{ const [zx,zy]=LL(...z.ll); return {...z,i,zx,zy}; });
   const LY=D.layers||{}, CB=LY.cables||[], LPs=LY.landings||[], SB=LY.subs||[], hk=b=>b.mw>0?1:0;
@@ -757,8 +783,26 @@ function renderMap(){
   if(LAY.zone) Z.forEach(z=>{ const r=(mapView==="all"?5.5:7)*u; zS+=`<path class="zn" data-z="${z.i}" d="M${z.zx},${z.zy-r}L${z.zx+r},${z.zy}L${z.zx},${z.zy+r}L${z.zx-r},${z.zy}Z" fill="var(--warm)" fill-opacity=".9" stroke="var(--surface)" stroke-width="1.2" vector-effect="non-scaling-stroke" style="cursor:pointer"/>`;
     });
   if(LAY.dc) S.slice().sort((a,b)=>b.area-a.area).forEach(x=>{ s+=`<circle class="pt" data-s="${esc(x.top.site)}" cx="${x.x.toFixed(1)}" cy="${x.y.toFixed(1)}" r="${(x.rp*u).toFixed(1)}" fill="${C[x.stage]}" fill-opacity=".88" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`; });
-  s+=zS+lpS+`</svg><div class="tip" hidden></div>`;
+  const KMAX=mapView==="all"?16:6;
+  s+=zS+lpS+`</svg><div class="tip" hidden></div><div class="zc">${ZM?`<span class="zb"><button type="button" data-zm="in" aria-label="확대"${ZM.k>=KMAX?" disabled":""}>＋</button><button type="button" data-zm="out" aria-label="축소">－</button></span><button type="button" data-zm="reset">전체 보기</button><span class="zh">끌어서 이동</span>`:`<span class="zh">빈 곳을 누르면 확대</span>`}</div>`;
   box.innerHTML=s;
+  box.classList.toggle("zoomed",!!ZM);
+  { // 빈 곳을 누르면 그 자리를 중심으로 확대, 확대 중에는 끌어서 이동
+    const svg=box.querySelector("svg"), zoomTo=(cx,cy,k)=>mapZoom(k<=1.01?null:{cx,cy,k:Math.min(KMAX,k)});
+    const toSvg=(X,Y)=>{ const p=svg.createSVGPoint(); p.x=X; p.y=Y; const q=p.matrixTransform(svg.getScreenCTM().inverse()); return [q.x,q.y]; };
+    let dg=null;
+    svg.addEventListener("pointerdown",e=>{ if(e.button>0) return; dg={x:e.clientX,y:e.clientY,id:e.pointerId,t:e.target,moved:false}; });
+    svg.addEventListener("pointermove",e=>{ if(!dg||e.pointerId!==dg.id) return; const dx=e.clientX-dg.x, dy=e.clientY-dg.y;
+      if(!dg.moved&&ZM&&Math.hypot(dx,dy)>5){ dg.moved=true; try{ svg.setPointerCapture(e.pointerId); }catch(_){} box.classList.add("panning"); box.querySelector(".tip").hidden=true; }
+      if(dg.moved){ const k=vb[2]/svg.getBoundingClientRect().width; svg.setAttribute("viewBox",[vb[0]-dx*k,vb[1]-dy*k,vb[2],vb[3]].map(v=>v.toFixed(1)).join(" ")); } });
+    const end=e=>{ if(!dg||e.pointerId!==dg.id) return; const d=dg; dg=null; box.classList.remove("panning"); const dx=e.clientX-d.x, dy=e.clientY-d.y;
+      if(d.moved){ const k=vb[2]/svg.getBoundingClientRect().width; ZM.cx-=dx*k; ZM.cy-=dy*k; renderMap(); return; }
+      if(e.type!=="pointerup"||Math.hypot(dx,dy)>5||d.t.closest(".pt,.zn,.lp")||(ZM&&ZM.k>=KMAX)) return;
+      const [px,py]=toSvg(e.clientX,e.clientY); zoomTo(px,py,(ZM?ZM.k:1)*2.2); };
+    svg.addEventListener("pointerup",end); svg.addEventListener("pointercancel",end);
+    box.querySelectorAll("[data-zm]").forEach(b=>b.addEventListener("click",()=>{ const m=b.dataset.zm, cx=vb[0]+vb[2]/2, cy=vb[1]+vb[3]/2;
+      if(m==="reset") mapZoom(null); else { const k=ZM.k*(m==="in"?2.2:1/2.2); zoomTo(cx,cy,k<1.3?1:k); } }));
+  }
   const tip=box.querySelector(".tip"), bySiteKey=Object.fromEntries(S.map(x=>[x.top.site,x]));
   box.querySelectorAll(".pt").forEach(c=>{ const show=()=>{ const x=bySiteKey[c.dataset.s], r=x.top, cp=x.cap;
       const capT=!cp||cp.none?"":cp.txt?cp.txt:[cp.mw!=null?(cp.basis==="수전"?"수전 ":"")+mwf(cp.mw)+"MW":"",cp.it!=null?"IT "+mwf(cp.it)+"MW":""].filter(Boolean).join(" · ");
@@ -884,7 +928,7 @@ function init(d){
   tg.addEventListener("change",renderTimeline);
   document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{ pmMode=b.dataset.m; document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderPM(); }));
   $("#pm-rg").addEventListener("change",()=>{ renderMap(); renderPM(); });
-  document.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>{ mapView=b.dataset.v; document.querySelectorAll("[data-v]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderMap(); }));
+  document.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>{ mapView=b.dataset.v; ZM=null; document.querySelectorAll("[data-v]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderMap(); }));
   document.querySelectorAll("[data-ly]").forEach(b=>b.addEventListener("click",()=>{ const k=b.dataset.ly; LAY[k]=!LAY[k]; b.setAttribute("aria-pressed",LAY[k]); renderMap(); }));
   document.querySelectorAll("[data-st]").forEach(b=>b.addEventListener("click",()=>{ tf.st=b.dataset.st; document.querySelectorAll("[data-st]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderTable(); }));
   $("#ls-rg").addEventListener("change",e=>{ tf.rg=e.target.value; renderTable(); });
