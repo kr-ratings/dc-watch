@@ -32,7 +32,7 @@ jobs:
         run: |
           git config user.name "dc-watch-bot"; git config user.email "dc-watch-bot@users.noreply.github.com"
           git add data/state/unit_counts.json || true
-          git diff --cached --quiet || git commit -q -m "전국 인허가 건수 집계 $(date -u +%F)"
+          git diff --cached --quiet || git commit -q -m "[CF-Pages-Skip] 전국 인허가 건수 집계 $(date -u +%F)"
           for i in 1 2 3; do git pull --rebase -X theirs -q origin main && git push -q origin HEAD:main && break; sleep 5; done
       - name: retry on a fresh runner
         if: env.STOP == 'conn' && (github.event.inputs.attempt || '1') < '5'
