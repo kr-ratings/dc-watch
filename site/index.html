@@ -295,6 +295,8 @@ h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;verti
 td.cp{text-align:right;white-space:nowrap}
 td.cp .v{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 td.cp .v b{font-weight:600}
+td.cp .v .q{font-family:var(--f-sans);font-weight:400;color:var(--muted);font-size:.78rem;margin:0 2px}
+
 td.cp small{display:block;font-size:.7rem;color:var(--muted);margin-top:1px}
 td.cp small a{color:var(--muted)}
 td.cp small a:hover{color:var(--accent)}
@@ -631,16 +633,15 @@ function hrCell(h){
 }
 const mwf=v=>fmt(v,v%1?1:0);
 function capCell(c){
-  if(!c) return `<td class="cp"><span class="dim">–</span></td>`;
-  const tt=s=>s?` title="${esc(s)}"`:"";
-  if(c.none) return `<td class="cp"><span class="dim">–</span></td>`;
-  let v;
-  if(c.txt) v=esc(c.txt);
-  else if(c.basis==="수전") v=c.it!=null?`수전 <b>${mwf(c.mw)}</b> · IT <b>${mwf(c.it)}</b>`:`수전 <b>${mwf(c.mw)}</b>`;
-  else if(c.mw==null) v=`IT <b>${mwf(c.it)}</b>`;
-  else v=`<b>${mwf(c.mw)}</b>`+(c.it!=null?` · IT <b>${mwf(c.it)}</b>`:"");
-  const a=(c.src||[])[0], sub=[c.auto?"기사 제목":c.basis==="미표기"?"기준 미표기":"",a?`<a href="${esc(a.u)}" target="_blank" rel="noopener"${tt([a.o,a.d,a.t].filter(Boolean).join(" · "))}>출처</a>`:""].filter(Boolean).join(" · ");
-  return `<td class="cp"${tt(c.note)}><span class="v">${v}</span>${sub?`<small>${sub}</small>`:""}</td>`;
+  // 모든 칸을 같은 모양으로: 첫 줄 = 굵은 숫자만(MW, 오른쪽 끝이 줄 맞게 꾸밈말은 앞에), 둘째 줄 = IT 값 · 기준 · 출처
+  if(!c||c.none) return `<td class="cp"><span class="dim">–</span></td>`;
+  const tt=s=>s?` title="${esc(s)}"`:"", t=c.txt||"";
+  const itOnly=c.mw==null, main=itOnly?c.it:c.mw;
+  const pre=/최대|이하/.test(t)?"최대":/1단계/.test(t)?"1단계":/MW\s*급/.test(t)?"약":"";
+  const v=`${pre?`<span class="q">${pre}</span>`:""}<b>${mwf(main)}</b>`;
+  const basis=itOnly||c.basis==="IT"?"IT 기준":c.basis==="수전"?"수전 기준":c.auto?"기사 제목 기준":"기준 미표기";
+  const a=(c.src||[])[0], sub=[!itOnly&&c.it!=null?`IT ${mwf(c.it)}`:"",/캠퍼스/.test(t)?"캠퍼스 전체":"",/목표/.test(t)?"목표":"",basis,a?`<a href="${esc(a.u)}" target="_blank" rel="noopener"${tt([a.o,a.d,a.t].filter(Boolean).join(" · "))}>출처</a>`:""].filter(Boolean).join(" · ");
+  return `<td class="cp"${tt(c.note)}><span class="v">${v}</span><small>${sub}</small></td>`;
 }
 const tf={st:"all",rg:"all",q:""}; let sortK="pms", sortD=-1;
 function renderFunnel(){
