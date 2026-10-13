@@ -809,7 +809,7 @@ function renderMap(){
     });
   if(LAY.dc) S.slice().sort((a,b)=>b.area-a.area).forEach(x=>{ s+=`<circle class="pt" data-s="${esc(x.top.site)}" cx="${x.x.toFixed(1)}" cy="${x.y.toFixed(1)}" r="${(x.rp*u).toFixed(1)}" fill="${C[x.stage]}" fill-opacity=".88" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`; });
   const KMAX=mapView==="all"?16:6;
-  s+=zS+lpS+`</svg><div class="tip" hidden></div><div class="zc">${ZM?`<span class="zb"><button type="button" data-zm="in" aria-label="확대"${ZM.k>=KMAX?" disabled":""}>＋</button><button type="button" data-zm="out" aria-label="축소">－</button></span><button type="button" data-zm="reset">전체 보기</button><span class="zh">끌어서 이동</span>`:`<span class="zh">${matchMedia("(pointer:coarse)").matches?"빈 곳을 누르거나 두 손가락으로 벌려 확대":"빈 곳을 누르면 확대"}</span>`}</div>`;
+  s+=zS+lpS+`</svg><div class="tip" hidden></div><div class="zc">${ZM?`<span class="zb"><button type="button" data-zm="in" aria-label="확대"${ZM.k>=KMAX?" disabled":""}>＋</button><button type="button" data-zm="out" aria-label="축소">－</button></span><button type="button" data-zm="reset">전체 보기</button><span class="zh">${matchMedia("(pointer:coarse)").matches?"끌어서 이동":"끌어서 이동 · 휠로 확대/축소"}</span>`:`<span class="zh">${matchMedia("(pointer:coarse)").matches?"빈 곳을 누르거나 두 손가락으로 벌려 확대":"빈 곳을 누르면 확대"}</span>`}</div>`;
   box.innerHTML=s;
   box.classList.toggle("zoomed",!!ZM);
   { // 빈 곳을 누르면 그 자리를 중심으로 확대 · 확대 중에는 끌어서 이동 · 두 손가락 벌리고 오므려 확대/축소(트랙패드 핀치 · Ctrl+휠도)
@@ -841,8 +841,11 @@ function renderMap(){
       if(e.type!=="pointerup"||Math.hypot(dx,dy)>5||d.t.closest(".pt,.zn,.lp")||(ZM&&ZM.k>=KMAX)) return;
       const [px,py]=toSvg(e.clientX,e.clientY); zoomTo(px,py,(ZM?ZM.k:1)*2.2); };
     svg.addEventListener("pointerup",end); svg.addEventListener("pointercancel",end);
-    svg.addEventListener("wheel",e=>{ if(!e.ctrlKey) return; e.preventDefault(); hideTip(); // 트랙패드 핀치는 Ctrl+휠로 들어온다(일반 스크롤은 그대로 페이지 스크롤)
-      const k=Math.max(1,Math.min(KMAX,base[2]/cur()[2]*Math.exp(-e.deltaY*.01))), p=toSvg(e.clientX,e.clientY);
+    // 휠: 확대한 뒤에는 위로 굴리면 확대 · 아래로 굴리면 축소(네이버 지도처럼). 확대 전에는 페이지 스크롤 그대로.
+    // 트랙패드 핀치는 Ctrl+휠로 들어오므로 확대 전에도 받는다. 끝까지 축소되면 다시 페이지 스크롤로 돌아간다.
+    svg.addEventListener("wheel",e=>{ if(!e.ctrlKey&&!ZM) return; e.preventDefault(); hideTip();
+      const dy=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?400:1), f=Math.exp(-dy*(e.ctrlKey?.01:.0025));
+      const k=Math.max(1,Math.min(KMAX,base[2]/cur()[2]*f)), p=toSvg(e.clientX,e.clientY);
       setVB(frame(k,p[0],p[1],e.clientX,e.clientY)); clearTimeout(wt); wt=setTimeout(()=>commit(cur()),160); },{passive:false});
     box.querySelectorAll("[data-zm]").forEach(b=>b.addEventListener("click",()=>{ const m=b.dataset.zm, cx=vb[0]+vb[2]/2, cy=vb[1]+vb[3]/2;
       if(m==="reset") mapZoom(null); else { const k=ZM.k*(m==="in"?2.2:1/2.2); zoomTo(cx,cy,k<1.3?1:k); } }));
