@@ -226,7 +226,12 @@ h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;verti
 .ly{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:4px 10px 4px 8px;border:1px solid var(--line);border-radius:999px;font-size:.76rem;font-weight:600;color:var(--fg);background:var(--surface);transition:opacity .15s,border-color .15s}
 .ly:hover{border-color:var(--bd)}
 .ly small{font-weight:400;color:var(--muted);font-size:.7rem}
-.ly[aria-pressed="false"]{opacity:.42}
+.ly::before{content:"";flex:none;width:13px;height:13px;box-sizing:border-box;border-radius:3.5px;border:1.5px solid var(--bd);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;font-size:10px;line-height:1;font-weight:700;color:var(--surface)}
+.ly[aria-pressed="true"]::before{content:"✓";background:var(--accent);border-color:var(--accent)}
+.ly-h{display:flex;align-items:baseline;gap:8px;font-size:.74rem;font-weight:600;color:var(--fg);margin-top:4px}
+.ly-h span{font-weight:400;color:var(--muted)}
+.ly-h span::before{content:"· ";}
+.ly[aria-pressed="false"]{opacity:.55;border-style:dashed}
 .ly[aria-pressed="false"] .lsw{filter:grayscale(1)}
 .ly:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ly .lsw{display:inline-flex;align-items:center;gap:3px;flex:none}
@@ -354,7 +359,8 @@ footer .ct{white-space:nowrap}
         </div>
       </div>
       <div class="map" id="map"></div>
-      <div class="layers" role="group" aria-label="지도에 표시할 항목(누르면 켜고 끔)">
+      <div class="ly-h" id="ly-h">지도에 표시할 항목<span>눌러서 켜고 끄기</span></div>
+      <div class="layers" role="group" aria-labelledby="ly-h">
         <button type="button" class="ly" data-ly="dc" aria-pressed="true"><span class="lsw"><i class="dot" style="background:var(--st-p)"></i><i class="dot" style="background:var(--st-s)"></i><i class="dot" style="background:var(--st-d)"></i></span>데이터센터<small>착공 전 · 공사 중 · 준공</small></button>
         <button type="button" class="ly" data-ly="sub" aria-pressed="true"><span class="lsw"><i class="sq" style="background:var(--hr0)"></i><i class="sq" style="background:var(--hr1)"></i><i class="sq" style="background:var(--hr2)"></i></span>345kV 변전소 여유<small>0 · 300MW 미만 · 이상</small></button>
         <button type="button" class="ly" data-ly="cab" aria-pressed="true"><span class="lsw"><i class="cl"></i><i class="lp"></i></span>해저케이블 · 육양국<small>점선 = 예정</small></button>
