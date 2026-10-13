@@ -428,7 +428,7 @@ footer .ct{white-space:nowrap}
           <th scope="col" data-k="nm"><button type="button">건물명 · 구분</button></th>
           <th scope="col" data-k="sd"><button type="button">위치</button></th>
           <th scope="col" class="num" data-k="cap"><button type="button">용량(MW)</button></th>
-          <th scope="col" class="num" data-k="hr"><button type="button" title="한전 전력공급 여유지도: 이 시 · 군 · 구를 맡은 345kV 변전소의 공급 여유용량">관할 변전소 여유(MW)</button></th>
+          <th scope="col" class="num" data-k="hr"><button type="button" title="한전 전력공급 여유지도: 이 시 · 군 · 구를 맡은 345kV 변전소에 남은 공급 여유용량(이미 배정된 사업장 몫을 뺀 값, – = 남은 여유 없음)">관할 변전소 여유(MW)</button></th>
           <th scope="col" class="num" data-k="area"><button type="button">연면적(㎡)</button></th>
           <th scope="col" class="num" data-k="share"><button type="button">데이터센터 층 비중</button></th>
           <th scope="col" data-k="pms" aria-sort="descending"><button type="button">허가</button></th>
@@ -507,7 +507,7 @@ footer .ct{white-space:nowrap}
       <div><b>사업장 위치</b>인허가 대장의 법정동 · 리 대표점(도로명주소 행정구역도 기반)에 표시합니다. 정확한 대지 위치는 지도 링크로 확인하세요.</div>
       <div><b>전력자립도</b>지역 발전량(전력거래소 EPSIS) ÷ 지역 전력판매량(한전). 100% 미만이면 다른 지역에서 송전받아 쓰는 곳입니다.</div>
       <div><b>PUE · 가동률</b>PUE는 데이터센터 전체 전력 ÷ IT 장비 전력으로, 냉방 · 전력 손실을 얼마나 더 쓰는지 보여 줍니다(낮을수록 효율적). 가동률은 계약한 IT 용량 대비 실제 평균 사용 비율입니다.</div>
-      <div><b>관할 변전소 여유</b>한전 '전력공급 여유지도'에서 그 시 · 군 · 구에 전기를 보내는 345kV 변전소의 공급 여유용량(MW)입니다. 0이면 지금은 대형 신규 수전 여유가 없다는 뜻이고, 변압기 용량 기준 참고값이라 실제 공급 가능 여부는 전기사용 신청 뒤 정해집니다.</div>
+      <div><b>관할 변전소 여유</b>한전 '전력공급 여유지도'에서 그 시 · 군 · 구에 전기를 보내는 345kV 변전소의 공급 여유용량(MW)입니다. 이미 배정된 사업장 몫을 뺀 뒤 남은 값이라, '–'(남은 여유 없음)는 그 지역에 새 대형 수전을 더 넣기 어렵다는 뜻이지 표에 있는 사업장이 전력을 못 받는다는 뜻은 아닙니다. 변압기 용량 기준 참고값이라 실제 공급 가능 여부는 전기사용 신청 뒤 정해집니다.</div>
       <div><b>분산에너지특화지역</b>분산에너지법에 따라 지역 발전 전기를 한전을 거치지 않고 직접 사고팔 수 있도록 지정한 곳입니다(2025년 7곳). 데이터센터 입장에서는 직접 PPA · 구역전기 공급과 계통 부담 완화가 가능한 지역입니다.</div>
       <div><b>제도 · 일정</b>정부 · 국회 발표와 보도를 매주 다시 검색해 진행 상황(완료 · 진행 중 · 계류 · 예정)과 새 항목을 반영합니다. 정확한 내용은 각 항목의 출처 원문에서 확인하세요.</div>
     </div>
@@ -619,8 +619,9 @@ function renderPM(){
 const capVal=c=>!c||c.none?null:(c.mw??c.it);
 function hrCell(h){
   if(!h) return `<td class="hr"><span class="dim">–</span></td>`;
-  const names=Object.entries(h.subs).map(([n,v])=>`${n} ${fmt(v)}`).join(" · ");
-  return `<td class="hr" title="${esc("관할 345kV 변전소: "+names)}"><span class="v ${h.sum>0?"ok":"no"}">${fmt(h.sum)}</span><small>${esc(names)}</small></td>`;
+  // 여유 0은 '–'로: 이미 배정된 사업장 몫을 뺀 뒤 남은 값이라, 0이 이 사업장이 전력을 못 받는다는 뜻은 아니다
+  const mw=v=>v>0?fmt(v):"–", names=Object.entries(h.subs).map(([n,v])=>`${n} ${mw(v)}`).join(" · ");
+  return `<td class="hr" title="${esc("관할 345kV 변전소 남은 여유: "+names+" (– = 남은 여유 없음, 이미 배정된 사업장 몫은 빠진 값)")}"><span class="v ${h.sum>0?"ok":"dim"}">${mw(h.sum)}</span><small>${esc(names)}</small></td>`;
 }
 const mwf=v=>fmt(v,v%1?1:0);
 function capCell(c){
