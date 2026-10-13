@@ -217,7 +217,17 @@ td.hr small{display:block;font-size:.68rem;color:var(--muted);line-height:1.35;m
 .explain b{color:var(--fg);font-weight:600;margin-right:4px}
 h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;vertical-align:2px;white-space:nowrap}
 .pm-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
-@media (min-width:1180px){.pm-grid{grid-template-columns:minmax(0,1.5fr) minmax(360px,1fr)}}
+.map-body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.map-side{display:flex;flex-direction:column;gap:8px;min-width:0}
+@media (min-width:1180px){.pm-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  /* 넓은 화면: 지도 오른쪽에 범례를 세로로 두어 지도를 키우고 바다 여백을 줄인다 */
+  .map-body{display:grid;grid-template-columns:minmax(0,1fr) 196px;gap:16px;align-items:start}
+  .map-side{padding-top:4px}
+  .map-side .ly-h{flex-direction:column;gap:2px;margin-top:0}
+  .map-side .ly-h span::before{content:""}
+  .map-side .layers{display:flex;flex-direction:column;gap:6px;margin-top:0}
+  .map-side .ly{border-radius:10px;width:100%;align-items:center}
+  .map-side .ly .lt small{display:block;margin-top:1px;line-height:1.4;word-break:keep-all}}
 .map{position:relative;width:100%;min-width:0}
 .map svg{display:block;width:100%;height:auto;cursor:zoom-in;user-select:none;-webkit-user-select:none;touch-action:pan-y}
 .map.zoomed svg{cursor:grab;touch-action:none}
@@ -248,6 +258,7 @@ h1 .dev{font-size:.95rem;font-weight:600;color:var(--warm);margin-left:4px;verti
 .ly{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:7px;padding:4px 10px 4px 8px;border:1px solid var(--line);border-radius:999px;font-size:.76rem;font-weight:600;color:var(--fg);background:var(--surface);transition:opacity .15s,border-color .15s}
 .ly:hover{border-color:var(--bd)}
 .ly small{font-weight:400;color:var(--muted);font-size:.7rem}
+.ly .lt{min-width:0}
 .ly::before{content:"";flex:none;width:13px;height:13px;box-sizing:border-box;border-radius:3.5px;border:1.5px solid var(--bd);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;font-size:10px;line-height:1;font-weight:700;color:var(--surface)}
 .ly[aria-pressed="true"]::before{content:"✓";background:var(--accent);border-color:var(--accent)}
 .ly-h{display:flex;align-items:baseline;gap:8px;font-size:.74rem;font-weight:600;color:var(--fg);margin-top:4px}
@@ -380,13 +391,17 @@ footer .ct{white-space:nowrap}
           <button type="button" data-v="cap" aria-pressed="false">수도권</button>
         </div>
       </div>
+      <div class="map-body">
       <div class="map" id="map"></div>
+      <div class="map-side">
       <div class="ly-h" id="ly-h">지도에 표시할 항목<span>눌러서 켜고 끄기</span></div>
       <div class="layers" role="group" aria-labelledby="ly-h">
-        <button type="button" class="ly" data-ly="dc" aria-pressed="true"><span class="lsw"><i class="dot" style="background:var(--st-p)"></i><i class="dot" style="background:var(--st-s)"></i><i class="dot" style="background:var(--st-d)"></i></span>데이터센터<small>착공 전 · 공사 중 · 준공</small></button>
-        <button type="button" class="ly" data-ly="sub" aria-pressed="true"><span class="lsw"><i class="gl" style="--c:var(--hr0)"></i><i class="gl" style="--c:var(--hr1)"></i></span>345kV 변전소 여유<small>붉은 번짐 = 없음 · 초록 번짐 = 있음(넓을수록 큼)</small></button>
-        <button type="button" class="ly" data-ly="cab" aria-pressed="true"><span class="lsw"><i class="cl"></i><i class="lp"></i></span>해저케이블 · 육양국<small>점선 = 예정</small></button>
-        <button type="button" class="ly" data-ly="zone" aria-pressed="true"><span class="lsw"><i class="dia"></i></span>분산에너지특화지역</button>
+        <button type="button" class="ly" data-ly="dc" aria-pressed="true"><span class="lsw"><i class="dot" style="background:var(--st-p)"></i><i class="dot" style="background:var(--st-s)"></i><i class="dot" style="background:var(--st-d)"></i></span><span class="lt">데이터센터<small>착공 전 · 공사 중 · 준공</small></span></button>
+        <button type="button" class="ly" data-ly="sub" aria-pressed="true"><span class="lsw"><i class="gl" style="--c:var(--hr0)"></i><i class="gl" style="--c:var(--hr1)"></i></span><span class="lt">345kV 변전소 여유<small>붉은 번짐 = 없음 · 초록 번짐 = 있음 · 넓을수록 큼</small></span></button>
+        <button type="button" class="ly" data-ly="cab" aria-pressed="true"><span class="lsw"><i class="cl"></i><i class="lp"></i></span><span class="lt">해저케이블 · 육양국<small>점선 = 예정</small></span></button>
+        <button type="button" class="ly" data-ly="zone" aria-pressed="true"><span class="lsw"><i class="dia"></i></span><span class="lt">분산에너지특화지역</span></button>
+      </div>
+      </div>
       </div>
       <p class="foot" id="map-foot"></p>
     </div>
@@ -575,7 +590,8 @@ function renderPM(){
   if(window.innerWidth>=1180){ // 옆 지도 카드와 높이를 맞춰 빈 공간 없이 채운다
     const cc=box.closest(".card"), mc=$("#map").closest(".card"), cs=getComputedStyle(cc), n=cc.children.length;
     const other=[...cc.children].filter(e=>e!==box).reduce((a,e)=>a+e.offsetHeight,0)+parseFloat(cs.rowGap||0)*(n-1)+parseFloat(cs.paddingTop)+parseFloat(cs.paddingBottom)+2;
-    H=Math.round(Math.max(320,Math.min(560,mc.offsetHeight-other))); }
+    const ms=getComputedStyle(mc), mn=[...mc.children].reduce((a,e)=>a+e.offsetHeight,0)+parseFloat(ms.rowGap||0)*(mc.children.length-1)+parseFloat(ms.paddingTop)+parseFloat(ms.paddingBottom)+2; // 지도 카드의 원래 높이(늘어난 높이 말고)
+    H=Math.round(Math.max(320,Math.min(760,mn-other))); }
   const m={l:40,r:8,t:22,b:30}, iw=W-m.l-m.r, ih=H-m.t-m.b;
   const {mx,st}=niceMax(Math.max(1,...data.flat()));
   const Y=v=>m.t+ih-(v/mx)*ih, band=iw/yrs.length, gw=Math.min(84,band*.72), bw=gw/3;
@@ -736,7 +752,7 @@ function renderMap(){
   const rg=$("#pm-rg").value||"all", S=bySite(D.permits.rows.filter(r=>r.ll&&rgMatch(r.sd,rg)));
   const zk=ZM?ZM.k:1;
   S.forEach(x=>{ [x.x,x.y]=LL(...x.top.ll); x.rp=(4+Math.sqrt(x.area/1e4)*2.1)*(mapView==="all"?Math.min(1,.62*Math.pow(zk,.3)):1); });
-  const W=Math.max(280,Math.round(box.clientWidth||400)), H=window.innerWidth>=1180?Math.round(Math.min(480,Math.max(400,W*.8))):Math.round(Math.min(560,Math.max(340,W*(mapView==="all"?1.18:0.98))));
+  const W=Math.max(280,Math.round(box.clientWidth||400)), H=window.innerWidth>=1180?Math.round(Math.min(620,Math.max(460,W*1.12))):Math.round(Math.min(560,Math.max(340,W*(mapView==="all"?1.18:0.98))));
   let vb;
   if(mapView==="all"){ const [x0,y0]=LL(124.55,38.78),[x1,y1]=LL(130.15,33.05); vb=[x0,y0,x1-x0,y1-y0]; }
   else { const cs=S.filter(x=>CAP.has(x.top.sd)), xs=cs.length?cs.map(x=>x.x):[LL(126.98,37.55)[0]], ys=cs.length?cs.map(x=>x.y):[LL(126.98,37.55)[1]];
