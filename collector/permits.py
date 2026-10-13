@@ -110,15 +110,19 @@ def main():
         units = [u for u in units if not str(u[1]).startswith(ex)]
     until = (dt.datetime.utcnow() + dt.timedelta(hours=9)).strftime("%Y%m%d")   # 한국 날짜 기준
     st = load_json(STATE, {})
+    base = a.since   # 처음부터 훑을 때의 시작일(2020-01-01)
     if a.restart or not st:
-        st = {"since": a.since, "done": [], "errors": {}, "started": until, "pass": 1}
+        st = {"since": a.since, "done": [], "errors": {}, "started": until, "pass": 1, "known": []}
     elif st.get("complete"):
         # 한 바퀴를 다 돌았으면 직전 회차 시작일(7일 겹침)부터 바뀐 대장만 다시 훑는다
         prev = dt.datetime.strptime(st["started"], "%Y%m%d").date() - dt.timedelta(days=7)
         st = {"since": prev.strftime("%Y%m%d"), "done": [], "errors": {}, "started": until, "pass": st.get("pass", 1) + 1,
-              "last_complete": st["started"]}
+              "last_complete": st["started"], "known": sorted(set(st.get("known") or []) | set(st["done"]))}
     a.since = st["since"]
     done = set(st["done"])
+    # 한 번이라도 처음부터 다 훑은 단위. 행정구역 개편으로 코드가 새로 생긴 단위는 여기에 없으므로 2020년부터 다시 훑는다
+    # (전북특별자치도 · 전남광주통합특별시처럼 코드가 바뀌면 옛 대장이 새 코드로 옮겨 오므로)
+    known = set(st.get("known") or [])
     todo = [u for u in units if f"{u[1]}-{u[2]}" not in done]
     # 지난번에 오류가 난 단위는 맨 뒤에서 다시 받는다(무거운 단위가 앞을 막지 않게)
     errs = set(st.get("errors", {}))
@@ -138,8 +142,9 @@ def main():
     def work(u):
         if conn["fail"] >= CONN_MAX:
             return u, None, "conn"
+        since = a.since if (not known or f"{u[1]}-{u[2]}" in known) else base
         try:
-            res = u, scan_unit(q, u, a.since, until), None
+            res = u, scan_unit(q, u, since, until), None
             with lock:
                 conn["fail"] = 0
             return res
@@ -154,8 +159,8 @@ def main():
         # 대장이 너무 많아 서버가 빈 응답을 주는 단위(가산 · 죽전 등)는 연도별로 나눠 다시 받는다
         try:
             got = {}
-            for y in range(int(a.since[:4]), int(until[:4]) + 1):
-                s_, e_ = max(a.since, f"{y}0101"), min(until, f"{y}1231")
+            for y in range(int(since[:4]), int(until[:4]) + 1):
+                s_, e_ = max(since, f"{y}0101"), min(until, f"{y}1231")
                 for h in scan_unit(q, u, s_, e_):
                     got[h["mgmPmsrgstPk"]] = h
             with lock:
@@ -188,9 +193,11 @@ def main():
                     continue
                 st["errors"].pop(key, None)
                 done.add(key)
+                known.add(key)
                 for h in hits:
                     found[h["mgmPmsrgstPk"]] = h
             st["done"] = sorted(done)
+            st["known"] = sorted(known)
             st["calls_last_run"] = q.used
             save_json(STATE, st)
             save_json(OUT, {"updated": until, "since": a.since, "items": sorted(found.values(), key=lambda h: (h.get("archPmsDay") or ""), reverse=True)})

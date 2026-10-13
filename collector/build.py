@@ -111,6 +111,8 @@ class Geo:
 
 class Headroom:
     """한전 '전력공급 여유지도': 시 · 군 · 구별 관할 345kV 변전소와 공급 여유용량(MW)."""
+    # 행정구역 개편으로 새로 생긴 시 · 군 · 구 → 한전 자료에 아직 남아 있는 옛 이름(2026.7 인천 개편)
+    RENAMED = {("인천", "제물포구"): ["중구", "동구"], ("인천", "영종구"): ["중구"], ("인천", "검단구"): ["서구"], ("인천", "서해구"): ["서구"]}
     def __init__(self):
         self.d = load_json("data/kepco_headroom.json", {})
         self.idx = {}
@@ -121,6 +123,17 @@ class Headroom:
     def find(self, sido, sgg):
         sd, g = short(sido), re.sub(r"\s+", "", sgg or "")
         subs = self.idx.get((sd, g))
+        if subs is None and (sd, g) in self.RENAMED:  # 개편으로 새로 생긴 구는 옛 구의 관할 변전소로 본다
+            subs = {}
+            for g2 in self.RENAMED[(sd, g)]:
+                subs.update(self.idx.get((sd, g2)) or {})
+            subs = subs or None
+        if subs is None and not g:  # 세종처럼 시 · 군 · 구가 없는 곳은 시 · 도 전체
+            subs = {}
+            for (s2, g2), v in self.idx.items():
+                if s2 == sd:
+                    subs.update(v)
+            subs = subs or None
         if subs is None and g:  # '고양시'처럼 구 없이 들어오면 그 시의 모든 구를 합친다
             subs = {}
             for (s2, g2), v in self.idx.items():
@@ -180,6 +193,9 @@ def permits():
     cov = {sd: [done.get(sd, 0), n] for sd, n in tot.items()}
     uc = load_json("data/state/unit_counts.json", {})
     scanned = {k: uc.get(k) for k in ("since", "until", "total", "n", "units", "complete")} if uc.get("total") else None
+    for r in rows:
+        if not r["ll"] or not r["hr"]:
+            print(f"[확인 필요] {'위치' if not r['ll'] else ''}{' · ' if not r['ll'] and not r['hr'] else ''}{'변전소' if not r['hr'] else ''} 연결 안 됨: {r['addr']}", flush=True)
     return {"headroom": hr.summary(), "rows": rows, "since": d.get("since"), "updated": d.get("updated"), "coverage": cov, "scanned": scanned, "n_bc": len(d["items"]),
             "pass": st.get("pass", 1), "complete": st.get("complete", False), "last_complete": st.get("last_complete")}
 
