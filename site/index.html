@@ -614,9 +614,21 @@ function renderFunnel(){
   const head=S&&S.total?`2020년 이후 전국 건축 인허가 <b>${man(S.total)}건</b>(전국 ${S.units.toLocaleString()}개 동 · 리 전수) 중 `:"";
   $("#funnel").innerHTML=`${head}주용도 방송통신시설 <b>${(P.n_bc||0).toLocaleString()}건</b> → 층별 용도에 '데이터센터'가 있는 <b>${nDc.toLocaleString()}건</b> · 매일 자동 갱신`;
 }
+// 검색: 띄어쓰기 · 옛 시 · 도 이름(전라남도 · 전라북도 · 강원도 …) · '번지'를 가리지 않고, 낱말을 모두 포함하는 건을 찾는다.
+// 여러 필지에 걸친 허가는 대표 지번만 나오므로 '2315-6'처럼 부번이 달라도 본번(2315)이 같으면 찾는다.
+const SDA={"서울":"서울특별시","부산":"부산광역시","대구":"대구광역시","인천":"인천광역시","대전":"대전광역시","울산":"울산광역시","세종":"세종특별자치시","경기":"경기도","강원":"강원도 강원특별자치도","충북":"충청북도","충남":"충청남도","전북":"전라북도 전북특별자치도","전남광주":"전라남도 전남 광주광역시 광주 전남광주통합특별시","경북":"경상북도","경남":"경상남도","제주":"제주특별자치도 제주도"};
+const nsp=s=>String(s||"").replace(/\s+|번지/g,"");
+function hit(r,q){
+  if(!q) return true;
+  const rest=String(r.addr||"").replace(/^\S+/,""), names=[r.sd,...(SDA[r.sd]||"").split(" ")];
+  const hay=[...names.map(n=>nsp(n+rest)),nsp(r.nm),nsp([r.sg,r.dong].join(""))].join("|");
+  const rx=t=>t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  return q.split(/\s+/).filter(Boolean).every(t=>{ t=nsp(t); if(!t||hay.includes(t)) return true;
+    const m=t.match(/^(.*?\d+)-\d+$/); return !!m&&new RegExp(`(^|[^\\d])${rx(m[1])}(-|\\||$)`).test(hay); });
+}
 function renderTable(){
   const q=tf.q.trim();
-  let rows=D.permits.rows.filter(r=>(tf.st==="all"||r.stage===tf.st)&&rgMatch(r.sd,tf.rg)&&(!q||[r.nm,r.addr,r.sg,r.dong].join(" ").includes(q)));
+  let rows=D.permits.rows.filter(r=>(tf.st==="all"||r.stage===tf.st)&&rgMatch(r.sd,tf.rg)&&hit(r,q));
   const key=r=>sortK==="share"?(r.area?r.dcArea/r.area:0):sortK==="newsd"?((r.news||[])[0]||{}).d:sortK==="cap"?capVal(r.cap):sortK==="hr"?(r.hr?r.hr.sum:null):r[sortK];
   rows.sort((a,b)=>{ const x=key(a),y=key(b); if(x==null||x==="") return 1; if(y==null||y==="") return -1; return (typeof x==="number"?x-y:String(x).localeCompare(String(y),"ko"))*sortD; });
   const stc={"착공 전":"s-p","공사 중":"s-s","준공":"s-d"};

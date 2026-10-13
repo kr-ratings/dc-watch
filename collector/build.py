@@ -54,24 +54,53 @@ def capacity(h, news, cur):
 
 class Geo:
     """법정동 · 리 대표점으로 사업장 위치를 잡는다(코드 → 같은 시 안 같은 동 이름 → 같은 시 · 도 안 같은 동 이름 → 시 · 군 · 구 평균)."""
-    def __init__(self):
+    # 시 · 도 개편으로 코드 앞자리가 바뀐 곳(전북특별자치도 45→52, 전남광주통합특별시 46 · 29→12, 강원특별자치도 42→51)
+    OLD = {"52": ("45",), "12": ("46", "29"), "51": ("42",)}
+
+    def __init__(self, units=None):
         self.p = load_json("data/geo_bjd_pts.json", {})
-        self.byname = {}
+        self.byname, self.sggs = {}, {}
         for k, v in self.p.items():
             if len(k) == 8:
                 self.byname.setdefault(v[2], []).append(k)
+                self.sggs.setdefault(k[:5], set()).add(v[2])
+        self.unit_names = {}
+        for u in units or []:
+            self.unit_names.setdefault(str(u[1]), set()).add(u[4])
+        self.memo = {}
+
+    def old_sgg(self, sg):
+        """대표점 자료에 없는 새 시 · 군 · 구 코드를, 같은 이름의 읍 · 면 · 동이 가장 많이 겹치는 옛 코드로 잇는다."""
+        if sg in self.sggs or sg in self.memo:
+            return self.memo.get(sg, sg)
+        names, best = self.unit_names.get(sg, set()), (0, None)
+        pres = (sg[:2],) + self.OLD.get(sg[:2], ())
+        for k, ns in self.sggs.items():
+            if k[:2] in pres and names:
+                n = len(names & ns) / len(names | ns)
+                if n > best[0]:
+                    best = (n, k)
+        self.memo[sg] = best[1] if best[0] >= 0.5 else sg
+        return self.memo[sg]
 
     def find(self, h):
-        sg, bj = str(h.get("sigunguCd") or ""), str(h.get("bjdongCd") or "")
+        sg0, bj = str(h.get("sigunguCd") or ""), str(h.get("bjdongCd") or "")
+        sg = self.old_sgg(sg0)
         dong = ((h.get("dongNmAddr") or "").split() or [""])[-1]
         emd = ((h.get("dongNmAddr") or "").split() or [""])[0]
-        if bj[3:] not in ("", "00") and sg + bj in self.p:
+        same = sg == sg0   # 코드를 옛 코드로 바꿔 찾을 때는 이름까지 같아야 인정한다(개편 때 동 코드가 바뀐 곳이 있어서)
+        if bj[3:] not in ("", "00") and sg + bj in self.p and (same or self.p[sg + bj][2] == dong):
             return self.p[sg + bj][:2], "ri"
-        if sg + bj[:3] in self.p:
+        if sg + bj[:3] in self.p and (same or self.p[sg + bj[:3]][2] == emd):
             return self.p[sg + bj[:3]][:2], "dong"
-        for pre in (sg[:4], sg[:2]):
+        pres = (sg, sg0[:4], sg0[:2]) + self.OLD.get(sg0[:2], ())
+        for pre in pres:
             ks = [k for k in self.byname.get(emd, []) if k.startswith(pre)]
             if len(ks) == 1:
+                if dong != emd:   # 리까지 같은 이름이 있으면 리 대표점
+                    ri = [k for k in self.p if len(k) == 10 and k.startswith(ks[0]) and self.p[k][2] == dong]
+                    if len(ri) == 1:
+                        return self.p[ri[0]][:2], "ri"
                 return self.p[ks[0]][:2], "dong"
         for pre in (sg, sg[:4]):
             ks = [v for k, v in self.p.items() if len(k) == 8 and k.startswith(pre)]
@@ -116,10 +145,10 @@ class Headroom:
 def permits():
     d = load_json("data/permits.json", {"items": []})
     hr = Headroom()
-    geo = Geo()
     cur = load_json("data/curated/capacity.json", {})
     st = load_json("data/state/permit_scan.json", {})
     units = load_json("data/bjd_units.json", None) or load_json("data/bjd_units_seed.json", [])
+    geo = Geo(units)
     pn = load_json("data/permit_news.json", {})
     rows = []
     for h in d["items"]:
