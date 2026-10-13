@@ -325,7 +325,7 @@ footer .ct{white-space:nowrap}
   <header>
     <div>
       <h1>데이터센터 개발 현황 대시보드</h1>
-      <p class="sub">국토교통부 건축 인허가 대장에서 용도가 '데이터센터'인 건을 모아 허가 → 착공 → 준공 흐름과 위치를 보여 주고, 공개 보도로 확인된 수전 · IT 용량, 정보통신업 전기 사용량 증가(MW), 시 · 도 전력자립도, 제도 · 일정과 기사를 함께 모았습니다 · <span style="white-space:nowrap">매일 자동 갱신</span></p>
+      <p class="sub">국토교통부 건축 인허가 대장에서 용도가 '데이터센터'인 건을 모아 허가 → 착공 → 준공 흐름과 위치를 보여 주고, 공개 보도로 확인된 수전 · IT 용량, 정보통신업 전기 사용량 증가(MW), 시 · 도 전력자립도, 제도 · 일정과 기사를 함께 모았습니다 · <span style="white-space:nowrap">매일 오전(08:00) 자동 갱신</span></p>
     </div>
     <div class="hright">
       <div class="sisters">
@@ -333,7 +333,7 @@ footer .ct{white-space:nowrap}
         <a class="sister" href="https://abs.namepf.com/" target="_blank" rel="noopener"><span class="sl">관련 대시보드:</span> → 유동화시장 등급 · 금리</a>
         <a class="sister" href="https://cons.namepf.com/" target="_blank" rel="noopener"><span class="sl">관련 대시보드:</span> → 시공사 시공능력 · 신용등급</a>
       </div>
-      <div class="updated" id="updated">자료 불러오는 중…</div>
+      <div class="updated" id="updated">데이터 불러오는 중…</div>
     </div>
   </header>
 
@@ -612,7 +612,7 @@ function renderFunnel(){
   const P=D.permits||{}, S=P.scanned, nDc=(P.rows||[]).length, man=n=>{const m=Math.floor(n/1e4), r=n%1e4; return m?`${m.toLocaleString()}만${r?` ${r.toLocaleString()}`:""}`:n.toLocaleString();};
   const up=String(P.updated||"").replace(/^\d{2}(\d{2})(\d{2})(\d{2})$/,"'$1.$2.$3");
   const head=S&&S.total?`2020년 이후 전국 건축 인허가 <b>${man(S.total)}건</b>(전국 ${S.units.toLocaleString()}개 동 · 리 전수) 중 `:"";
-  $("#funnel").innerHTML=`${head}주용도 방송통신시설 <b>${(P.n_bc||0).toLocaleString()}건</b> → 층별 용도에 '데이터센터'가 있는 <b>${nDc.toLocaleString()}건</b> · 매일 새벽 전국을 다시 확인해 갱신${up?`(마지막 갱신 ${up})`:""}`;
+  $("#funnel").innerHTML=`${head}주용도 방송통신시설 <b>${(P.n_bc||0).toLocaleString()}건</b> → 층별 용도에 '데이터센터'가 있는 <b>${nDc.toLocaleString()}건</b> · 매일 자동 갱신`;
 }
 function renderTable(){
   const q=tf.q.trim();
@@ -856,7 +856,7 @@ function drawCharts(){ renderMap(); renderPM(); renderAbsorb(); renderScatter();
 function init(d){
   D=d;
   rgOptions($("#pm-rg"),D.permits.rows); rgOptions($("#ls-rg"),D.permits.rows);
-  $("#updated").textContent=`인허가 ${D.permits.updated?D.permits.updated.slice(0,4)+"."+D.permits.updated.slice(4,6)+"."+D.permits.updated.slice(6):"–"} 수집 · 한전 ${ym(D.kepco.latest)}`;
+  $("#updated").textContent=D.built?`최종 수집 ${D.built} KST`:"수집 시각 정보 없음";
   $("#pm-note").textContent=`국토교통부 건축HUB · ${D.permits.since?.slice(0,4)}년 이후 대장 · 매일 자동 갱신`;
   const tg=$("#tl-tag"), have=new Set((D.timeline?.items||[]).map(x=>x.tag)); tg.innerHTML=`<option value="all">전체</option>`+TAGS.filter(x=>have.has(x)).map(x=>`<option>${x}</option>`).join("");
   $("#law-note").textContent=`정부 · 국회 발표와 보도로 확인 · 매주 월요일 재확인`; $("#tl-chk").textContent=`마지막 확인 ${D.timeline?.checked||"–"}`;
@@ -875,7 +875,7 @@ function init(d){
 if(window.GEO_DATA) GEO=window.GEO_DATA;
 else fetch("data/geo.json").then(r=>r.json()).then(g=>{ GEO=g; if(D) renderMap(); }).catch(()=>{});
 if(window.DASH) init(window.DASH);
-else fetch("data/dash.json",{cache:"no-store"}).then(r=>r.json()).then(init).catch(()=>{ $("#updated").textContent="자료를 불러오지 못했습니다. 잠시 뒤 새로고침해 주세요."; });
+else fetch("data/dash.json",{cache:"no-store"}).then(r=>r.json()).then(init).catch(()=>{ $("#updated").textContent="데이터를 불러오지 못했습니다. 잠시 뒤 새로고침해 주세요."; });
 </script>
 </body>
 </html>
