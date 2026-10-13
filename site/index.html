@@ -723,10 +723,11 @@ function renderMap(){
       if(mapView==="all"){ const o=LO[l.id]||[7,3.5,"start"]; lpS+=`<text class="ml cbl" x="${(lx+o[0]*u).toFixed(1)}" y="${(ly+o[1]*u).toFixed(1)}" text-anchor="${o[2]}" style="font-size:${9*u}px;stroke-width:${3*u}px">${esc(l.nm.replace("(새만금)",""))} ${pl?"예정":l.cables.length}</text>`; } });
   }
   if(LAY.sub) SB.forEach((b,i)=>{ const [bx,by]=LL(...b.ll); s+=`<circle class="sb" data-b="${i}" cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="${(gR(b)*.45).toFixed(1)}" fill="transparent"/>`; });
-  if(LAY.zone) Z.forEach(z=>{ const r=(mapView==="all"?5.5:7)*u; s+=`<path class="zn" data-z="${z.i}" d="M${z.zx},${z.zy-r}L${z.zx+r},${z.zy}L${z.zx},${z.zy+r}L${z.zx-r},${z.zy}Z" fill="var(--warm)" fill-opacity=".9" stroke="var(--surface)" stroke-width="1.2" vector-effect="non-scaling-stroke" style="cursor:pointer"/>`;
-    if(mapView==="all") s+=`<text class="ml" x="${z.zx+8*u}" y="${z.zy+3.5*u}" style="font-size:${9.5*u}px;stroke-width:${3*u}px;fill:var(--warm);font-weight:600">${esc(z.nm.replace(" 분산특구",""))}</text>`; });
+  let zS=""; // 분산특구 마름모는 데이터센터 원 위에 그린다
+  if(LAY.zone) Z.forEach(z=>{ const r=(mapView==="all"?5.5:7)*u; zS+=`<path class="zn" data-z="${z.i}" d="M${z.zx},${z.zy-r}L${z.zx+r},${z.zy}L${z.zx},${z.zy+r}L${z.zx-r},${z.zy}Z" fill="var(--warm)" fill-opacity=".9" stroke="var(--surface)" stroke-width="1.2" vector-effect="non-scaling-stroke" style="cursor:pointer"/>`;
+    });
   if(LAY.dc) S.slice().sort((a,b)=>b.area-a.area).forEach(x=>{ s+=`<circle class="pt" data-s="${esc(x.top.site)}" cx="${x.x.toFixed(1)}" cy="${x.y.toFixed(1)}" r="${(x.rp*u).toFixed(1)}" fill="${C[x.stage]}" fill-opacity=".88" stroke="var(--surface)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`; });
-  s+=lpS+`</svg><div class="tip" hidden></div>`;
+  s+=zS+lpS+`</svg><div class="tip" hidden></div>`;
   box.innerHTML=s;
   const tip=box.querySelector(".tip"), bySiteKey=Object.fromEntries(S.map(x=>[x.top.site,x]));
   box.querySelectorAll(".pt").forEach(c=>{ const show=()=>{ const x=bySiteKey[c.dataset.s], r=x.top, cp=x.cap;
