@@ -739,10 +739,18 @@ function renderMap(){
     s+=`<defs><radialGradient id="cbg"><stop offset="0" stop-color="#fff"/><stop offset=".45" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient><mask id="cbm" maskUnits="userSpaceOnUse" x="${vb[0]}" y="${vb[1]}" width="${vb[2]}" height="${vb[3]}">${LPs.map(l=>{ const [lx,ly]=LL(...l.ll); return `<circle cx="${lx.toFixed(0)}" cy="${ly.toFixed(0)}" r="${R}" fill="url(#cbg)"/>`; }).join("")}</mask></defs><g mask="url(#cbm)">`;
     CB.forEach((c,i)=>(c.paths||[]).forEach(ps=>{ const d=pth(ps); s+=`<path class="cbh" data-c="${i}" d="${d}"/><path class="cb" data-c="${i}" d="${d}" stroke-width="1.1" stroke-opacity="${c.planned?.75:.6}"${c.planned?' stroke-dasharray="4 3"':""} vector-effect="non-scaling-stroke"/>`; }));
     s+=`</g>`;
+    // 육양국 이름이 데이터센터 · 특구 표시를 가리지 않도록, 기본 자리 → 오른쪽 → 왼쪽 → 위 → 아래 순으로 비어 있는 자리를 고른다
+    const lbPos=(lx,ly,txt,pref)=>{ const fs=9*u, w=[...txt].reduce((a,ch)=>a+(/[가-힣]/.test(ch)?.95:.58),0)*fs;
+      const obs=[...(LAY.dc?S.map(x=>[x.x,x.y,x.rp*u]):[]),...(LAY.zone?Z.map(z=>[z.zx,z.zy,(mapView==="all"?5.5:7)*u]):[])];
+      const cands=[pref,[7,3.5,"start"],[-7,3.5,"end"],[0,-7,"middle"],[0,13,"middle"]];
+      const free=o=>{ const x=lx+o[0]*u, y=ly+o[1]*u, x0=o[2]==="start"?x:o[2]==="end"?x-w:x-w/2, x1=x0+w, y0=y-.8*fs, y1=y+.2*fs;
+        return obs.every(([cx,cy,r])=>{ const dx=Math.max(x0-cx,0,cx-x1), dy=Math.max(y0-cy,0,cy-y1); return dx*dx+dy*dy>(r+1.5*u)*(r+1.5*u); }); };
+      return cands.find(free)||pref; };
     const LO={"busan-south-korea":[10,17,"start"],"geoje-south-korea":[0,15,"middle"],"shindu-ri-south-korea":[-8,3.5,"end"],"gunsan-south-korea":[-8,3.5,"end"]};
     LPs.forEach((l,i)=>{ const [lx,ly]=LL(...l.ll), r=(mapView==="all"?3.4:4.4)*u, pl=l.cables.every(id=>(CB.find(c=>c.id===id)||{}).planned);
       lpS+=`<g class="lp" data-l="${i}"><circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="${(r+3*u).toFixed(1)}" fill="transparent"/><circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="${r.toFixed(1)}" fill="var(--surface)" stroke="var(--cable)" stroke-width="1.8" vector-effect="non-scaling-stroke"${pl?' stroke-dasharray="2 2"':""}/><circle cx="${lx.toFixed(1)}" cy="${ly.toFixed(1)}" r="${(r*.4).toFixed(1)}" fill="var(--cable)"/></g>`;
-      if(mapView==="all"){ const o=LO[l.id]||[7,3.5,"start"]; lpS+=`<text class="ml cbl" x="${(lx+o[0]*u).toFixed(1)}" y="${(ly+o[1]*u).toFixed(1)}" text-anchor="${o[2]}" style="font-size:${9*u}px;stroke-width:${3*u}px">${esc(l.nm.replace("(새만금)",""))} ${pl?"예정":l.cables.length}</text>`; } });
+      if(mapView==="all"){ const txt=`${l.nm.replace("(새만금)","")} ${pl?"예정":l.cables.length}`, o=lbPos(lx,ly,txt,LO[l.id]||[7,3.5,"start"]);
+        lpS+=`<text class="ml cbl" x="${(lx+o[0]*u).toFixed(1)}" y="${(ly+o[1]*u).toFixed(1)}" text-anchor="${o[2]}" style="font-size:${9*u}px;stroke-width:${3*u}px">${esc(txt)}</text>`; } });
   }
   if(LAY.sub) SB.forEach((b,i)=>{ const [bx,by]=LL(...b.ll); s+=`<circle class="sb" data-b="${i}" cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="${(gR(b)*.45).toFixed(1)}" fill="transparent"/>`; });
   let zS=""; // 분산특구 마름모는 데이터센터 원 위에 그린다
