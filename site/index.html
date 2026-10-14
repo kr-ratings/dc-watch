@@ -1033,7 +1033,7 @@ function init(d){
   D=d;
   rgOptions($("#pm-rg"),D.permits.rows); rgOptions($("#ls-rg"),D.permits.rows);
   $("#updated").textContent=D.built?`최종 수집 ${D.built} KST`:"수집 시각 정보 없음";
-  $("#pm-note").textContent=`국토교통부 건축HUB · ${D.permits.since?.slice(0,4)}년 이후 대장 · 매일 자동 갱신`;
+  $("#pm-note").textContent=`국토교통부 건축HUB · ${String((D.permits.scanned||{}).since||"20200101").slice(0,4)}년 이후 대장 · 매일 자동 갱신`; // since는 매일 변경분 수집 시작일이라 쓰지 않는다
   const tg=$("#tl-tag"), have=new Set((D.timeline?.items||[]).map(x=>x.tag)); tg.innerHTML=`<option value="all">전체</option>`+TAGS.filter(x=>have.has(x)).map(x=>`<option>${x}</option>`).join("");
   $("#law-note").textContent=`정부 · 국회 발표와 보도로 확인 · 매주 월요일 재확인`; $("#tl-chk").textContent=`마지막 확인 ${D.timeline?.checked||"–"}`;
   renderKPI(); renderFunnel(); renderTable(); renderTimeline(); renderNews(); renderDecomp(); renderHeadroom(); drawCharts();
