@@ -1,6 +1,8 @@
 """전국 동 · 리별 건축 인허가 건수(대장 생성 · 변경일이 since 이후인 건)를 센다.
 한 동에 한 번만, 1건짜리 페이지로 조회해 totalCount만 받는다(전국 약 1만 9천 번 호출).
-결과: data/state/unit_counts.json — 동 · 리별 건수와 전국 합계. 중간에 끊겨도 이어서 센다."""
+결과: data/state/unit_counts.json — 동 · 리별 건수와 전국 합계. 중간에 끊겨도 이어서 센다.
+이번 회차에 아직 못 센(서버 503 등) 동 · 리는 직전 회차 값(base)으로 채워 합계를 낸다.
+그러지 않으면 몇 개 동만 빠져도 전국 합계가 줄어든 것처럼 보인다(10/20: 6개 동 503 → 2,228건 적게 표시)."""
 import argparse, datetime as dt, os, re, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, os.path.dirname(__file__))
@@ -22,7 +24,9 @@ def main():
     until = (dt.datetime.utcnow() + dt.timedelta(hours=9)).strftime("%Y%m%d")   # 한국 날짜 기준
     st = load_json(OUT, {})
     if st.get("since") != a.since or st.get("complete"):
-        st = {"since": a.since, "until": until, "counts": {}, "errors": {}}
+        base = {**st.get("base", {}), **st.get("counts", {})} if st.get("since") == a.since else {}
+        st = {"since": a.since, "until": until, "counts": {}, "errors": {}, "base": base}
+    st.setdefault("base", {})
     todo = [u for u in units if f"{u[1]}-{u[2]}" not in st["counts"]]
     print(f"units {len(units)}, todo {len(todo)}", flush=True)
     q, lock, conn = Quota(a.limit), threading.Lock(), {"fail": 0}
@@ -44,6 +48,13 @@ def main():
                     conn["fail"] += 1
             return u, None, msg
 
+    keys = [f"{u[1]}-{u[2]}" for u in units]
+
+    def tally():
+        st["total"] = sum(st["counts"].get(k, st["base"].get(k, 0)) for k in keys)
+        st["n"], st["units"] = len(st["counts"]), len(units)
+        st["carried"] = sum(1 for k in keys if k not in st["counts"] and k in st["base"])
+
     reason, t0 = "done", time.time()
     with ThreadPoolExecutor(a.workers) as ex:
         for i in range(0, len(todo), 200):
@@ -56,16 +67,30 @@ def main():
                 else:
                     st["counts"][k] = n
                     st["errors"].pop(k, None)
-            st["total"] = sum(st["counts"].values())
-            st["n"], st["units"] = len(st["counts"]), len(units)
+            tally()
             save_json(OUT, st)
             print(f"{min(i + 200, len(todo))}/{len(todo)} counted {st['n']} total {st['total']:,} {int(time.time() - t0)}s", flush=True)
             if reason != "done":
                 break
+    # 일시 오류(HTTP 503 등)로 빠진 동 · 리는 잠시 쉬었다가 두 번까지 다시 센다
+    for _ in range(2):
+        left = [u for u in units if f"{u[1]}-{u[2]}" in st["errors"]]
+        if not left or reason != "done":
+            break
+        time.sleep(30)
+        for u in left:
+            u, n, err = work(u)
+            k = f"{u[1]}-{u[2]}"
+            if err in ("quota", "conn"):
+                reason = err; break
+            if not err:
+                st["counts"][k] = n; st["errors"].pop(k, None)
+        print("다시 센 뒤 남은 오류", len(st["errors"]), flush=True)
+    tally()
     st["complete"] = st["n"] >= len(units)
     st["stop"] = "done" if st["complete"] else reason if reason != "done" else "partial"
     save_json(OUT, st)
-    print("stop", st["stop"], "counted", st["n"], "/", len(units), "total", f"{st['total']:,}", "errors", len(st["errors"]))
+    print("stop", st["stop"], "counted", st["n"], "/", len(units), "total", f"{st['total']:,}", "errors", len(st["errors"]), "직전 값으로 채움", st["carried"])
 
 
 if __name__ == "__main__":
