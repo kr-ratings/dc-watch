@@ -59,7 +59,8 @@ def main():
         print("원자료 최신", v); return
     if st.get("since") != a.since or st.get("complete"):
         base = {**st.get("base", {}), **st.get("counts", {})} if st.get("since") == a.since else {}
-        st = {"since": a.since, "until": until, "counts": {}, "errors": {}, "base": base}
+        st = {"since": a.since, "until": until, "counts": {}, "errors": {}, "base": base,
+              **({"src_latest": st["src_latest"]} if st.get("src_latest") else {})}
     st.setdefault("base", {})
     todo = [u for u in units if f"{u[1]}-{u[2]}" not in st["counts"]]
     print(f"units {len(units)}, todo {len(todo)}", flush=True)
