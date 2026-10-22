@@ -192,7 +192,7 @@ def permits():
         done[code2sd.get(k, "?")] += 1
     cov = {sd: [done.get(sd, 0), n] for sd, n in tot.items()}
     uc = load_json("data/state/unit_counts.json", {})
-    scanned = {k: uc.get(k) for k in ("since", "until", "total", "n", "units", "complete")} if uc.get("total") else None
+    scanned = {k: uc.get(k) for k in ("since", "until", "total", "n", "units", "complete", "src_latest")} if uc.get("total") else None
     for r in rows:
         if not r["ll"] or not r["hr"]:
             print(f"[확인 필요] {'위치' if not r['ll'] else ''}{' · ' if not r['ll'] and not r['hr'] else ''}{'변전소' if not r['hr'] else ''} 연결 안 됨: {r['addr']}", flush=True)

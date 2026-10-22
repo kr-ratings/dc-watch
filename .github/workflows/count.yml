@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       attempt: {description: "서버 연결이 안 돼 다시 띄운 횟수(자동)", required: false, default: "1"}
+      args: {description: "count_units.py 추가 인자(예: --src-only)", required: false, default: ""}
   push:
     branches: [count-run]
   schedule:
@@ -25,7 +26,7 @@ jobs:
         env:
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
         run: |
-          python collector/count_units.py --workers 3 || true
+          python collector/count_units.py --workers 3 ${{ github.event.inputs.args }} || true
           echo "STOP=$(python -c "import json;print(json.load(open('data/state/unit_counts.json')).get('stop',''))")" >> "$GITHUB_ENV"
       - name: commit
         if: always()

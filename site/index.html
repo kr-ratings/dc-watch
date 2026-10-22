@@ -655,7 +655,8 @@ const tf={st:"all",rg:"all",q:""}; let sortK="pms", sortD=-1;
 function renderFunnel(){
   const P=D.permits||{}, S=P.scanned, nDc=(P.rows||[]).length, man=n=>{const m=Math.floor(n/1e4), r=n%1e4; return m?`${m.toLocaleString()}만${r?` ${r.toLocaleString()}`:""}`:n.toLocaleString();};
   const up=String(P.updated||"").replace(/^\d{2}(\d{2})(\d{2})(\d{2})$/,"'$1.$2.$3");
-  const head=S&&S.total?`2020년 이후 전국 건축 인허가 <b>${man(S.total)}건</b>(전국 ${S.units.toLocaleString()}개 동 · 리 전수) 중 `:"";
+  const src=S&&S.src_latest?` · 국토부 원자료 ${String(S.src_latest).replace(/^\d{2}(\d{2})(\d{2})(\d{2})$/,"'$1.$2.$3")}까지`:"";
+  const head=S&&S.total?`2020년 이후 전국 건축 인허가 <b>${man(S.total)}건</b>(전국 ${S.units.toLocaleString()}개 동 · 리 전수${src}) 중 `:"";
   $("#funnel").innerHTML=`${head}주용도 방송통신시설 <b>${(P.n_bc||0).toLocaleString()}건</b> → 층별 용도에 '데이터센터'가 있는 <b>${nDc.toLocaleString()}건</b> · 매일 자동 갱신`;
 }
 // 검색: 띄어쓰기 · 옛 시 · 도 이름(전라남도 · 전라북도 · 강원도 …) · '번지'를 가리지 않고, 낱말을 모두 포함하는 건을 찾는다.
