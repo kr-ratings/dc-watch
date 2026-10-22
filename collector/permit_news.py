@@ -7,6 +7,7 @@
 import datetime as dt, email.utils, html, re, sys, time, os
 sys.path.insert(0, os.path.dirname(__file__))
 from common import get, load_json, save_json
+from kis_guard import kis_ok
 
 OUT = "data/permit_news.json"
 NOISE = r"(신축공사|신축|증축|공사|용도변경|대수선|리모델링|방송통신시설|데이터\s*센터|데이터센타|DATA\s*CENTER|IDC|센터|PFV|프로젝트|사업|\(가칭\)|㈜|\(주\)|주식회사|및|외\s*\d+필지|[\(\)\[\]·,]|\d+[-\d]*번지|\d+-\d+|\d+)"
@@ -44,7 +45,10 @@ def search(q):
             pub = email.utils.parsedate_to_datetime(g("pubDate")).astimezone(dt.timezone(dt.timedelta(hours=9)))
         except Exception:
             continue
-        out.append({"t": re.sub(r"\s+-\s+[^-]+$", "", title), "src": src, "u": link, "d": pub.strftime("%Y-%m-%d")})
+        t = re.sub(r"\s+-\s+[^-]+$", "", title)
+        if not kis_ok(t):                    # 한국투자증권 · 한국금융지주 계열 부정 기사는 싣지 않는다
+            continue
+        out.append({"t": t, "src": src, "u": link, "d": pub.strftime("%Y-%m-%d")})
     return out
 
 

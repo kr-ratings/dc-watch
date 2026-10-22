@@ -2,6 +2,7 @@
 import calendar, collections, datetime as dt, json, os, re, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from common import load_json, save_json
+from kis_guard import kis_ok  # 한국투자증권 · 한국금융지주 계열 부정 기사는 싣지 않는다
 
 SHORT = [("서울", "서울"), ("부산", "부산"), ("대구", "대구"), ("인천", "인천"), ("광주", "전남광주"), ("전남광주", "전남광주"), ("전라남", "전남광주"), ("전남", "전남광주"),
          ("대전", "대전"), ("울산", "울산"), ("세종", "세종"), ("경기", "경기"), ("강원", "강원"), ("충청북", "충북"), ("충청남", "충남"),
@@ -173,7 +174,7 @@ def permits():
         pms, stc, apr = ymd(h.get("archPmsDay")), ymd(h.get("realStcnsDay")), ymd(h.get("useAprDay"))
         stage = "준공" if apr else ("공사 중" if stc else "착공 전")
         addr = re.sub(r"\s+", " ", (h.get("platPlc") or "").replace("번지", "")).strip()
-        news = [{k: a[k] for k in ("t", "src", "d", "u")} for a in (pn.get(str(h["mgmPmsrgstPk"]), {}).get("items") or [])]
+        news = [{k: a[k] for k in ("t", "src", "d", "u")} for a in (pn.get(str(h["mgmPmsrgstPk"]), {}).get("items") or []) if kis_ok(a.get("t"))]
         ll, prec = geo.find(h)
         rows.append({"id": h["mgmPmsrgstPk"], "sd": short(h.get("sido")), "sg": h.get("sggNm"), "dong": h.get("dongNmAddr"), "addr": addr,
                      "nm": nm, "kind": (h.get("archGbCdNm") or "").strip(), "area": round(float(h.get("totArea") or 0)),
@@ -384,7 +385,7 @@ def main():
     out = {"built": dt.datetime.now(dt.timezone(dt.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M"),
            "permits": perm, "kepco": kep, "power": power(kep), "policy": load_json("data/policy.json", {}),
            "timeline": load_json("data/curated/policy_timeline.json", {"items": []}), "zones": zones(), "layers": layers()}
-    out["policy"]["news"] = out["policy"].get("news", [])[:60]
+    out["policy"]["news"] = [a for a in out["policy"].get("news", []) if kis_ok(a.get("t"))][:60]
     out["policy"].pop("bills", None)
     save_json("site/data/dash.json", out)
     print("built", len(out["permits"]["rows"]), "dc rows; kepco", kep["latest"], "; self-suff", out["power"]["self_year"], len(out["power"]["self"]))

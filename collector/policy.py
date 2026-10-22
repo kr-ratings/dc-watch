@@ -1,6 +1,7 @@
 """국회 의안(열린국회정보) · 언론 기사(구글 뉴스 RSS)."""
 import datetime as dt, email.utils, html, re
 from common import get, load_json, save_json
+from kis_guard import kis_ok  # 한국투자증권 · 한국금융지주 계열 부정 기사는 싣지 않는다
 
 OUT = "data/policy.json"
 BILL_KW = ["데이터센터", "분산에너지", "전력계통", "전력망"]
@@ -36,7 +37,7 @@ def news():
                 continue
             base = re.sub(r"\s+-\s+[^-]+$", "", title)
             key = re.sub(r"\W", "", base)[:40]
-            if key in seen or ("데이터센터" not in base and "데이터 센터" not in base) or FOREIGN.search(base):
+            if key in seen or ("데이터센터" not in base and "데이터 센터" not in base) or FOREIGN.search(base) or not kis_ok(base):
                 continue
             seen.add(key)
             items.append({"t": base, "src": src, "u": link, "d": pub.astimezone(dt.timezone(dt.timedelta(hours=9))).strftime("%Y-%m-%d %H:%M"), "q": q})
