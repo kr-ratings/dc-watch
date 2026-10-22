@@ -1,6 +1,8 @@
 name: probe
 on:
   workflow_dispatch:
+    inputs:
+      script: {description: "실행할 점검 스크립트", required: false, default: "probe/probe.py"}
   push:
     branches: [probe-run]
 permissions:
@@ -19,7 +21,7 @@ jobs:
         env:
           DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
           KEPCO_API_KEY: ${{ secrets.KEPCO_API_KEY }}
-        run: python probe/probe.py
+        run: python "${{ github.event.inputs.script || 'probe/probe.py' }}"
       - name: save result to branch
         run: |
           git config user.name "dc-watch-bot"
