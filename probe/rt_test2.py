@@ -39,14 +39,13 @@ def call(base, lawd, ymd, rows=10, page=1):
 
 
 res = {}
-for scheme in ("https", "http"):
-    base = f"{scheme}://apis.data.go.kr/1613000/RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade"
-    res[f"{scheme}_gangnam_202609"] = call(base, "11680", "202609")
-    if "error" not in res[f"{scheme}_gangnam_202609"]:
+for nm, base in (("dev", "https://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev/getRTMSDataSvcAptTradeDev"),
+                 ("basic", "https://apis.data.go.kr/1613000/RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade")):
+    res[f"{nm}_gangnam_202609"] = call(base, "11680", "202609")
+    if res[f"{nm}_gangnam_202609"].get("status") == 200 and not res[f"{nm}_gangnam_202609"].get("errMsg"):
         for lawd, ymd in [("11680", "201109"), ("51110", "201109"), ("42110", "201109"), ("36110", "201109"), ("44730", "201109"),
-                          ("28260", "202509"), ("28260", "202608"), ("41590", "202109")]:
-            res[f"{scheme}_{lawd}_{ymd}"] = call(base, lawd, ymd, rows=1000 if lawd == "41590" else 10)
-        break
+                          ("28260", "202509"), ("28260", "202608"), ("28275", "202608"), ("12300", "202608"), ("29170", "202608"), ("29170", "202509"), ("41590", "202109")]:
+            res[f"{nm}_{lawd}_{ymd}"] = call(base, lawd, ymd, rows=1000 if lawd == "41590" else 10)
 txt = clean(json.dumps(res, ensure_ascii=False, indent=1))
 (OUT / "rt_test2.json").write_text(txt)
 print(txt[:4000])
