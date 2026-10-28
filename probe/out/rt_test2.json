@@ -1,0 +1,18 @@
+{
+ "dev_gangnam_202609": {
+  "status": 403,
+  "sec": 0.7,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ },
+ "basic_gangnam_202609": {
+  "status": 403,
+  "sec": 0.7,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ }
+}
