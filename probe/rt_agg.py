@@ -4,7 +4,9 @@
 - 기간: 1 · 3 · 6개월, 1 · 3 · 5 · 10 · 15년. 1개월은 1개월 창끼리, 나머지는 3개월 창끼리 비교한다.
 - 변동률: 같은 단지(aptSeq)가 두 창에 모두 거래된 경우만 단지별 중위 평당가 비율을 구하고,
   거래 건수(둘 중 적은 쪽) 가중 기하평균으로 지역 변동률을 낸다(단지 구성 변화의 영향을 줄임).
-- 평당가: 최근 3개월 창의 거래 평당가(거래금액 ÷ 전용면적 × 3.3058) 중위값, 만원.
+- 평당가: 최근 3개월 창의 거래 평당가 중위값, 만원. p = 공급면적 기준(전용면적을 공급면적으로 환산), pe = 전용면적 기준.
+  실거래 자료에는 전용면적만 있어, 청약홈 분양 주택형의 공급면적 ÷ 전용면적 중위값(전용 크기별)으로 환산한다.
+- NOW_ONLY=1 이면 최근 3개월만 받아 평당가만 다시 낸다(변동률은 이전 결과를 쓴다).
 - anchor: 달별 · 시도별 거래 건수 · 거래금액 합 · 전용면적 합(아파트 시가총액 추정의 기준 가격용).
 """
 import concurrent.futures as cf, datetime as dt, json, math, os, pathlib, re, statistics as st, threading, time, urllib.parse
@@ -18,6 +20,18 @@ EPS = ["https://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev/getRTMSDataSvcApt
        "https://apis.data.go.kr/1613000/RTMSDataSvcAptTrade/getRTMSDataSvcAptTrade"]
 PERIODS = [1, 3, 6, 12, 36, 60, 120, 180]
 LOG = []
+NOW_ONLY = os.environ.get("NOW_ONLY") == "1"
+# 공급면적 ÷ 전용면적: 청약홈 2025~26년 분양 주택형 2,077개의 전용 크기별 중위값(점 사이는 직선으로 잇는다)
+SUP_R = [(40, 1.413), (59, 1.385), (74, 1.352), (84, 1.324), (105, 1.306), (135, 1.327)]
+
+
+def sup_ratio(ar):
+    if ar <= SUP_R[0][0]:
+        return SUP_R[0][1]
+    for (a0, r0), (a1, r1) in zip(SUP_R, SUP_R[1:]):
+        if ar <= a1:
+            return r0 + (r1 - r0) * (ar - a0) / (a1 - a0)
+    return SUP_R[-1][1]
 
 
 def clean(s):
@@ -90,7 +104,7 @@ def mo(k):
 
 
 WIN = {"now3": [0, 1, 2], "now1": [0]}
-for p in PERIODS:
+for p in ([] if NOW_ONLY else PERIODS):
     WIN[f"b{p}"] = [p] if p == 1 else [p, p + 1, p + 2]
 NEED = sorted({k for v in WIN.values() for k in v})
 log("기준월", mo(0), "필요한 달", len(NEED), "코드", len(ALL))
@@ -170,7 +184,7 @@ with cf.ThreadPoolExecutor(6) as ex:
             SEEN.add(sig)
             s, g = sgg_of(c, dong)
             apt = x.get("aptSeq") or f"{c}|{dong}|{x.get('jibun','')}|{x.get('aptNm','')}"
-            RAW.setdefault(y, []).append((s, g, dong, apt, round(amt / ar * 3.3058, 1)))
+            RAW.setdefault(y, []).append((s, g, dong, apt, round(amt / ar * 3.3058, 1), round(amt / (ar * sup_ratio(ar)) * 3.3058, 1)))
             ag = ANC.setdefault(y, {}).setdefault(s, [0, 0.0, 0.0])   # 시가총액 기준 가격용: 건수 · 금액 합 · 면적 합
             ag[0] += 1; ag[1] += amt; ag[2] += ar
         if i % 500 == 0:
@@ -185,22 +199,25 @@ def keys(s, g, d):
     return [("all", "전국"), ("sido", SIDO_OF(s)), ("sgg", f"{s}|{g}"), ("dong", f"{s}|{g}|{d}")]
 
 
-win_rows = {w: {} for w in WIN}   # w → level → key → apt → [ppy]
+win_rows = {w: {} for w in WIN}   # w → level → key → apt → [전용 평당가]
+sup_now = {}                       # level → key → [공급 평당가] (최근 3개월)
 for w, ks in WIN.items():
     for k in ks:
-        for (s, g, d, apt, ppy) in RAW.get(mo(k), []):
+        for (s, g, d, apt, ppy, pps) in RAW.get(mo(k), []):
             for lv, key in keys(s, g, d):
                 win_rows[w].setdefault(lv, {}).setdefault(key, {}).setdefault(apt, []).append(ppy)
+                if w == "now3":
+                    sup_now.setdefault(lv, {}).setdefault(key, []).append(pps)
 MINC = {"all": 20, "sido": 8, "sgg": 5, "dong": 3}
-out = {"asof": f"{mo(0)[:4]}-{mo(0)[4:]}", "periods": PERIODS, "generated": today.isoformat(), "method": "same-complex", "levels": {}}
+out = {"asof": f"{mo(0)[:4]}-{mo(0)[4:]}", "periods": PERIODS, "generated": today.isoformat(), "method": "same-complex", "area": "supply-converted", "sup_ratio": SUP_R, "now_only": NOW_ONLY, "levels": {}}
 out["anchor"] = {f"{y[:4]}-{y[4:]}": {k: [v[0], round(v[1]), round(v[2], 1)] for k, v in d.items()} for y, d in sorted(ANC.items())}
 for lv in ("all", "sido", "sgg", "dong"):
     res = {}
     now3 = win_rows["now3"].get(lv, {})
     for key, apts in now3.items():
         allp = [p for v in apts.values() for p in v]
-        e = {"p": round(st.median(allp)), "n": len(allp), "c": {}}
-        for p in PERIODS:
+        e = {"p": round(st.median(sup_now[lv][key])), "pe": round(st.median(allp)), "n": len(allp), "c": {}}
+        for p in ([] if NOW_ONLY else PERIODS):
             A = win_rows["now1" if p == 1 else "now3"].get(lv, {}).get(key, {})
             B = win_rows[f"b{p}"].get(lv, {}).get(key, {})
             num = den = 0.0; m = 0
