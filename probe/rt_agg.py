@@ -5,6 +5,7 @@
 - 변동률: 같은 단지(aptSeq)가 두 창에 모두 거래된 경우만 단지별 중위 평당가 비율을 구하고,
   거래 건수(둘 중 적은 쪽) 가중 기하평균으로 지역 변동률을 낸다(단지 구성 변화의 영향을 줄임).
 - 평당가: 최근 3개월 창의 거래 평당가(거래금액 ÷ 전용면적 × 3.3058) 중위값, 만원.
+- anchor: 달별 · 시도별 거래 건수 · 거래금액 합 · 전용면적 합(아파트 시가총액 추정의 기준 가격용).
 """
 import concurrent.futures as cf, datetime as dt, json, math, os, pathlib, re, statistics as st, threading, time, urllib.parse
 import xml.etree.ElementTree as ET
@@ -145,6 +146,7 @@ else:
 
 jobs = [(c, mo(k)) for k in NEED for c in ALL]
 RAW = {}   # ymd → list of (sido, sgg, dong, apt, ppy)
+ANC = {}   # ymd → 시도(광주 · 전남 따로) → [건수, 거래금액 합(만원), 전용면적 합(㎡)]
 SEEN = set()   # 예전 코드와 새 코드가 같은 거래를 함께 돌려줄 때 두 번 세지 않게
 t_start = time.time()
 with cf.ThreadPoolExecutor(6) as ex:
@@ -168,6 +170,8 @@ with cf.ThreadPoolExecutor(6) as ex:
             s, g = sgg_of(c, dong)
             apt = x.get("aptSeq") or f"{c}|{dong}|{x.get('jibun','')}|{x.get('aptNm','')}"
             RAW.setdefault(y, []).append((s, g, dong, apt, round(amt / ar * 3.3058, 1)))
+            ag = ANC.setdefault(y, {}).setdefault(s, [0, 0.0, 0.0])   # 시가총액 기준 가격용: 건수 · 금액 합 · 면적 합
+            ag[0] += 1; ag[1] += amt; ag[2] += ar
         if i % 500 == 0:
             log("진행", i, "/", len(jobs), "호출", CALLS[0], f"{time.time() - t_start:.0f}s")
 log("수집 끝 호출", CALLS[0], "거래", sum(len(v) for v in RAW.values()), f"{time.time() - t_start:.0f}s", "중단" if STOP[0] else "")
@@ -188,6 +192,7 @@ for w, ks in WIN.items():
                 win_rows[w].setdefault(lv, {}).setdefault(key, {}).setdefault(apt, []).append(ppy)
 MINC = {"all": 20, "sido": 8, "sgg": 5, "dong": 3}
 out = {"asof": f"{mo(0)[:4]}-{mo(0)[4:]}", "periods": PERIODS, "generated": today.isoformat(), "method": "same-complex", "levels": {}}
+out["anchor"] = {f"{y[:4]}-{y[4:]}": {k: [v[0], round(v[1]), round(v[2], 1)] for k, v in d.items()} for y, d in sorted(ANC.items())}
 for lv in ("all", "sido", "sgg", "dong"):
     res = {}
     now3 = win_rows["now3"].get(lv, {})
