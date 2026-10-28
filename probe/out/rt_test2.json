@@ -1,0 +1,74 @@
+{
+ "https_gangnam_202609": {
+  "status": 403,
+  "sec": 1.0,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ },
+ "https_11680_201109": {
+  "status": 403,
+  "sec": 0.8,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ },
+ "https_51110_201109": {
+  "status": 403,
+  "sec": 0.7,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ },
+ "https_42110_201109": {
+  "status": 403,
+  "sec": 0.7,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ },
+ "https_36110_201109": {
+  "status": 403,
+  "sec": 1.0,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ },
+ "https_44730_201109": {
+  "status": 403,
+  "sec": 0.7,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ },
+ "https_28260_202509": {
+  "status": 403,
+  "sec": 0.7,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ },
+ "https_28260_202608": {
+  "status": 403,
+  "sec": 1.0,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ },
+ "https_41590_202109": {
+  "status": 403,
+  "sec": 1.0,
+  "errMsg": "SERVICE_KEY_IS_NOT_REGISTERED_ERROR",
+  "returnAuthMsg": "등록되지 않은 서비스키",
+  "returnReasonCode": "30",
+  "items": 0
+ }
+}
