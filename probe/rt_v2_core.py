@@ -54,6 +54,9 @@ MONTHS, (y, m) = [], y0
 while (y, m) <= y1:
     MONTHS.append(f"{y}{m:02d}"); y, m = (y + (m == 12), m % 12 + 1)
 MONTHS.reverse()
+todo = pathlib.Path(f"probe/v2_todo_{PART}.txt")   # noqa: F821  — 있으면 그 달만(앞서 받은 달은 건너뜀)
+if todo.exists():
+    MONTHS = [m for m in MONTHS if m in set(todo.read_text().split())]
 log("PART", PART, "달", len(MONTHS), MONTHS[0], "~", MONTHS[-1], "코드", len(CODE))  # noqa: F821
 
 sess = requests.Session(); lock = threading.Lock(); STOP = [False]; CALLS = [0]
