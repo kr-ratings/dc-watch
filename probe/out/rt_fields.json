@@ -1,0 +1,1946 @@
+{
+ "11680-200806": {
+  "n": 202,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.0,
+   "cdealType": 0.0,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 0.0,
+   "estateAgentSggNm": 0.0,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.99,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     202
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "",
+     202
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     202
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     202
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     202
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     202
+    ]
+   ]
+  }
+ },
+ "11680-201506": {
+  "n": 611,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.0,
+   "cdealType": 0.0,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 0.0,
+   "estateAgentSggNm": 0.0,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.96,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     611
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "",
+     611
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     611
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     611
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     611
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     611
+    ]
+   ]
+  }
+ },
+ "11680-202006": {
+  "n": 827,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.04,
+   "cdealType": 0.04,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 0.0,
+   "estateAgentSggNm": 0.0,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.93,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     827
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "",
+     827
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     827
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     827
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     792
+    ],
+    [
+     "O",
+     35
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     822
+    ],
+    [
+     "Y",
+     5
+    ]
+   ]
+  }
+ },
+ "11680-202106": {
+  "n": 171,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.06,
+   "cdealType": 0.06,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 0.0,
+   "estateAgentSggNm": 0.0,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.9,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     171
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "",
+     171
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     171
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     171
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     160
+    ],
+    [
+     "O",
+     11
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     171
+    ]
+   ]
+  }
+ },
+ "11680-202206": {
+  "n": 74,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.12,
+   "cdealType": 0.12,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 1.0,
+   "estateAgentSggNm": 0.96,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.95,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     74
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "중개거래",
+     71
+    ],
+    [
+     "직거래",
+     3
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     74
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     74
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     65
+    ],
+    [
+     "O",
+     9
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     74
+    ]
+   ]
+  }
+ },
+ "11680-202306": {
+  "n": 274,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.89,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.08,
+   "cdealType": 0.08,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 1.0,
+   "estateAgentSggNm": 0.96,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.92,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.83,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     29
+    ],
+    [
+     "103",
+     17
+    ],
+    [
+     "102",
+     12
+    ],
+    [
+     "105",
+     11
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "중개거래",
+     264
+    ],
+    [
+     "직거래",
+     10
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     274
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     274
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     252
+    ],
+    [
+     "O",
+     22
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     274
+    ]
+   ]
+  }
+ },
+ "11680-202406": {
+  "n": 501,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.9,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 1.0,
+   "cdealDay": 0.04,
+   "cdealType": 0.04,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 1.0,
+   "estateAgentSggNm": 0.98,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.96,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.83,
+   "sggCd": 1.0,
+   "slerGbn": 1.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     50
+    ],
+    [
+     "101",
+     32
+    ],
+    [
+     "103",
+     23
+    ],
+    [
+     "102",
+     20
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "중개거래",
+     491
+    ],
+    [
+     "직거래",
+     10
+    ]
+   ],
+   "slerGbn": [
+    [
+     "개인",
+     497
+    ],
+    [
+     "법인",
+     4
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "개인",
+     499
+    ],
+    [
+     "법인",
+     2
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     483
+    ],
+    [
+     "O",
+     18
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     498
+    ],
+    [
+     "Y",
+     3
+    ]
+   ]
+  }
+ },
+ "11680-202509": {
+  "n": 233,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.85,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 1.0,
+   "cdealDay": 0.05,
+   "cdealType": 0.05,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 1.0,
+   "estateAgentSggNm": 0.98,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.95,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.93,
+   "sggCd": 1.0,
+   "slerGbn": 1.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     36
+    ],
+    [
+     "101",
+     18
+    ],
+    [
+     "102",
+     12
+    ],
+    [
+     "104",
+     9
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "중개거래",
+     228
+    ],
+    [
+     "직거래",
+     5
+    ]
+   ],
+   "slerGbn": [
+    [
+     "개인",
+     232
+    ],
+    [
+     "법인",
+     1
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "개인",
+     232
+    ],
+    [
+     "법인",
+     1
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     221
+    ],
+    [
+     "O",
+     12
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     231
+    ],
+    [
+     "Y",
+     2
+    ]
+   ]
+  }
+ },
+ "50110-200806": {
+  "n": 116,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.0,
+   "cdealType": 0.0,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 0.0,
+   "estateAgentSggNm": 0.0,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.99,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     116
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "",
+     116
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     116
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     116
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     116
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     116
+    ]
+   ]
+  }
+ },
+ "50110-201506": {
+  "n": 197,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.0,
+   "cdealType": 0.0,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 0.0,
+   "estateAgentSggNm": 0.0,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.99,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     197
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "",
+     197
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     197
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     197
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     197
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     197
+    ]
+   ]
+  }
+ },
+ "50110-202006": {
+  "n": 235,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.06,
+   "cdealType": 0.06,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 0.0,
+   "estateAgentSggNm": 0.0,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.97,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     235
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "",
+     235
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     235
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     235
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     221
+    ],
+    [
+     "O",
+     14
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     235
+    ]
+   ]
+  }
+ },
+ "50110-202106": {
+  "n": 286,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.07,
+   "cdealType": 0.07,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 0.0,
+   "estateAgentSggNm": 0.0,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.98,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     286
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "",
+     286
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     286
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     286
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     266
+    ],
+    [
+     "O",
+     20
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     286
+    ]
+   ]
+  }
+ },
+ "50110-202206": {
+  "n": 174,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.0,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.05,
+   "cdealType": 0.05,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 1.0,
+   "estateAgentSggNm": 0.77,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.0,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.98,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     174
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "중개거래",
+     134
+    ],
+    [
+     "직거래",
+     40
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     174
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     174
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     166
+    ],
+    [
+     "O",
+     8
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     174
+    ]
+   ]
+  }
+ },
+ "50110-202306": {
+  "n": 137,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.38,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 0.0,
+   "cdealDay": 0.08,
+   "cdealType": 0.08,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 1.0,
+   "estateAgentSggNm": 0.69,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.92,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.97,
+   "sggCd": 1.0,
+   "slerGbn": 0.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     85
+    ],
+    [
+     "205",
+     5
+    ],
+    [
+     "103",
+     4
+    ],
+    [
+     "101",
+     4
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "중개거래",
+     96
+    ],
+    [
+     "직거래",
+     41
+    ]
+   ],
+   "slerGbn": [
+    [
+     "",
+     137
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "",
+     137
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     126
+    ],
+    [
+     "O",
+     11
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     137
+    ]
+   ]
+  }
+ },
+ "50110-202406": {
+  "n": 127,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.49,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 1.0,
+   "cdealDay": 0.08,
+   "cdealType": 0.08,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 1.0,
+   "estateAgentSggNm": 0.85,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.92,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.97,
+   "sggCd": 1.0,
+   "slerGbn": 1.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     65
+    ],
+    [
+     "101동",
+     4
+    ],
+    [
+     "201",
+     4
+    ],
+    [
+     "103",
+     4
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "중개거래",
+     108
+    ],
+    [
+     "직거래",
+     19
+    ]
+   ],
+   "slerGbn": [
+    [
+     "개인",
+     120
+    ],
+    [
+     "법인",
+     7
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "개인",
+     126
+    ],
+    [
+     "공공기관",
+     1
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     117
+    ],
+    [
+     "O",
+     10
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     127
+    ]
+   ]
+  }
+ },
+ "50110-202509": {
+  "n": 150,
+  "fields": [
+   "aptDong",
+   "aptNm",
+   "aptSeq",
+   "bonbun",
+   "bubun",
+   "buildYear",
+   "buyerGbn",
+   "cdealDay",
+   "cdealType",
+   "dealAmount",
+   "dealDay",
+   "dealMonth",
+   "dealYear",
+   "dealingGbn",
+   "estateAgentSggNm",
+   "excluUseAr",
+   "floor",
+   "jibun",
+   "landCd",
+   "landLeaseholdGbn",
+   "rgstDate",
+   "roadNm",
+   "roadNmBonbun",
+   "roadNmBubun",
+   "roadNmCd",
+   "roadNmSeq",
+   "roadNmSggCd",
+   "roadNmbCd",
+   "sggCd",
+   "slerGbn",
+   "umdCd",
+   "umdNm"
+  ],
+  "fill": {
+   "aptDong": 0.55,
+   "aptNm": 1.0,
+   "aptSeq": 1.0,
+   "bonbun": 1.0,
+   "bubun": 1.0,
+   "buildYear": 1.0,
+   "buyerGbn": 1.0,
+   "cdealDay": 0.05,
+   "cdealType": 0.05,
+   "dealAmount": 1.0,
+   "dealDay": 1.0,
+   "dealMonth": 1.0,
+   "dealYear": 1.0,
+   "dealingGbn": 1.0,
+   "estateAgentSggNm": 0.83,
+   "excluUseAr": 1.0,
+   "floor": 1.0,
+   "jibun": 1.0,
+   "landCd": 1.0,
+   "landLeaseholdGbn": 1.0,
+   "rgstDate": 0.92,
+   "roadNm": 1.0,
+   "roadNmBonbun": 1.0,
+   "roadNmBubun": 1.0,
+   "roadNmCd": 1.0,
+   "roadNmSeq": 1.0,
+   "roadNmSggCd": 1.0,
+   "roadNmbCd": 0.95,
+   "sggCd": 1.0,
+   "slerGbn": 1.0,
+   "umdCd": 1.0,
+   "umdNm": 1.0
+  },
+  "examples": {
+   "aptDong": [
+    [
+     "",
+     68
+    ],
+    [
+     "101",
+     7
+    ],
+    [
+     "103",
+     6
+    ],
+    [
+     "102",
+     4
+    ]
+   ],
+   "dealingGbn": [
+    [
+     "중개거래",
+     125
+    ],
+    [
+     "직거래",
+     25
+    ]
+   ],
+   "slerGbn": [
+    [
+     "개인",
+     141
+    ],
+    [
+     "공공기관",
+     5
+    ],
+    [
+     "법인",
+     4
+    ]
+   ],
+   "buyerGbn": [
+    [
+     "개인",
+     146
+    ],
+    [
+     "법인",
+     4
+    ]
+   ],
+   "cdealType": [
+    [
+     "",
+     143
+    ],
+    [
+     "O",
+     7
+    ]
+   ],
+   "landLeaseholdGbn": [
+    [
+     "N",
+     150
+    ]
+   ]
+  }
+ }
+}
