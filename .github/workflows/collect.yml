@@ -21,7 +21,10 @@ jobs:
       - name: collect
         env:
           KEPCO_API_KEY: ${{ secrets.KEPCO_API_KEY }}
+          DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
         run: |
+          # 잡힌 데이터센터 건은 지번으로 매일 다시 조회(건축HUB가 착공 등을 과거 날짜로 늦게 넣는 경우 대비)
+          python collector/permits.py --refresh-only || true
           python collector/power.py || true
           python collector/policy.py || true
           python collector/kepco.py || true

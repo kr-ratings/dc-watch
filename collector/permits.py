@@ -4,6 +4,9 @@
 - startDate/endDate는 대장 생성·변경일(crtnDay) 기준이라, 착공·사용승인 같은 단계 변화도 다시 잡힌다.
 - 주용도 방송통신시설(24000) 건만 층별개요를 받아 세부용도 '데이터센터'(24005)가 있는지 확인한다.
 - 하루 호출 한도를 넘지 않도록 상한을 두고, 다 못 돌면 상태 파일에 이어서 돌 위치를 남긴다.
+- 이미 잡힌 데이터센터 건은 매일 지번(bun · ji)으로 날짜 조건 없이 다시 조회한다(--refresh-only, 매일 collect에서).
+  건축HUB가 착공 · 사용승인을 나중에 입력하면서 변경일(crtnDay)을 과거 날짜(실제 착공일 등)로 적는 경우가 있어,
+  변경일 창(최근 8일)만 보면 그 변화를 놓친다(예: 군산 비응도동 36-33 — 10/12 이후 입력된 9/23 착공).
 """
 import argparse, datetime as dt, json, os, re, sys, threading, time
 from concurrent.futures import ThreadPoolExecutor
@@ -87,6 +90,27 @@ def scan_unit(q, unit, since, until):
     return hits
 
 
+def refresh_known(q, found):
+    """잡혀 있는 데이터센터 건을 지번으로 다시 받아 착공 · 사용승인 · 면적 등 바뀐 값을 반영한다. (바뀐 건수, 호출 수)"""
+    changed = []
+    for h in [x for x in found.values() if x.get("dc")]:
+        try:
+            _, items = call(q, "getApBasisOulnInfo", sigunguCd=h["sigunguCd"], bjdongCd=h["bjdongCd"], bun=h["bun"], ji=h["ji"])
+        except QuotaExceeded:
+            raise
+        except Exception as e:
+            print("다시 조회 안 됨", h.get("platPlc"), scrub(repr(e))[:80], flush=True)
+            continue
+        for it in items:
+            if str(it.get("mgmPmsrgstPk")) != str(h["mgmPmsrgstPk"]):
+                continue
+            diff = {k: clean(it.get(k)) for k in KEEP if k != "mgmPmsrgstPk" and clean(it.get(k)) != h.get(k)}
+            if diff:
+                changed.append((h.get("platPlc"), {k: (h.get(k), v) for k, v in diff.items() if k in ("realStcnsDay", "stcnsSchedDay", "useAprDay", "crtnDay", "totArea")}))
+                h.update(diff)
+    return changed
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--units", default="data/bjd_units.json")
@@ -98,9 +122,25 @@ def main():
     ap.add_argument("--restart", action="store_true")
     ap.add_argument("--only", default="")         # 쉼표로 구분한 '시군구-법정동' 단위만 받기
     ap.add_argument("--max-seconds", type=int, default=0)  # 이 시간이 지나면 다음 묶음을 시작하지 않고 저장 후 끝낸다
+    ap.add_argument("--refresh-only", action="store_true")  # 잡힌 데이터센터 건만 지번으로 다시 조회하고 끝낸다
     a = ap.parse_args()
     if not DGK:
         print("DATA_GO_KR_KEY 없음"); return
+    if a.refresh_only:
+        d = load_json(OUT, {"items": []}); found = {h["mgmPmsrgstPk"]: h for h in d.get("items", [])}
+        q = Quota(min(a.limit, 2000))
+        try:
+            ch = refresh_known(q, found)
+        except QuotaExceeded:
+            print("포털 한도로 다시 조회를 다 못 함"); ch = None
+        if ch is not None:
+            for addr, dd in ch:
+                print("바뀜", addr, dd, flush=True)
+            d["items"] = sorted(found.values(), key=lambda h: (h.get("archPmsDay") or ""), reverse=True)
+            d["refreshed"] = (dt.datetime.utcnow() + dt.timedelta(hours=9)).strftime("%Y%m%d")
+            save_json(OUT, d)
+            print("다시 조회", sum(1 for h in found.values() if h.get("dc")), "건 · 바뀐 건", len(ch), "· 호출", q.used)
+        return
     units = load_json(a.units, None) or load_json("data/bjd_units_seed.json", [])
     if a.sido:
         want = set(s.strip() for s in a.sido.split(","))
