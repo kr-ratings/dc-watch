@@ -1,0 +1,32 @@
+{
+ "지번": {
+  "total": 1,
+  "items": [
+   {
+    "mgmPmsrgstPk": 1000000000000001015792,
+    "platPlc": "전북특별자치도 군산시 비응도동 36-33번지",
+    "mainPurpsCdNm": "방송통신시설",
+    "archPmsDay": "20260820",
+    "stcnsSchedDay": "20261001",
+    "realStcnsDay": "20260923",
+    "useAprDay": " ",
+    "crtnDay": "20260923"
+   }
+  ]
+ },
+ "지번+platGbCd0": {
+  "total": 1,
+  "items": [
+   {
+    "mgmPmsrgstPk": 1000000000000001015792,
+    "platPlc": "전북특별자치도 군산시 비응도동 36-33번지",
+    "mainPurpsCdNm": "방송통신시설",
+    "archPmsDay": "20260820",
+    "stcnsSchedDay": "20261001",
+    "realStcnsDay": "20260923",
+    "useAprDay": " ",
+    "crtnDay": "20260923"
+   }
+  ]
+ }
+}
