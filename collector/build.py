@@ -175,6 +175,12 @@ def permits():
         stage = "준공" if apr else ("공사 중" if stc else "착공 전")
         addr = re.sub(r"\s+", " ", (h.get("platPlc") or "").replace("번지", "")).strip()
         news = [{k: a[k] for k in ("t", "src", "d", "u")} for a in (pn.get(str(h["mgmPmsrgstPk"]), {}).get("items") or []) if kis_ok(a.get("t"))]
+        # 큐레이션에서 이 대지의 기사로 확인한 것(기사에 동 이름이 없어 자동 검색이 못 찾는 경우)을 앞에 붙인다
+        cn = (cur.get(f"{h.get('sigunguCd')}-{h.get('bjdongCd')}-{h.get('bun')}-{h.get('ji')}") or {}).get("news") or []
+        if cn:
+            seen = {a["u"] for a in cn}
+            news = ([{"t": a["t"], "src": a.get("o", ""), "d": a["d"], "u": a["u"]} for a in cn if kis_ok(a.get("t"))]
+                    + [a for a in news if a["u"] not in seen])[:3]
         ll, prec = geo.find(h)
         rows.append({"id": h["mgmPmsrgstPk"], "sd": short(h.get("sido")), "sg": h.get("sggNm"), "dong": h.get("dongNmAddr"), "addr": addr,
                      "nm": nm, "kind": (h.get("archGbCdNm") or "").strip(), "area": round(float(h.get("totArea") or 0)),
