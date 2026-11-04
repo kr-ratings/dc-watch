@@ -2,6 +2,8 @@
 
 - 기본개요(getApBasisOulnInfo)는 시군구+법정동 단위로만 조회되므로 전국 법정동을 순서대로 훑는다.
 - startDate/endDate는 대장 생성·변경일(crtnDay) 기준이라, 착공·사용승인 같은 단계 변화도 다시 잡힌다.
+  다만 국토부는 한 달 치를 다음 달 중순쯤 몰아 넣으며 변경일을 그 달 날짜로 적으므로, 매일 훑는 시작일을
+  '원자료 최신 달의 전달 1일'까지 당기고, 30일마다 한 번은 2020년부터 다시 훑는다.
 - 주용도 방송통신시설(24000) 건만 층별개요를 받아 세부용도 '데이터센터'(24005)가 있는지 확인한다.
 - 하루 호출 한도를 넘지 않도록 상한을 두고, 다 못 돌면 상태 파일에 이어서 돌 위치를 남긴다.
 - 이미 잡힌 데이터센터 건은 매일 지번(bun · ji)으로 날짜 조건 없이 다시 조회한다(--refresh-only, 매일 collect에서).
@@ -152,12 +154,28 @@ def main():
     st = load_json(STATE, {})
     base = a.since   # 처음부터 훑을 때의 시작일(2020-01-01)
     if a.restart or not st:
-        st = {"since": a.since, "done": [], "errors": {}, "started": until, "pass": 1, "known": []}
+        st = {"since": a.since, "done": [], "errors": {}, "started": until, "pass": 1, "known": [], "last_full": until}
     elif st.get("complete"):
-        # 한 바퀴를 다 돌았으면 직전 회차 시작일(7일 겹침)부터 바뀐 대장만 다시 훑는다
+        # 한 바퀴를 다 돌았으면 바뀐 대장만 다시 훑는다. 시작일은 아래 셋 중 가장 이른 날:
+        #  ① 직전 회차 시작일 − 7일
+        #  ② 원자료(건축HUB) 최신 달의 전달 1일 — 국토부가 한 달 치를 다음 달 중순쯤 몰아 넣으면서 변경일을 그 달 날짜로
+        #     적으므로, ①만 보면 새로 들어온 한 달 치(새 인허가 포함)를 통째로 놓친다
+        #  ③ 마지막으로 처음(2020)부터 훑은 지 30일이 지났으면 처음부터 — 더 오래된 날짜로 늦게 들어온 대장까지 잡는 안전망
+        today = dt.date(int(until[:4]), int(until[4:6]), int(until[6:]))
         prev = dt.datetime.strptime(st["started"], "%Y%m%d").date() - dt.timedelta(days=7)
-        st = {"since": prev.strftime("%Y%m%d"), "done": [], "errors": {}, "started": until, "pass": st.get("pass", 1) + 1,
-              "last_complete": st["started"], "known": sorted(set(st.get("known") or []) | set(st["done"]))}
+        cand = [prev]
+        src = (load_json("data/state/unit_counts.json", {}) or {}).get("src_latest")
+        if src and re.fullmatch(r"\d{8}", str(src)):
+            y, m = int(src[:4]), int(src[4:6]) - 1
+            y, m = (y - 1, 12) if m == 0 else (y, m)
+            cand.append(dt.date(y, m, 1))
+        last_full = st.get("last_full") or st.get("full_started") or "20261012"   # 처음 전체 훑기: 10/12 시작
+        full = (today - dt.datetime.strptime(last_full, "%Y%m%d").date()).days >= 30
+        since = base if full else min(cand).strftime("%Y%m%d")
+        st = {"since": since, "done": [], "errors": {}, "started": until, "pass": st.get("pass", 1) + 1,
+              "last_complete": st["started"], "known": sorted(set(st.get("known") or []) | set(st["done"])),
+              "last_full": until if full else last_full}
+        print("이번 회차 시작일", since, "(처음부터)" if full else "", flush=True)
     a.since = st["since"]
     done = set(st["done"])
     # 한 번이라도 처음부터 다 훑은 단위. 행정구역 개편으로 코드가 새로 생긴 단위는 여기에 없으므로 2020년부터 다시 훑는다
