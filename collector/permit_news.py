@@ -2,7 +2,7 @@
 
 - 건물명에 사업자 · 브랜드가 드러나면 그 이름으로, 아니면 '시 · 군 + 동 + 데이터센터'로 검색한다.
 - 제목에 데이터센터(IDC)가 들어가고, 브랜드 · 동 이름 · 시군 이름이 맞는 기사만 남겨 점수순으로 3건까지 붙인다.
-- 새로 잡힌 건은 바로, 기존 건은 7일마다 다시 찾는다.
+- 새로 잡힌 건은 바로, 기존 건도 매일 다시 찾는다(검색 오류가 난 건은 직전 결과를 그대로 둔다).
 """
 import datetime as dt, email.utils, html, re, sys, time, os
 sys.path.insert(0, os.path.dirname(__file__))
@@ -109,12 +109,12 @@ def find(row, siblings=()):
     return {"q": qs, "items": items}
 
 
-def collect(max_refresh=60):
+def collect(max_refresh=200):
     rows = [h for h in load_json("data/permits.json", {"items": []})["items"] if h.get("dc")]
     db = load_json(OUT, {})
     today = dt.date.today()
     todo = [h for h in rows if h["mgmPmsrgstPk"] not in db]
-    stale = sorted((h for h in rows if h["mgmPmsrgstPk"] in db and db[h["mgmPmsrgstPk"]].get("checked", "") <= (today - dt.timedelta(days=7)).isoformat()),
+    stale = sorted((h for h in rows if h["mgmPmsrgstPk"] in db and db[h["mgmPmsrgstPk"]].get("checked", "") < today.isoformat()),
                    key=lambda h: db[h["mgmPmsrgstPk"]].get("checked", ""))
     dongs = {}
     for h in rows:
