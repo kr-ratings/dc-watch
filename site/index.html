@@ -524,7 +524,7 @@ footer .ct{white-space:nowrap}
       <div><b>PUE · 가동률</b>PUE는 데이터센터 전체 전력 ÷ IT 장비 전력으로, 냉방 · 전력 손실을 얼마나 더 쓰는지 보여 줍니다(낮을수록 효율적). 가동률은 계약한 IT 용량 대비 실제 평균 사용 비율입니다.</div>
       <div><b>관할 변전소 추가 여유</b>한전 '전력공급 여유지도'에서 그 시 · 군 · 구에 전기를 보내는 345kV 변전소의 공급 여유용량(MW)입니다. 이미 배정된 사업장 몫을 뺀 뒤 남은 값이라, '–'(남은 여유 없음)는 그 지역에 새 대형 수전을 더 넣기 어렵다는 뜻이지 표에 있는 사업장이 전력을 못 받는다는 뜻은 아닙니다. 변압기 용량 기준 참고값이라 실제 공급 가능 여부는 전기사용 신청 뒤 정해집니다.</div>
       <div><b>분산에너지특화지역</b>분산에너지법에 따라 지역 발전 전기를 한전을 거치지 않고 직접 사고팔 수 있도록 지정한 곳입니다(2025년 7곳). 데이터센터 입장에서는 직접 PPA · 구역전기 공급과 계통 부담 완화가 가능한 지역입니다.</div>
-      <div><b>제도 · 일정</b>정부 · 국회 발표와 보도를 매주 다시 검색해 진행 상황(완료 · 진행 중 · 계류 · 예정)과 새 항목을 반영합니다. 정확한 내용은 각 항목의 출처 원문에서 확인하세요.</div>
+      <div><b>제도 · 일정</b>정부 · 국회 발표와 보도를 매일 다시 검색해 진행 상황(완료 · 진행 중 · 계류 · 예정)과 새 항목을 반영합니다. 정확한 내용은 각 항목의 출처 원문에서 확인하세요.</div>
     </div>
   </details>
 
@@ -1037,7 +1037,7 @@ function init(d){
   $("#updated").textContent=D.built?`최종 수집 ${D.built} KST`:"수집 시각 정보 없음";
   $("#pm-note").textContent=`국토교통부 건축HUB · ${String((D.permits.scanned||{}).since||"20200101").slice(0,4)}년 이후 대장 · 매일 자동 갱신`; // since는 매일 변경분 수집 시작일이라 쓰지 않는다
   const tg=$("#tl-tag"), have=new Set((D.timeline?.items||[]).map(x=>x.tag)); tg.innerHTML=`<option value="all">전체</option>`+TAGS.filter(x=>have.has(x)).map(x=>`<option>${x}</option>`).join("");
-  $("#law-note").textContent=`정부 · 국회 발표와 보도로 확인 · 매주 월요일 재확인`; $("#tl-chk").textContent=`마지막 확인 ${D.timeline?.checked||"–"}`;
+  $("#law-note").textContent=`정부 · 국회 발표와 보도로 확인 · 매일 자동 갱신`; $("#tl-chk").textContent=`마지막 확인 ${D.timeline?.checked||"–"}`;
   renderKPI(); renderFunnel(); renderTable(); renderTimeline(); renderNews(); renderDecomp(); renderHeadroom(); drawCharts();
   tg.addEventListener("change",renderTimeline);
   document.querySelectorAll("[data-m]").forEach(b=>b.addEventListener("click",()=>{ pmMode=b.dataset.m; document.querySelectorAll("[data-m]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderPM(); }));

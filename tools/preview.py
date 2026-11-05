@@ -10,7 +10,7 @@ done, tot = sum(v[0] for v in cov.values()), sum(v[1] for v in cov.values()) or 
 note = ("건축 인허가는 전국 수집을 마쳤고 매일 바뀐 대장만 다시 받습니다." if d["permits"].get("complete") else
         f"건축 인허가는 전국 동·리 단위를 매일 나눠 도는 첫 바퀴 중({done / tot * 100:.0f}%, {done:,}/{tot:,} 단위)이라 아직 돌지 않은 지역은 빠져 있습니다.")
 draft = (f'<div class="draft" role="note"><b>공개 전 시안</b><span>모든 칸이 원출처에서 자동으로 받은 실제 값입니다. {note} '
-         f'용량(MW)과 제도·일정은 공개 보도·보고서를 매주 다시 검색해 갱신합니다.</span></div>')
+         f'제도·일정은 매일, 용량(MW)은 매주 공개 보도·보고서를 다시 검색해 갱신합니다.</span></div>')
 title = re.search(r"<title>.*?</title>", h).group(0)
 font = re.search(r'<link rel="preconnect".*?display=swap">', h, re.S).group(0)
 style = re.search(r"<style>.*?</style>", h, re.S).group(0)
