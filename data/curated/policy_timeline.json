@@ -1,5 +1,5 @@
 {
- "checked": "2026-11-17",
+ "checked": "2026-11-18",
  "items": [
   {
    "d": "2023.03.09",
@@ -87,7 +87,7 @@
    "tag": "전력",
    "t": "전력계통영향평가 운영규정 행정예고",
    "s": "데이터센터 통과 기준 수도권 75점 · 비수도권 70점(100점 만점)",
-   "status": "진행 중",
+   "status": "완료",
    "u": "https://www.kimchang.com/ko/insights/detail.kc?idx=35319",
    "src": "김앤장"
   },
@@ -155,12 +155,12 @@
    "src": "ZDNet Korea"
   },
   {
-   "d": "2026 연내",
+   "d": "2026.11.16",
    "tag": "전력",
-   "t": "전력계통영향평가 고시 확정",
-   "s": "행정예고(7.9~7.20) 후 확정 예정. 확정 시 시범운영 종료",
-   "status": "예정",
-   "u": "https://www.energydaily.co.kr/news/articleView.html?idxno=201248",
+   "t": "전력계통영향평가 본격 시행",
+   "s": "수도권 DC 통과 75점·전력이용밀도 추가. 통보서 양도 금지·유효 1년",
+   "status": "완료",
+   "u": "https://www.energydaily.co.kr/news/articleView.html?idxno=205109",
    "src": "에너지데일리"
   },
   {
